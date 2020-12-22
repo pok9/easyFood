@@ -25,24 +25,23 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    let request = this.http.get('http://localhost:3000/user')
-          .subscribe(response => {
-            console.log('Response: ' + JSON.stringify(response));
-          },error =>{
-            console.log('Error ' + JSON.stringify(error));
-          });
-    this.router.navigateByUrl('/feeds');
-    // let json = {username : this.username,password:this.password};
-    // let name = "pok";
-    // let request = this.http.post('http://localhost:3000/authenticate',JSON.stringify(name))
-    //   .subscribe(response => {
-    //     console.log('not error ' + JSON.stringify(response));
-    //     this.data.username = this.username;
-    //     this.data.password = this.password;
-    //     this.router.navigateByUrl('/feeds');
-    //   }, error => {
-    //     console.log('Error ' + JSON.stringify(error));
-    //   });
+    // let request = this.http.get('http://localhost:3000/user')
+    //       .subscribe(response => {
+    //         console.log('Response: ' + JSON.stringify(response));
+    //       },error =>{
+    //         console.log('Error ' + JSON.stringify(error));
+    //       });
+    // this.router.navigateByUrl('/feeds');
+    let json = {username :this.username,password:this.password};
+    let request = this.http.post('http://localhost:3000/api/users/login',json)
+      .subscribe(response => {
+        console.log('not error ' + JSON.stringify(response));
+        this.data.username = this.username;
+        this.data.password = this.password;
+        // this.router.navigateByUrl('/feeds');
+      }, error => {
+        console.log('Error ' + JSON.stringify(error));
+      });
   }
   signUp(){
     this.router.navigateByUrl('/signup');
