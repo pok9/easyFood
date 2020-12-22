@@ -1,0 +1,59 @@
+<style>
+    .leftScreen {
+        position: absolute;
+        top: 50%;
+        margin-top: -150px;
+        left: 45%;
+        margin-left: 400px;
+    }
+
+    :host>>>.mystyle {
+        background-color: seashell;
+    }
+
+    .center {
+        margin-left: 110px;
+    }
+
+    .imgRight {
+        margin-top: 5%;
+        margin-left: 20%;
+    }
+    .green{
+        color: green
+    }
+</style>
+
+<p-toolbar>
+    <div class="ui-toolbar-group-left">
+        <img src="../../assets/images/logo.svg" alt="" width="30px">&nbsp;&nbsp;
+        <a routerLink="/login">Login</a>&nbsp;
+        <a routerLink="/profile">Profile</a>&nbsp;
+    </div>
+</p-toolbar>
+
+<img class="imgRight" height="700px" width="700px" src="../../assets/images/login.svg" alt="">
+
+
+<div class="leftScreen">
+    <p-card header="" [style]="{width: '380px'}" styleClass="">
+        <div>
+            <h1 >EasyFooD</h1><br>
+        </div>
+        
+        <span class="p-float-label">
+            <input id="float-input" type="text" pInputText size="40" [(ngModel)]="username">
+            <label for="float-input">Username</label>
+        </span><br>
+        <span class="p-float-label">
+            <input id="float-input" type="password" pInputText size="40" [(ngModel)]="password">
+            <label for="float-input">Password</label>
+        </span><br>
+        <button (click)="login()" pButton pRipple type="button" label="Login"
+            class="btn btn-primary btn-lg btn-block"></button>
+        <br><br>
+        <button (click)="signUp()" type="button" class="btn btn-secondary btn-block">Sign Up</button>
+    </p-card>
+    <!-- <h6 class="center">or continue with</h6> -->
+</div>
+
