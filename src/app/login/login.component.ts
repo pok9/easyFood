@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     //       });
     // this.router.navigateByUrl('/feeds');
     let json = {username :this.username,password:this.password};
-    let request = this.http.post('http://localhost:3000/api/users/login',json)
+    let request = this.http.post('http://localhost:3000/login',json)
       .subscribe(response => {
         console.log('not error ' + JSON.stringify(response));
         this.data.username = this.username;
