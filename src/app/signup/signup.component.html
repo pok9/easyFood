@@ -1,1 +1,70 @@
-<p>signup works!</p>
+<style>
+    .rightScreen {
+        position: absolute;
+        top: 50%;
+        margin-top: -200px;
+        left: 45%;
+        margin-left: -600px;
+    }
+
+    :host>>>.mystyle {
+        background-color: seashell;
+    }
+
+    .center {
+        margin-left: 110px;
+    }
+
+    .imgRight {
+        margin-top: 5%;
+        margin-left: 50%;
+    }
+    .fullscreen {
+        margin-top: 0%;
+        margin-left: 0%;
+    }
+
+    .green {
+        color: green
+    }
+
+    button {
+        width: 220px;
+        height: 50px;
+    }
+</style>
+
+<!-- <img class="fullscreen" height="977px" width="100%" src="../../assets/images/food2.jpeg" alt=""> -->
+<img class="imgRight" height="700px" width="700px" src="../../assets/images/cooking.svg" alt="">
+
+
+<div class="rightScreen">
+    <p-card header="Sign Up" [style]="{width: '530px'}" styleClass="">
+        <!-- <div>
+            <h1 >EasyFooD</h1><br>
+        </div> -->
+        <!-- [(ngModel)]="password" -->
+        <!-- <span class="p-float-label">
+            <input id="float-input" type="text" pInputText size="40" >
+            <label for="float-input">Username</label>
+        </span><br> -->
+        <div class="p-field">
+            <label for="username1" >Username</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="username1">Password</label><br>
+            <input id="username1" size="25px" type="username" aria-describedby="username1-help" pInputText  [(ngModel)]="username"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="username1" size="25px" type="password" aria-describedby="username1-help" pInputText  [(ngModel)]="password"/><br><br>
+            <label for="username1">Nickname</label><br>
+            <input id="username1" size="63px" type="text" aria-describedby="username1-help" pInputText  [(ngModel)]="nickname"/><br><br>
+            <label for="username1">Fullname</label><br>
+            <input id="username1" size="63px" type="text" aria-describedby="username1-help" pInputText  [(ngModel)]="fullname"/>
+        </div><br>
+
+        <!-- <span class="p-float-label">
+            <input id="float-input" type="password" pInputText size="40">
+            <label for="float-input">Password</label>
+        </span><br> -->
+        <button (click)="signup()" pButton pRipple type="button" label="Create an Account" class="btn btn-primary"></button><br><br>
+        <!-- <br><br> -->
+        <label >Already have an account?</label> <a routerLink="/login"> Sign In</a>
+    </p-card>
+    <!-- <h6 class="center">or continue with</h6> -->
+    
+</div>
