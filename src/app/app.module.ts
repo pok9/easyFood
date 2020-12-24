@@ -16,7 +16,8 @@ import {ButtonModule} from 'primeng/button';
 import { FeedsComponent } from './feeds/feeds.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './signup/signup.component'; //observable เช่น get,post
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,7 @@ import { SignupComponent } from './signup/signup.component'; //observable เช
     ProfileComponent,
     FeedsComponent,
     SignupComponent,
+    ToolbarComponent,
     
   ],
   imports: [
@@ -35,7 +37,8 @@ import { SignupComponent } from './signup/signup.component'; //observable เช
     BrowserAnimationsModule,
     InputTextModule,
     ButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

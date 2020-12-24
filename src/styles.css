@@ -1,1 +1,69 @@
-/* You can add global styles to this file, and also import other style files */
+/*--------Login---------*/
+.leftScreen {
+    position: absolute;
+    top: 50%;
+    margin-top: -150px;
+    left: 45%;
+    margin-left: 650px;
+}
+:host>>>.mystyle1 {
+    background-color: seashell;
+}
+
+.center1 {
+    margin-left: 110px;
+}
+
+.imgRight1 {
+    margin-top: 130%;
+    margin-left: -100%;
+}
+
+.green1 {
+    color: green
+}
+/*--------Login---------*/
+
+/*--------signup---------*/
+.rightScreen {
+    position: absolute;
+    top: 50%;
+    margin-top: -500px;
+    left: 45%;
+    margin-left: -600px;
+}
+
+:host>>>.mystyle2 {
+    background-color: seashell;
+}
+
+.center2 {
+    margin-left: 110px;
+}
+
+.imgRight2 {
+    margin-top: 5%;
+    margin-left: 50%;
+}
+.fullscreen {
+    margin-top: 0%;
+    margin-left: 0%;
+}
+
+.green2 {
+    color: green
+}
+
+.button2 {
+    width: 220px;
+    height: 50px;
+}
+/*--------signup---------*/
+
+/*--------profile---------*/
+.imgProfile{
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+/*--------profile---------*/
