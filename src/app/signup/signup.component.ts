@@ -9,8 +9,8 @@ import { HttpClient } from '@angular/common/http'; //เชื่อต่อ ht
 export class SignupComponent implements OnInit {
   username : any;
   password : any;
-  nickname : any;
   fullname : any;
+  nickName : any;
   constructor(private router: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -19,11 +19,11 @@ export class SignupComponent implements OnInit {
   signup(){
     console.log(this.username);
     console.log(this.password);
-    console.log(this.nickname);
     console.log(this.fullname);
+    console.log(this.nickName);
 
-    let json = {username :this.username,password:this.password,nickname:this.nickname,fullname:this.fullname,status : 0};
-    let request = this.http.post('http://localhost:3000/api/users/signup',json)
+    let json = {username :this.username,password:this.password,fullName:this.fullname,nickName:this.nickName,status : 1,profile_img:"213"};
+    let request = this.http.post('http://apifood.comsciproject.com/users/signup',json)
       .subscribe(response => {
         console.log('not error ' + JSON.stringify(response));
         // this.router.navigateByUrl('/feeds');

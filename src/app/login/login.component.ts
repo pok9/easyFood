@@ -10,8 +10,13 @@ import { HttpClient } from '@angular/common/http'; //เชื่อต่อ ht
 
 export class LoginComponent implements OnInit {
 
-  username: any;
-  password: any;
+  user_id : any; 
+  success : any;
+  username : any;
+  password : any;
+  fullname : any;
+  imgProfile : any;
+  status : any;
 
 
   constructor(private router: Router, //router เปลี่ยนหน้าในไฟล์ .ts 1
@@ -33,12 +38,27 @@ export class LoginComponent implements OnInit {
     //       });
     // this.router.navigateByUrl('/feeds');
     let json = {username :this.username,password:this.password};
-    let request = this.http.post('http://localhost:3000/login',json)
+    let request = this.http.post('http://apifood.comsciproject.com/users/login',json)
       .subscribe(response => {
-        console.log('not error ' + JSON.stringify(response));
-        this.data.username = this.username;
-        this.data.password = this.password;
-        // this.router.navigateByUrl('/feeds');
+       if(response["success"] == 1){
+
+         console.log(response["data"])
+         this.data.user_id = response["data"].user_ID;
+         this.data.success = response["success"]
+         this.data.username = response["data"].username;
+         this.data.fullname = response["data"].fullName;
+         this.data.nickname = response["data"].nickname;
+         this.data.imgProfile = response["data"].profile_img;
+         this.data.status = response["data"].status;
+         
+
+         this.router.navigateByUrl('/feeds');
+       }else{
+        console.log(JSON.stringify(response));
+       }
+        // this.data.username = this.username;
+        // this.data.password = this.password;
+        // 
       }, error => {
         console.log('Error ' + JSON.stringify(error));
       });

@@ -10,7 +10,6 @@ export class FeedsComponent implements OnInit {
 
   constructor(private datapass : UserpassService) { 
     console.log(datapass.username);
-    console.log(datapass.password);
   }
 
   ngOnInit(): void {
