@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "EasyFood"
+  "defaultProject": "EasyFood",
+  "cli": {
+    "analytics": "88dbbecf-12f6-4258-a7a3-e1926afe94c0"
+  }
 }
