@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
          this.data.success = response["success"]
          this.data.username = response["data"].username;
          this.data.fullname = response["data"].fullName;
-         this.data.nickname = response["data"].nickname;
+         this.data.nickname = response["data"].nickName;
          this.data.imgProfile = response["data"].profile_img;
          this.data.status = response["data"].status;
          
