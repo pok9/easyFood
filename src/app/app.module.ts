@@ -18,6 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './signup/signup.component'; //observable เช่น get,post
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { TestComponent } from './test/test.component';
+
+import {PasswordModule} from 'primeng/password';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     FeedsComponent,
     SignupComponent,
     ToolbarComponent,
+    TestComponent,
+
     
   ],
   imports: [
@@ -39,7 +44,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     InputTextModule,
     ButtonModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    PasswordModule
   ],
   providers: [],
   bootstrap: [AppComponent]

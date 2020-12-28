@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';//router เปลี่ยนหน้าในไฟล์ .ts 1
 import { UserpassService } from '../userpass.service'; //data passing  2 เอาไว้เก็บข้อมูล username และ password ตอน login
 import { HttpClient } from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,6 +11,9 @@ import { HttpClient } from '@angular/common/http'; //เชื่อต่อ ht
 })
 
 export class LoginComponent implements OnInit {
+  alert : boolean=false //แจ้งเตือน
+  txtalert : string
+  txtmessageAlert : string
 
   user_id : any; 
   success : any;
@@ -21,8 +26,9 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, //router เปลี่ยนหน้าในไฟล์ .ts 1
     private data: UserpassService, //data passing  2 เอาไว้เก็บข้อมูล username และ password ตอน login
-    private http: HttpClient  //เชื่อต่อ http เช่น get post put delete                     
-  ) {
+    private http: HttpClient,  //เชื่อต่อ http เช่น get post put delete                     
+    
+    ) {
 
   }
 
@@ -41,6 +47,8 @@ export class LoginComponent implements OnInit {
     let request = this.http.post('http://apifood.comsciproject.com/users/login',json)
       .subscribe(response => {
        if(response["success"] == 1){
+         this.txtalert = "success"
+         this.alert = true
 
          console.log(response["data"])
          this.data.user_id = response["data"].user_ID;
@@ -51,10 +59,14 @@ export class LoginComponent implements OnInit {
          this.data.imgProfile = response["data"].profile_img;
          this.data.status = response["data"].status;
          
-
+         
          this.router.navigateByUrl('/feeds');
        }else{
         console.log(JSON.stringify(response));
+        this.txtmessageAlert = response["message"];
+        
+        this.txtalert = "danger"
+         this.alert = true
        }
         // this.data.username = this.username;
         // this.data.password = this.password;
@@ -65,6 +77,10 @@ export class LoginComponent implements OnInit {
   }
   signUp(){
     this.router.navigateByUrl('/signup');
+  }
+
+  closeAlert(){
+    this.alert = false
   }
 
 }

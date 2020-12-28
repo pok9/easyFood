@@ -14,7 +14,7 @@
                         <label for="username1">Password</label><br>
                         <input id="username1" size="23%" type="username" aria-describedby="username1-help" pInputText
                             [(ngModel)]="username" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
-                            id="username1" size="23%" type="password" aria-describedby="username1-help" pInputText
+                            id="username1" size="23%" type="password" pPassword aria-describedby="username1-help" pInputText
                             [(ngModel)]="password" /><br><br>
                         <label for="username1">fullname</label><br>
                         <input id="username1" size="58%" type="text" aria-describedby="username1-help" pInputText
@@ -23,7 +23,7 @@
                         <input id="username1" size="58%" type="text" aria-describedby="username1-help" pInputText
                             [(ngModel)]="nickName" />
                     </div><br>
-
+                    
 
                     <button class="button2" (click)="signup()" pButton pRipple type="button" label="Create an Account"
                         class="btn btn-primary"></button><br><br>
