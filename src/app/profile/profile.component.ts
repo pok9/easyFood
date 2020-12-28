@@ -7,8 +7,10 @@ import { UserpassService } from '../userpass.service';
 })
 export class ProfileComponent implements OnInit {
   nickname : any;
+  profile_img : any;
   constructor(private datapass : UserpassService) { 
     this.nickname = datapass.nickname
+    this.profile_img = datapass.imgProfile
   }
 
   ngOnInit(): void {

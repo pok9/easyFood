@@ -14,8 +14,10 @@ export class ToolbarComponent implements OnInit {
   iconmessage = faComments;
   iconbell = faBell;
   username : any;
+  profile_img : any;
   constructor(private datapass : UserpassService) {
     this.username = datapass.username;
+    this.profile_img = datapass.imgProfile;
    }
 
   ngOnInit(): void {
