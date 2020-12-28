@@ -4,10 +4,25 @@
         width: 50px;
         height: 50px;
     }
+    a{
+        font-family: cursive;
+        color: black;
+        float: left;
+        text-align: center;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+    col{
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+    }
+    
 </style>
-<p-toolbar>
+<!-- <p-toolbar>
     <div class="ui-toolbar-group-left">
-        <!-- <img src="../../assets/images/logo.png" alt="" width="30px">&nbsp;&nbsp; -->
+       
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       
       <a routerLink="/profile/{{username}}">EasyFooD</a>
@@ -28,6 +43,44 @@
         <a routerLink=""><fa-icon [icon]="iconbell"></fa-icon></a>
         &nbsp;&nbsp;
         <img  class="imgToolbar" src="{{profile_img}}" alt="Avatar">
+        
+    </div>
+</p-toolbar> -->
+<p-toolbar>
+    
+    <div class="row">
+        <div class="col-sm-8"></div>
+        <div class="col-sm-2"></div>  
+        <div class="col-sm-2">
+            <div class="ui-toolbar-group-left">
+                <a routerLink="/profile/{{username}}"><span>Easy</span> <span style="color: #24ad18;">Food</span></a>
+            </div>
+        </div>
+
+    </div>
+    <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText placeholder="ค้นหา"  />
+    </span>
+    <div class="p-toolbar-group-right">
+        <!-- <a routerLink="/feeds"><fa-icon [icon]="iconhome" style="color: dodgerblue;" ></fa-icon></a>
+        <a routerLink=""><fa-icon [icon]="iconmessage" style="color: dodgerblue;"></fa-icon></a>
+        <a routerLink=""><fa-icon [icon]="iconbell" style="color: dodgerblue;"></fa-icon></a>
+        <img  class="imgToolbar" src="{{profile_img}}" alt="Avatar"> -->
+        <div class="row">
+            <div class="col">
+                <a routerLink="/feeds"><fa-icon [icon]="iconhome" style="color: dodgerblue;"></fa-icon></a>
+            </div>
+            <div class="col">
+                <a routerLink=""><fa-icon [icon]="iconmessage" style="color: dodgerblue;"></fa-icon></a>
+            </div>
+            <div class="col">
+                <a routerLink=""><fa-icon [icon]="iconbell" style="color: dodgerblue;"></fa-icon></a>
+            </div>
+            <div class="col">
+                <img  class="imgToolbar" src="{{profile_img}}" alt="Avatar">
+            </div>
+        </div>
         
     </div>
 </p-toolbar>
