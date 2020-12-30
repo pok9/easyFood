@@ -24,11 +24,13 @@ export class ToolbarComponent implements OnInit {
   interpretations;
 
   constructor(private datapass: UserpassService) {
-    this.username = datapass.username;
-    this.profile_img = datapass.imgProfile;
+    
 
     this.getInterpretations()
     this.profile_img = this.interpretations.profile_img
+    this.username = this.interpretations.username;
+    
+    //this.profile_img = this.interpretations.imgProfile;
   }
 
   ngOnInit(): void {

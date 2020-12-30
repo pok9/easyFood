@@ -10,7 +10,7 @@ import { Router } from '@angular/router';//router เปลี่ยนหน้
 export class ProfileComponent implements OnInit {
   nickname: any;
   profile_img: any;
-
+  fullname;
   user_id;
   username;
 
@@ -26,16 +26,18 @@ export class ProfileComponent implements OnInit {
     // console.log("datapass.imgProfile = " + datapass.imgProfile);
     // console.log(this.datapass.user_id)
 
+    
+  }
+
+  ngOnInit(): void {
     this.getInterpretations()
     console.log(this.interpretations.profile_img)
     
     this.user_id = this.interpretations.user_ID
     this.profile_img = this.interpretations.profile_img
     this.username = this.interpretations.username
-  }
-
-  ngOnInit(): void {
-    
+    this.nickname = this.interpretations.nickName
+    this.fullname = this.interpretations.fullName
   }
 
   getInterpretations(){
@@ -59,11 +61,24 @@ export class ProfileComponent implements OnInit {
           let request = this.http.get('http://apifood.comsciproject.com/users/' + this.user_id).subscribe(response => {
 
             this.interpretations = {
-              profile_img : response["data"].profile_img
+              success : response["success"],
+              user_ID : response["data"].user_ID,
+              username : response["data"].username,
+              fullName : response["data"].fullName,
+              nickName : response["data"].nickName,
+              profile_img : response["data"].profile_img,
+              status : response["data"].status,
+              
             };
             
             this.profile_img = this.interpretations.profile_img
-          
+
+            localStorage.setItem(
+              'interpretations',
+              JSON.stringify(this.interpretations)
+            );
+
+            location.reload()
             // this.router.navigateByUrl('/profile/'+this.username );
             
           //  window.location.reload();
