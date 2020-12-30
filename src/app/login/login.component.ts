@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   imgProfile : any;
   status : any;
 
+  interpretations; //Local Storage
 
   constructor(private router: Router, //router เปลี่ยนหน้าในไฟล์ .ts 1
     private data: UserpassService, //data passing  2 เอาไว้เก็บข้อมูล username และ password ตอน login
@@ -35,6 +36,14 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // getInterpretations(){
+  //   if(localStorage.getItem('interpretations') === null)
+  //     this.interpretations = [];
+  //   else{
+  //       this.interpretations = localStorage.getItem('interpretations')
+  //   }
+  // }
+  
   login() {
     // let request = this.http.get('http://localhost:3000/user')
     //       .subscribe(response => {
@@ -59,6 +68,20 @@ export class LoginComponent implements OnInit {
          this.data.imgProfile = response["data"].profile_img;
          this.data.status = response["data"].status;
          
+         this.interpretations = {
+            success : response["success"],
+            user_ID : response["data"].user_ID,
+            username : response["data"].username,
+            fullName : response["data"].fullName,
+            nickName : response["data"].nickName,
+            profile_img : response["data"].profile_img,
+            status : response["data"].status
+         };
+
+         localStorage.setItem(
+           'interpretations',
+           JSON.stringify(this.interpretations)
+         );
          
          this.router.navigateByUrl('/feeds');
        }else{

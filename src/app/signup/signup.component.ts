@@ -38,6 +38,7 @@ export class SignupComponent implements OnInit {
             this.data.username = response["data"].username;
             this.data.fullname = response["data"].fullName;
             this.data.nickname = response["data"].nickName;
+            console.log("response.profile_img = " + response["data"].profile_img);
             this.data.imgProfile = response["data"].profile_img;
             this.data.status = response["data"].status;
             this.router.navigateByUrl('/feeds');

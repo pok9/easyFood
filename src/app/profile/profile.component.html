@@ -1,3 +1,4 @@
+
 <app-toolbar></app-toolbar>
 
 <style>
@@ -11,13 +12,31 @@
         margin-left: -15%;
         margin-top: 5%;
     }
+
+    .image-upload>input {
+        display: none;
+        
+    }
 </style>
 <div class="container">
     <br><br>
     <div class="row">
         <div class="col-xs-1">
-            <img class="imgProfile" height="100px" width="100px" src="{{profile_img}}" alt="">
+            
+            <div class="image-upload">
+                <label for="file-input"><!--รูปโปรไฟล์&อัปโหลดรูป-->
+                    <img class="imgProfile" height="100px" width="100px" src="{{profile_img}}" alt=""  > 
+                </label>
+                
+                <form enctype="multipart/form-data">
+                    <input id="file-input" type="file" #fileUpload hidden (change)="updateImagePro($event.target.files)"/>
+                </form>
+                
+              </div>
         </div>
+        
+        
+
         <!-- &nbsp;&nbsp&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="row">
@@ -44,4 +63,3 @@
 </div>
 
 <br>
-

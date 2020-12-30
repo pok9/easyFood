@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
-  property;
+  
   constructor() { }
 
   ngOnInit(): void {
   }
+  yourFile: File;
+getFile(fileInput) {
+   this.yourFile = fileInput.target.files[0];
+   console.log("ok");
+}
 
 }

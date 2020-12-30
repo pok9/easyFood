@@ -22,6 +22,8 @@ import { TestComponent } from './test/test.component';
 
 import {PasswordModule} from 'primeng/password';
 
+import {DropdownModule} from 'primeng/dropdown';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +47,8 @@ import {PasswordModule} from 'primeng/password';
     ButtonModule,
     HttpClientModule,
     FontAwesomeModule,
-    PasswordModule
+    PasswordModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]

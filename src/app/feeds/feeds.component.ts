@@ -9,7 +9,7 @@ import { UserpassService } from '../userpass.service';
 export class FeedsComponent implements OnInit {
 
   constructor(private datapass : UserpassService) { 
-    console.log(datapass.username);
+    // console.log(datapass.username);
   }
 
   ngOnInit(): void {
