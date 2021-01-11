@@ -8,31 +8,41 @@ import { UserpassService } from '../userpass.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  username : any;
-  password : any;
-  fullname : any;
-  nickName : any;
-  constructor(private router: Router,private http: HttpClient,private data: UserpassService) { }
+  username: any;
+  password: any;
+  fullname: any;
+  nickName: any;
+
+  siteKey:String;
+  theme: String;
+  constructor(private router: Router, private http: HttpClient, private data: UserpassService) { 
+    this.siteKey = '6LdgeyUaAAAAAPN4KVZKHFgbQalaUlk0FvIE3WXl';
+    this.theme = 'Dark';
+  }
 
   ngOnInit(): void {
   }
 
-  signup(){
+  showResponse(response) {
+    //call to a backend to verify against recaptcha with private key
+  }
+
+  signup() {
     console.log(this.username);
     console.log(this.password);
     console.log(this.fullname);
     console.log(this.nickName);
     let url_deProfiel = "http://apifood.comsciproject.com/uploadProfile/img_avatar.png"
 
-    let json = {username :this.username,password:this.password,fullName:this.fullname,nickName:this.nickName,status : 1,profile_img:url_deProfiel};
-    let request = this.http.post('http://apifood.comsciproject.com/users/signup',json)
+    let json = { username: this.username, password: this.password, fullName: this.fullname, nickName: this.nickName, status: 1, profile_img: url_deProfiel };
+    let request = this.http.post('http://apifood.comsciproject.com/users/signup', json)
       .subscribe(response => {
         //console.log('not error ' + JSON.stringify(response));
         // this.router.navigateByUrl('/feeds');
 
-        if(response["success"] == 1){
-          let json = {username :this.username,password:this.password};
-          let req = this.http.post('http://apifood.comsciproject.com/users/login',json).subscribe(response=>{
+        if (response["success"] == 1) {
+          let json = { username: this.username, password: this.password };
+          let req = this.http.post('http://apifood.comsciproject.com/users/login', json).subscribe(response => {
             this.data.user_id = response["data"].user_ID;
             this.data.success = response["success"]
             this.data.username = response["data"].username;
@@ -55,7 +65,8 @@ export class SignupComponent implements OnInit {
         console.log('Error ' + JSON.stringify(error));
       });
 
-    
   }
+
+  
 
 }

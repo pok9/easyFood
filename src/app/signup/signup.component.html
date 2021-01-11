@@ -14,8 +14,8 @@
                         <label for="username1">Password</label><br>
                         <input id="username1" size="23%" type="username" aria-describedby="username1-help" pInputText
                             [(ngModel)]="username" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
-                            id="username1" size="23%" type="password" pPassword aria-describedby="username1-help" pInputText
-                            [(ngModel)]="password" /><br><br>
+                            id="username1" size="23%" type="password" pPassword aria-describedby="username1-help"
+                            pInputText [(ngModel)]="password" /><br><br>
                         <label for="username1">fullname</label><br>
                         <input id="username1" size="58%" type="text" aria-describedby="username1-help" pInputText
                             [(ngModel)]="fullname" /><br><br>
@@ -23,13 +23,18 @@
                         <input id="username1" size="58%" type="text" aria-describedby="username1-help" pInputText
                             [(ngModel)]="nickName" />
                     </div><br>
-                    
+
+                    <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" [theme]="theme">
+                    </ngx-recaptcha2><br>
+
+
 
                     <button class="button2" (click)="signup()" pButton pRipple type="button" label="Create an Account"
                         class="btn btn-primary"></button><br><br>
-
                     <label>Already have an account?</label> <a routerLink="/login"> Sign In</a>
                 </p-card>
+
+
 
             </div>
         </div>

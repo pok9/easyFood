@@ -7,14 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestComponent implements OnInit {
   
-  constructor() { }
+
+  constructor() { 
+    
+  }
 
   ngOnInit(): void {
   }
-  yourFile: File;
-getFile(fileInput) {
-   this.yourFile = fileInput.target.files[0];
-   console.log("ok");
-}
+
+  
+
+
+
 
 }

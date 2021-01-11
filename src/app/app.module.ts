@@ -24,6 +24,10 @@ import {PasswordModule} from 'primeng/password';
 
 import {DropdownModule} from 'primeng/dropdown';
 
+import {CaptchaModule} from 'primeng/captcha';
+import { NgxCaptchaModule } from 'ngx-captcha';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +52,9 @@ import {DropdownModule} from 'primeng/dropdown';
     HttpClientModule,
     FontAwesomeModule,
     PasswordModule,
-    DropdownModule
+    DropdownModule,
+    NgxCaptchaModule,
+    CaptchaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
