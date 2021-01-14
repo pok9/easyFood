@@ -14,6 +14,7 @@ export class SignupComponent implements OnInit {
   nickName: any;
   captcha: any;
 
+  interpretations; //Local Storage
   constructor(private router: Router, private http: HttpClient, private data: UserpassService) {
     //this.siteKey = '6LdieiUaAAAAAIYEXn_XHHc81QgOgkBnCi1cw633';
   }
@@ -52,7 +53,27 @@ export class SignupComponent implements OnInit {
               console.log("response.profile_img = " + response["data"].profile_img);
               this.data.imgProfile = response["data"].profile_img;
               this.data.status = response["data"].status;
+
+
+              this.interpretations = {
+                success : response["success"],
+                user_ID : response["data"].user_ID,
+                username : response["data"].username,
+                fullName : response["data"].fullName,
+                nickName : response["data"].nickName,
+                profile_img : response["data"].profile_img,
+                status : response["data"].status
+             };
+    
+             localStorage.setItem(
+               'interpretations',
+               JSON.stringify(this.interpretations)
+             );
+             
+
               this.router.navigateByUrl('/feeds');
+
+
             })
           }
           // this.data.user_id = response["data"].user_ID;

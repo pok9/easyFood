@@ -44,4 +44,8 @@ export class ToolbarComponent implements OnInit {
     }
   }
 
+  logoutLocalstorege(){
+    localStorage.removeItem('interpretations')
+  }
+
 }

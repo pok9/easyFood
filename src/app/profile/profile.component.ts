@@ -30,6 +30,10 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(localStorage.getItem('interpretations') === null){
+      alert("Please login!")
+      this.router.navigateByUrl('/login');
+    }
     this.getInterpretations()
     console.log(this.interpretations.profile_img)
     
@@ -38,6 +42,8 @@ export class ProfileComponent implements OnInit {
     this.username = this.interpretations.username
     this.nickname = this.interpretations.nickName
     this.fullname = this.interpretations.fullName
+
+    
   }
 
   getInterpretations(){
