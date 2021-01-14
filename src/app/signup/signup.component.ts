@@ -12,61 +12,64 @@ export class SignupComponent implements OnInit {
   password: any;
   fullname: any;
   nickName: any;
+  captcha: any;
 
-  siteKey:String;
-  theme: String;
-  constructor(private router: Router, private http: HttpClient, private data: UserpassService) { 
-    this.siteKey = '6LdgeyUaAAAAAPN4KVZKHFgbQalaUlk0FvIE3WXl';
-    this.theme = 'Dark';
+  constructor(private router: Router, private http: HttpClient, private data: UserpassService) {
+    //this.siteKey = '6LdieiUaAAAAAIYEXn_XHHc81QgOgkBnCi1cw633';
   }
 
   ngOnInit(): void {
   }
 
-  showResponse(response) {
-    //call to a backend to verify against recaptcha with private key
-  }
+  // showResponse() {
+  //   //call to a backend to verify against recaptcha with private key
+  //   console.log('showResponsesss');
+  // }
+
 
   signup() {
-    console.log(this.username);
-    console.log(this.password);
-    console.log(this.fullname);
-    console.log(this.nickName);
-    let url_deProfiel = "http://apifood.comsciproject.com/uploadProfile/img_avatar.png"
+    // console.log(this.username);
+    // console.log(this.password);
+    // console.log(this.fullname);
+    // console.log(this.nickName);
+    if (this.captcha !== undefined) {
+      let url_deProfiel = "http://apifood.comsciproject.com/uploadProfile/img_avatar.png"
 
-    let json = { username: this.username, password: this.password, fullName: this.fullname, nickName: this.nickName, status: 1, profile_img: url_deProfiel };
-    let request = this.http.post('http://apifood.comsciproject.com/users/signup', json)
-      .subscribe(response => {
-        //console.log('not error ' + JSON.stringify(response));
-        // this.router.navigateByUrl('/feeds');
+      let json = { username: this.username, password: this.password, fullName: this.fullname, nickName: this.nickName, status: 1, profile_img: url_deProfiel };
+      let request = this.http.post('http://apifood.comsciproject.com/users/signup', json)
+        .subscribe(response => {
+          //console.log('not error ' + JSON.stringify(response));
+          // this.router.navigateByUrl('/feeds');
 
-        if (response["success"] == 1) {
-          let json = { username: this.username, password: this.password };
-          let req = this.http.post('http://apifood.comsciproject.com/users/login', json).subscribe(response => {
-            this.data.user_id = response["data"].user_ID;
-            this.data.success = response["success"]
-            this.data.username = response["data"].username;
-            this.data.fullname = response["data"].fullName;
-            this.data.nickname = response["data"].nickName;
-            console.log("response.profile_img = " + response["data"].profile_img);
-            this.data.imgProfile = response["data"].profile_img;
-            this.data.status = response["data"].status;
-            this.router.navigateByUrl('/feeds');
-          })
-        }
-        // this.data.user_id = response["data"].user_ID;
-        //  this.data.success = response["success"]
-        //  this.data.username = response["data"].username;
-        //  this.data.fullname = response["data"].fullName;
-        //  this.data.nickname = response["data"].nickName;
-        //  this.data.imgProfile = response["data"].profile_img;
-        //  this.data.status = response["data"].status;
-      }, error => {
-        console.log('Error ' + JSON.stringify(error));
-      });
-
+          if (response["success"] == 1) {
+            let json = { username: this.username, password: this.password };
+            let req = this.http.post('http://apifood.comsciproject.com/users/login', json).subscribe(response => {
+              this.data.user_id = response["data"].user_ID;
+              this.data.success = response["success"]
+              this.data.username = response["data"].username;
+              this.data.fullname = response["data"].fullName;
+              this.data.nickname = response["data"].nickName;
+              console.log("response.profile_img = " + response["data"].profile_img);
+              this.data.imgProfile = response["data"].profile_img;
+              this.data.status = response["data"].status;
+              this.router.navigateByUrl('/feeds');
+            })
+          }
+          // this.data.user_id = response["data"].user_ID;
+          //  this.data.success = response["success"]
+          //  this.data.username = response["data"].username;
+          //  this.data.fullname = response["data"].fullName;
+          //  this.data.nickname = response["data"].nickName;
+          //  this.data.imgProfile = response["data"].profile_img;
+          //  this.data.status = response["data"].status;
+        }, error => {
+          console.log('Error ' + JSON.stringify(error));
+        });
+    }else{
+      
+    }
   }
 
-  
+
 
 }
