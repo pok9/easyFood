@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   status : any;
 
   interpretations; //Local Storage
-
+  TOKEN;
   constructor(private router: Router, //router เปลี่ยนหน้าในไฟล์ .ts 1
     private data: UserpassService, //data passing  2 เอาไว้เก็บข้อมูล username และ password ตอน login
     private http: HttpClient,  //เชื่อต่อ http เช่น get post put delete                     
@@ -77,6 +77,13 @@ export class LoginComponent implements OnInit {
             profile_img : response["data"].profile_img,
             status : response["data"].status
          };
+
+         this.TOKEN = {
+           token : response["token"]
+         }
+
+         localStorage.setItem('TOKEN', JSON.stringify(this.TOKEN))
+         
 
          localStorage.setItem(
            'interpretations',

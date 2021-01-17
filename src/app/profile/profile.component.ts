@@ -13,9 +13,10 @@ export class ProfileComponent implements OnInit {
   fullname;
   user_id;
   username;
+  token_user;
 
   interpretations;
-
+  TOKEN;
   
   constructor(private datapass: UserpassService, private http: HttpClient,private router: Router) {
     this.nickname = datapass.nickname
@@ -35,6 +36,7 @@ export class ProfileComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     this.getInterpretations()
+    this.getToken()
     console.log(this.interpretations.profile_img)
     
     this.user_id = this.interpretations.user_ID
@@ -43,6 +45,7 @@ export class ProfileComponent implements OnInit {
     this.nickname = this.interpretations.nickName
     this.fullname = this.interpretations.fullName
 
+    this.token_user = this.TOKEN.token
     
   }
 
@@ -51,6 +54,14 @@ export class ProfileComponent implements OnInit {
       this.interpretations = [];
     else{
         this.interpretations = JSON.parse(localStorage.getItem('interpretations'))
+    }
+  }
+
+  getToken(){
+    if(localStorage.getItem('TOKEN') === null)
+      this.TOKEN = [];
+    else{
+        this.TOKEN = JSON.parse(localStorage.getItem('TOKEN'))
     }
   }
 

@@ -9,13 +9,14 @@ import { Router } from '@angular/router';
 })
 export class FeedsComponent implements OnInit {
   interpretations
+  TOKEN
   constructor(private datapass : UserpassService,private router: Router) { 
     // console.log(datapass.username);
     
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem('interpretations') === null){
+    if(localStorage.getItem('TOKEN') === null){
       alert("Please login!")
       this.router.navigateByUrl('/login');
     }
@@ -29,5 +30,14 @@ export class FeedsComponent implements OnInit {
         this.interpretations = JSON.parse(localStorage.getItem('interpretations'))
     }
   }
+
+  getToken(){
+      if(localStorage.getItem('TOKEN') === null)
+        this.interpretations = [];
+      else{
+          this.interpretations = localStorage.getItem('TOKEN')
+      }
+    }
+    
 
 }
