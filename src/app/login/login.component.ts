@@ -109,6 +109,8 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl('/signup');
   }
 
+ 
+
   closeAlert(){
     this.alert = false
   }

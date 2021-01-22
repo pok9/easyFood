@@ -4,7 +4,7 @@ import { faComments } from '@fortawesome/free-regular-svg-icons';
 import { faBell } from '@fortawesome/free-regular-svg-icons';
 // import { faHome } from '@fortawesome/free-regular-svg-icons';
 import { UserpassService } from '../userpass.service';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-toolbar',
@@ -22,8 +22,10 @@ export class ToolbarComponent implements OnInit {
   profile_img: any;
 
   interpretations;
+  localstorage;
+  gettoken;
 
-  constructor(private datapass: UserpassService) {
+  constructor(private datapass: UserpassService,private http: HttpClient) {
     
 
     this.getInterpretations()
@@ -47,6 +49,28 @@ export class ToolbarComponent implements OnInit {
   logoutLocalstorege(){
     localStorage.removeItem('interpretations')
     localStorage.removeItem('TOKEN')
+  }
+
+  test(){
+    this.localstorage = JSON.parse(localStorage.getItem('TOKEN'))
+    this.gettoken = this.localstorage.token
+    let json = { username: "1" };
+
+    let header = new HttpHeaders({
+      
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer '+this.gettoken
+    });
+    let option = {
+      headers : header
+    }
+    
+    
+    let req = this.http.post('http://apifood.comsciproject.com/users/test',json,option).subscribe(response =>{
+      console.log(response)
+    })
+
+    //let req = this.http.post
   }
 
 }

@@ -73,7 +73,7 @@
                 <a routerLink="/feeds"><fa-icon [icon]="iconhome" style="color: dodgerblue;"></fa-icon></a>
             </div>
             <div class="col">
-                <a routerLink=""><fa-icon [icon]="iconmessage" style="color: dodgerblue;"></fa-icon></a>
+                <a ><fa-icon [icon]="iconmessage" style="color: dodgerblue;" (click)= "test()"></fa-icon></a>
             </div>
             <div class="col">
                 <a routerLink=""><fa-icon [icon]="iconbell" style="color: dodgerblue;" (click)="logoutLocalstorege()"></fa-icon></a>

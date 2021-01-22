@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserpassService } from '../userpass.service';
-import { HttpClient } from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
+import { HttpClient ,HttpHeaders} from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
 import { Router } from '@angular/router';//router เปลี่ยนหน้าในไฟล์ .ts 1
 @Component({
   selector: 'app-profile',
@@ -71,6 +71,15 @@ export class ProfileComponent implements OnInit {
     formdata.append("profile_picture", files.item(0))
 
     formdata.append("uid", this.user_id)
+
+    let header = new HttpHeaders({
+      
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer '+this.token_user
+    });
+    let option = {
+      headers : header
+    }
 
     let request = this.http.post('http://apifood.comsciproject.com/users/uploadProfile', formdata)
       .subscribe(response => {

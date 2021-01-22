@@ -13,6 +13,7 @@ export class SignupComponent implements OnInit {
   fullname: any;
   nickName: any;
   captcha: any;
+  siteKey
 
   interpretations; //Local Storage
   constructor(private router: Router, private http: HttpClient, private data: UserpassService) {
