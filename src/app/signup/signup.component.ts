@@ -16,6 +16,7 @@ export class SignupComponent implements OnInit {
   siteKey
 
   interpretations; //Local Storage
+  TOKEN
   constructor(private router: Router, private http: HttpClient, private data: UserpassService) {
     //this.siteKey = '6LdieiUaAAAAAIYEXn_XHHc81QgOgkBnCi1cw633';
   }
@@ -70,6 +71,11 @@ export class SignupComponent implements OnInit {
                'interpretations',
                JSON.stringify(this.interpretations)
              );
+             this.TOKEN = {
+              token : response["token"]
+            }
+   
+            localStorage.setItem('TOKEN', JSON.stringify(this.TOKEN))
              
 
               this.router.navigateByUrl('/feeds');
@@ -92,6 +98,12 @@ export class SignupComponent implements OnInit {
     }
   }
 
-
+  getToken(){
+    if(localStorage.getItem('TOKEN') === null)
+      this.TOKEN = [];
+    else{
+        this.TOKEN = localStorage.getItem('TOKEN')
+    }
+  }
 
 }
