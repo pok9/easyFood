@@ -25,48 +25,48 @@ export class ToolbarComponent implements OnInit {
   localstorage;
   gettoken;
 
-  constructor(private datapass: UserpassService,private http: HttpClient) {
-    
+  constructor(private datapass: UserpassService, private http: HttpClient) {
+
 
     this.getInterpretations()
     this.profile_img = this.interpretations.profile_img
     this.username = this.interpretations.username;
-    
+
     //this.profile_img = this.interpretations.imgProfile;
   }
 
   ngOnInit(): void {
   }
 
-  getInterpretations(){
-    if(localStorage.getItem('interpretations') === null)
+  getInterpretations() {
+    if (localStorage.getItem('interpretations') === null)
       this.interpretations = [];
-    else{
-        this.interpretations = JSON.parse(localStorage.getItem('interpretations'))
+    else {
+      this.interpretations = JSON.parse(localStorage.getItem('interpretations'))
     }
   }
 
-  logoutLocalstorege(){
+  logoutLocalstorege() {
     localStorage.removeItem('interpretations')
     localStorage.removeItem('TOKEN')
   }
 
-  test(){
+  test() {
     this.localstorage = JSON.parse(localStorage.getItem('TOKEN'))
     this.gettoken = this.localstorage.token
     let json = { username: "1" };
 
     let header = new HttpHeaders({
-      
+
       'Content-Type': 'application/json',
-      'authorization': 'Bearer '+this.gettoken
+      'authorization': 'Bearer ' + this.gettoken
     });
     let option = {
-      headers : header
+      headers: header
     }
-    
-    
-    let req = this.http.post('http://apifood.comsciproject.com/users/test',json,option).subscribe(response =>{
+
+
+    let req = this.http.post('http://apifood.comsciproject.com/users/test', json, option).subscribe(response => {
       console.log(response)
     })
 

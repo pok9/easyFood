@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';//router เปลี่ยนหน้าในไฟล์ .ts 1
 import { HttpClient } from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
 import { UserpassService } from '../userpass.service';
+import jwt_decode from 'jwt-decode'
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -14,7 +15,7 @@ export class SignupComponent implements OnInit {
   nickName: any;
   captcha: any;
   siteKey
-
+  decode: any
   interpretations; //Local Storage
   TOKEN
   constructor(private router: Router, private http: HttpClient, private data: UserpassService) {
@@ -43,66 +44,61 @@ export class SignupComponent implements OnInit {
         .subscribe(response => {
           //console.log('not error ' + JSON.stringify(response));
           // this.router.navigateByUrl('/feeds');
-
+          //console.log(response["success"].username)
           if (response["success"] == 1) {
             let json = { username: this.username, password: this.password };
             let req = this.http.post('http://apifood.comsciproject.com/users/login', json).subscribe(response => {
-              this.data.user_id = response["data"].user_ID;
-              this.data.success = response["success"]
-              this.data.username = response["data"].username;
-              this.data.fullname = response["data"].fullName;
-              this.data.nickname = response["data"].nickName;
-              console.log("response.profile_img = " + response["data"].profile_img);
-              this.data.imgProfile = response["data"].profile_img;
-              this.data.status = response["data"].status;
+
+              if (response["success"] == 1) {
+                var token = response["token"]
+                this.decode = jwt_decode(token)
+
+                let req = this.http.get('http://apifood.comsciproject.com/users/' + this.decode.user).subscribe(response => {
+                  console.log(response["data"].username)
+                  if (response["success"] == 1) {
+                    this.interpretations = {
+                      success: response["success"],
+                      user_ID: response["data"].user_ID,
+                      username: response["data"].username,
+                      fullName: response["data"].fullName,
+                      nickName: response["data"].nickName,
+                      profile_img: response["data"].profile_img,
+                      status: response["data"].status
+                    };
+                    localStorage.setItem(
+                      'interpretations',
+                      JSON.stringify(this.interpretations)
+                    );
+
+                    this.TOKEN = {
+                      token: response["token"]
+                    }
+
+                    localStorage.setItem('TOKEN', JSON.stringify(this.TOKEN))
+
+                    this.router.navigateByUrl('/feeds');
+
+                  }
+                }) // get user
+
+              }
 
 
-              this.interpretations = {
-                success : response["success"],
-                user_ID : response["data"].user_ID,
-                username : response["data"].username,
-                fullName : response["data"].fullName,
-                nickName : response["data"].nickName,
-                profile_img : response["data"].profile_img,
-                status : response["data"].status
-             };
-    
-             localStorage.setItem(
-               'interpretations',
-               JSON.stringify(this.interpretations)
-             );
-             this.TOKEN = {
-              token : response["token"]
-            }
-   
-            localStorage.setItem('TOKEN', JSON.stringify(this.TOKEN))
-             
-
-              this.router.navigateByUrl('/feeds');
-
-
-            })
+            }) //login
           }
-          // this.data.user_id = response["data"].user_ID;
-          //  this.data.success = response["success"]
-          //  this.data.username = response["data"].username;
-          //  this.data.fullname = response["data"].fullName;
-          //  this.data.nickname = response["data"].nickName;
-          //  this.data.imgProfile = response["data"].profile_img;
-          //  this.data.status = response["data"].status;
         }, error => {
           console.log('Error ' + JSON.stringify(error));
         });
-    }else{
-      
+    } else {
+
     }
   }
 
-  getToken(){
-    if(localStorage.getItem('TOKEN') === null)
+  getToken() {
+    if (localStorage.getItem('TOKEN') === null)
       this.TOKEN = [];
-    else{
-        this.TOKEN = localStorage.getItem('TOKEN')
+    else {
+      this.TOKEN = localStorage.getItem('TOKEN')
     }
   }
 
