@@ -1,7 +1,54 @@
+<!-- //****************** NavBar ************************ */ -->
+<p-toolbar>
+    
+    <div class="row">
+        <div class="col-sm-8"></div>
+        <div class="col-sm-2"></div>  
+        <div class="col-sm-2">
+            <div class="ui-toolbar-group-left">
+                <a routerLink="/profile/{{username}}"><span>Easy</span> <span style="color: #24ad18;">Food</span></a>
+            </div>
+        </div>
 
-<app-toolbar></app-toolbar>
-
+    </div>
+    <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText placeholder="ค้นหา"  />
+    </span>
+    <div class="p-toolbar-group-right">
+        <!-- <a routerLink="/feeds"><fa-icon [icon]="iconhome" style="color: dodgerblue;" ></fa-icon></a>
+        <a routerLink=""><fa-icon [icon]="iconmessage" style="color: dodgerblue;"></fa-icon></a>
+        <a routerLink=""><fa-icon [icon]="iconbell" style="color: dodgerblue;"></fa-icon></a>
+        <img  class="imgToolbar" src="{{profile_img}}" alt="Avatar"> -->
+        <div class="row">
+            <div class="col">
+                <a routerLink="/feeds"><fa-icon [icon]="iconhome" style="color: dodgerblue;"></fa-icon></a>
+            </div>
+            <div class="col">
+                <a ><fa-icon [icon]="iconmessage" style="color: dodgerblue;" (click)= "test()"></fa-icon></a>
+            </div>
+            <div class="col">
+                <a routerLink=""><fa-icon [icon]="iconbell" style="color: dodgerblue;" (click)="logoutLocalstorege()"></fa-icon></a>
+            </div>
+            <div class="col">
+                <img  class="imgToolbar" src="{{profile_img}}" alt="Avatar">
+            </div>
+        </div>
+        
+    </div>
+</p-toolbar>
+<!-- //****************** NavBar ************************ */ -->
 <style>
+    .imgEditAvtar{
+        border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        margin-left: 45%;
+    }
+    .inputEditAvtar{
+        margin-left: 42%;
+        margin-top: 1%;
+    }
     button {
         margin-top: 8px;
         width: 150px;
@@ -15,27 +62,29 @@
 
     .image-upload>input {
         display: none;
-        
+
     }
 </style>
 <div class="container">
     <br><br>
     <div class="row">
         <div class="col-xs-1">
-            
+
             <div class="image-upload">
-                <label for="file-input"><!--รูปโปรไฟล์&อัปโหลดรูป-->
-                    <img class="imgProfile" height="100px" width="100px" src="{{profile_img}}" alt=""  > 
+                <label for="file-input">
+                    <!--รูปโปรไฟล์&อัปโหลดรูป-->
+                    <img class="imgProfile" height="100px" width="100px" src="{{profile_img}}" alt="">
                 </label>
-                
+
                 <form enctype="multipart/form-data">
-                    <input id="file-input" type="file" #fileUpload hidden (change)="updateImagePro($event.target.files)"/>
+                    <input id="file-input" type="file" #fileUpload hidden
+                        (change)="updateImagePro($event.target.files)" />
                 </form>
-                
-              </div>
+
+            </div>
         </div>
-        
-        
+
+
 
         <!-- &nbsp;&nbsp&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -44,7 +93,37 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <h2>{{nickname}}</h2>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <button pButton type="button" label="แก้ไขโปรไฟล์" class="p-button-secondary"></button>
+            <!-- ==========================================แก้ไขข้อมูล======================================================= -->
+            <!-- <button pButton type="button" label="แก้ไขโปรไฟล์" class="p-button-secondary"></button> -->
+            <p-button (click)="showModalDialog()" icon="pi pi-user-edit" label="แก้ไขข้อมูล" class="p-button-secondary">
+            </p-button>
+            <p-dialog header="แก้ไขโปรไฟล์" [(visible)]="displayModal" [modal]="true" [style]="{width: '25%'}"
+                [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false">
+                <p-card>
+
+                    <div class="p-field">
+                        <div>  <!--แก้ไขโปรไฟล์-->
+                            <img class="imgEditAvtar"  src="{{profile_img_Copy}}" alt="Avatar">
+                        </div>
+                        <input class="inputEditAvtar" id="file-input" type="file" 
+                        (change)="onEditPro($event.target.files)" />
+                        <!-- <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onEditPro($event.target.files)" [auto]="true"></p-fileUpload> -->
+                        <br>
+                        <label for="nickname">ชื่อ</label><br>
+                        <input id="nickname" size="50%" type="text" aria-describedby="nickname-help" [(ngModel)]="editname"
+                            pInputText /><br><br>
+                    </div>
+
+                </p-card>
+                <ng-template pTemplate="footer">
+                    <p-button icon="pi pi-check" (click)="confirmEdit()" label="แก้ไข" styleClass="p-button-info">
+                    </p-button>
+                    <p-button icon="pi pi-times" (click)="cancelEdit()" label="ยกเลิก"
+                        styleClass="p-button-danger">
+                    </p-button>
+                </ng-template>
+            </p-dialog>
+            <!-- ==============================================แก้ไขข้อมูล================================================ -->
             <br><br>
 
             <!-- </div> -->

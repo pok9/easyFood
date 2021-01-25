@@ -26,7 +26,7 @@ import {DropdownModule} from 'primeng/dropdown';
 
 import {CaptchaModule} from 'primeng/captcha';
 import { NgxCaptchaModule } from 'ngx-captcha';
-
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -54,7 +54,8 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     PasswordModule,
     DropdownModule,
     NgxCaptchaModule,
-    CaptchaModule
+    CaptchaModule,
+    DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
