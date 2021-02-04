@@ -27,7 +27,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {CaptchaModule} from 'primeng/captcha';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import {DialogModule} from 'primeng/dialog';
-
+import {FileUploadModule} from 'primeng/fileupload';//upload file
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +55,8 @@ import {DialogModule} from 'primeng/dialog';
     DropdownModule,
     NgxCaptchaModule,
     CaptchaModule,
-    DialogModule
+    DialogModule,
+    FileUploadModule
   ],
   providers: [],
   bootstrap: [AppComponent]
