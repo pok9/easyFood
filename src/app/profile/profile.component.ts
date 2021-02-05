@@ -161,7 +161,16 @@ export class ProfileComponent implements OnInit {
     let request = this.http.post('http://apifood.comsciproject.com/users/uploadProfile', formdata)
       .subscribe(response => {
         if (response["success"] == 1) {
-          let request = this.http.get('http://apifood.comsciproject.com/users/' + this.user_id).subscribe(response => {
+
+          let header = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + this.token_user
+          });
+          let option = {
+            headers: header
+          }
+          let request = this.http.get('http://apifood.comsciproject.com/users/myAccount',option).subscribe(response => {
 
             this.interpretations = {
               success: response["success"],
