@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';//router เปลี่ยนหน้าในไฟล์ .ts 1
 import { UserpassService } from '../userpass.service'; //data passing  2 เอาไว้เก็บข้อมูล username และ password ตอน login
-import { HttpClient } from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
+import { HttpClient,HttpHeaders } from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
 import jwt_decode from 'jwt-decode'
 
 @Component({
@@ -47,9 +47,18 @@ export class LoginComponent implements OnInit {
           this.alert = true
 
           var token = response["token"]
-          this.decode = jwt_decode(token)
-          console.log(this.decode.user)
-          let req = this.http.get('http://apifood.comsciproject.com/users/' + this.decode.user).subscribe(response => {
+          //this.decode = jwt_decode(token)
+          //console.log(this.decode.user)
+          let header = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + token
+          });
+          let option = {
+            headers: header
+          }
+
+          let req = this.http.get('http://apifood.comsciproject.com/users/myAccount',option).subscribe(response => {
             console.log(response["data"].username)
             if (response["success"] == 1) {
               this.interpretations = {

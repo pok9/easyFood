@@ -30,6 +30,12 @@ export class ProfileComponent implements OnInit {
   interpretations;
   TOKEN;
 
+  localstorage
+  gettoken
+
+  countFollowing:any
+  countFollower:any
+  countPost:any
   // public datapass;
   constructor(private datapass: UserpassService, private http: HttpClient, private router: Router) {
     // this.nickname = datapass.nickname
@@ -51,7 +57,7 @@ export class ProfileComponent implements OnInit {
     this.username = this.interpretations.username;
   }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     if (localStorage.getItem('interpretations') === null) {
       alert("Please login!")
       this.router.navigateByUrl('/login');
@@ -70,6 +76,11 @@ export class ProfileComponent implements OnInit {
     this.fullname = this.interpretations.fullName
 
     this.token_user = this.TOKEN.token
+    //this.getFollowingCount()
+    this.getFollowingCount()
+    this.getFollowerCount()
+    this.getPostCount()
+    //console.log(this.countFollowing)
 
   }
 
@@ -87,6 +98,48 @@ export class ProfileComponent implements OnInit {
     else {
       this.TOKEN = JSON.parse(localStorage.getItem('TOKEN'))
     }
+  }
+
+  getFollowingCount(){
+    let header = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.token_user
+    });
+    let option = {
+      headers: header
+    }
+    let req = this.http.get('http://apifood.comsciproject.com/follow/countFollowing',option).subscribe(response =>{
+       this.countFollowing = response['countMyFollowing']
+    })
+  }
+
+  getFollowerCount(){
+    let header = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.token_user
+    });
+    let option = {
+      headers: header
+    }
+    let req = this.http.get('http://apifood.comsciproject.com/follow/countFollower',option).subscribe(response =>{
+       this.countFollower = response['countMyFollower']
+    })
+  }
+
+  getPostCount(){
+    let header = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.token_user
+    });
+    let option = {
+      headers: header
+    }
+    let req = this.http.get('http://apifood.comsciproject.com/post/countMyPost',option).subscribe(response =>{
+       this.countPost = response['countMyPost']
+    })
   }
 
   updateImagePro(files: FileList) {
@@ -158,14 +211,17 @@ export class ProfileComponent implements OnInit {
 
     formdata.append("uid", this.user_id)
 
-    let header = new HttpHeaders({
+    //getToken
 
-      'Content-Type': 'application/json',
-      'authorization': 'Bearer ' + this.token_user
-    });
-    let option = {
-      headers: header
-    }
+          let header = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + this.token_user
+          });
+          let option = {
+            headers: header
+          }
+
     let request0 = this.http.get('http://apifood.comsciproject.com/users/path_profileImage/' + this.user_id).subscribe(respone => {
       this.profileImagePath = respone["data"].profile_img
       console.log(this.profileImagePath)
@@ -174,7 +230,7 @@ export class ProfileComponent implements OnInit {
       .subscribe(response => {
         if (response["success"] == 1) {
 
-          let request = this.http.get('http://apifood.comsciproject.com/users/' + this.user_id).subscribe(response => {
+          let request = this.http.get('http://apifood.comsciproject.com/users/myAccount',option ).subscribe(response => {
 
             this.interpretations = {
               success: response["success"],
