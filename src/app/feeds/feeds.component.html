@@ -7,51 +7,68 @@
         background-color: #F0F2F5 !important;
         /* color: rgb(136, 135, 135) !important; */
     }
+
+    .imgToolbar {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+    }
 </style>
 <app-toolbar></app-toolbar>
 
-<div class="row">
+<div class="container-fluid">
 
-    <!-- พื้นที่ที่ไม่ได้ใช้ -->
-    <div class="d-none col-md-3 d-md-block"></div>
+    <div class="row">
 
-    <div class="card">
-        <div class="card-header h6">
-            สร้างโพส
-        </div>
+        <!-- พื้นที่ที่ไม่ได้ใช้ -->
+        <div class="d-none col-md-3 d-md-block"></div>
 
-        <div class="card-body">
-            <!--เขียนโพส-->
-            <button [style]="{width: '50vw'}" (click)="showModalDialog()" pButton pRipple type="button"
-                label="มีสูตรอาหารอะไรใหม่ๆมั้ย" class="p-button-rounded reasonButton colorWritePost"></button>
-            <p-dialog header="สร้างโพส" [(visible)]="displayModal" [style]="{width: '50vw'}" [baseZIndex]="10000">
+        <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
+        <div class="card">
+            <div class="card-header h6">
+                สร้างโพส
+            </div>
 
-                
+            <div class="card-body">
+                <!--เขียนโพส-->
+                <div class="row">
+                    <div class="col">
+                        <img class="imgToolbar" src="http://apifood.comsciproject.com/uploadProfile/img_avatar.png"
+                            alt="Avatar">
+                    </div>
+
+                    <button [style]="{width: '43vw'}" (click)="showModalDialog()" pButton pRipple type="button"
+                        label="มีสูตรอาหารอะไรใหม่ๆมั้ย" class="p-button-rounded reasonButton colorWritePost"></button>
+                </div>
+
+                <p-dialog header="สร้างโพส" [(visible)]="displayModal" [style]="{width: '50vw'}" [baseZIndex]="10000">
+
+
                     <div class="card-header h6">
                         <!-- สร้างโพส -->
                     </div>
                     <div class="card-body">
                         <!--เขียนโพส-->
-                        <textarea class="form-control beautify-textarea" cols="70" rows="2"
+                        <textarea [(ngModel)]="txt" class="form-control beautify-textarea" cols="70" rows="2"
                             placeholder="มีสูตรอาหารอะไรใหม่ๆมั้ย"></textarea>
                     </div>
                     <div class="card-footer ">
-                        <!-- <h5>Advanced</h5> -->
-                        <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)" multiple="multiple" accept="image/*"
-                            maxFileSize="1000000">
-                            <ng-template pTemplate="content">
-                                <!-- <ul *ngIf="uploadedFiles.length">
-                                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                            </ul> -->
-                            </ng-template>
+
+                        <p-fileUpload customUpload="true" (uploadHandler)="onFileUpload($event)">
+
                         </p-fileUpload>
+                        <p-progressBar [value]="value"></p-progressBar>
 
                     </div>
-            </p-dialog>
+                </p-dialog>
 
+            </div>
         </div>
     </div>
+    <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
 
-
-
+    <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
+    
+    <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
 </div>

@@ -66,7 +66,7 @@ export class ToolbarComponent implements OnInit {
     }
 
 
-    let req = this.http.post('http://apifood.comsciproject.com/users/test', json, option).subscribe(response => {
+    let req = this.http.post('http://apifood.comsciproject.com/users/test1', json, option).subscribe(response => {
       console.log(response)
     })
 
