@@ -130,13 +130,13 @@
         display: flex;
         -ms-flex-wrap: wrap; /* IE10 */
         flex-wrap: wrap;
-        padding: 0 4px;
+        padding: 0 0px;
     }
     .column {
         -ms-flex: 25%; /* IE10 */
         flex: 25%;
         max-width: 25%;
-        padding: 0 4px;
+        padding: 10px 10px;
       }
       .column img {
         margin-top: 8px;
@@ -247,29 +247,29 @@
             <!-- <div class="line2"> -->
             <div class="row">
                 <div class="col-sm-2">
-                    <h5>Post {{countPost}} </h5>
+                    <h6>{{countPost}} โพส </h6>
                 </div>
                 <div class="col-sm-3">
-                    <h5>Follower {{countFollower}} </h5>
+                    <h6>ผู้ติดตาม {{countFollower}} คน</h6>
                 </div>
                 <div class="col-sm-5">
-                    <h5>Following {{countFollowing}}</h5>
+                    <h6>กำลังติดตาม {{countFollowing}} คน</h6>
                 </div>
             </div>
             <!-- </div> -->
         </div>
 
     </div>
-    <hr class="my-5">
+    <hr>
     <!-- ==========================แสดงโพส========================== -->
     <div class="header">
-        <h1>POSTS</h1>
-        <p>Start capturing and sharing your moments.</p>
+        <h1>โพสต์</h1>
+        <!-- <p>Start capturing and sharing your moments.</p> -->
       </div>
 
     <div class="row">
         <div class="column" *ngFor="let item of this.data">
-            <img src="{{this.item.image}}" alt="" style="width: 100%;">        
+            <img src="{{this.item.image}}" alt="" style="width: 100%;" style="height: 100%;">        
         </div>      
     </div>
     <hr class="my-5">
