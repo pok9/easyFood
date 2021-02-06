@@ -36,7 +36,7 @@ export class ProfileComponent implements OnInit {
   countFollowing:any
   countFollower:any
   countPost:any
-
+  position
   data: any = new Array()
   // public datapass;
   constructor(private datapass: UserpassService, private http: HttpClient, private router: Router, private imgpass: DataimgpassService ) {
@@ -429,6 +429,11 @@ export class ProfileComponent implements OnInit {
     // })
 
     //let req = this.http.post
+  }
+  displayModal1
+  showPositionDialog(position: string) {
+    this.position = position
+    this.displayModal1 = true;
   }
   //****************** NavBar ************************ */
 

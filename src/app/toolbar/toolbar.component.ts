@@ -5,6 +5,7 @@ import { faBell } from '@fortawesome/free-regular-svg-icons';
 // import { faHome } from '@fortawesome/free-regular-svg-icons';
 import { UserpassService } from '../userpass.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
   selector: 'app-toolbar',
@@ -25,6 +26,10 @@ export class ToolbarComponent implements OnInit {
   localstorage;
   gettoken;
 
+  displayModal
+  position
+  
+
   constructor(private datapass: UserpassService, private http: HttpClient) {
 
 
@@ -36,6 +41,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
   getInterpretations() {
@@ -72,5 +78,11 @@ export class ToolbarComponent implements OnInit {
 
     //let req = this.http.post
   }
+
+  showPositionDialog(position: string) {
+    this.position = position
+    this.displayModal = true;
+  }
+ 
 
 }

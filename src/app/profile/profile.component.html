@@ -21,51 +21,74 @@
         flex-wrap: wrap;
         align-content: center;
     }
+
+    .block {
+        display: block;
+        width: 100%;
+       
+        
+        padding: 14px 28px;
+        
+    
+       
+    }
 </style>
 <!-- //****************** NavBar ************************ */ -->
 <p-toolbar>
-
+    
     <div class="row">
         <div class="col-sm-8"></div>
-        <div class="col-sm-2"></div>
+        <div class="col-sm-2"></div>  
         <div class="col-sm-2">
             <div class="ui-toolbar-group-left">
-                <a routerLink="/profile/{{username}}"><span style="color: #007BFF;">Easy</span> <span
-                        style="color: #24ad18;">Food</span></a>
+                <a ><span style="color: #007BFF;">Easy</span> <span style="color: #24ad18;">Food</span></a>
             </div>
         </div>
 
     </div>
     <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input type="text" pInputText placeholder="ค้นหา" />
+        <input type="text" pInputText placeholder="ค้นหา"  />
     </span>
+    
+    <!-- <p-button (click)="showPositionDialog('top-right')" icon="pi pi-arrow-down" label="TopRight" styleClass="p-button-warning"></p-button> -->
+    
+    
+
     <div class="p-toolbar-group-right">
-        <!-- <a routerLink="/feeds"><fa-icon [icon]="iconhome" style="color: dodgerblue;" ></fa-icon></a>
-        <a routerLink=""><fa-icon [icon]="iconmessage" style="color: dodgerblue;"></fa-icon></a>
-        <a routerLink=""><fa-icon [icon]="iconbell" style="color: dodgerblue;"></fa-icon></a>
-        <img  class="imgToolbar" src="{{profile_img}}" alt="Avatar"> -->
+        
         <div class="row">
             <div class="col">
-                <a routerLink="/feeds">
-                    <fa-icon [icon]="iconhome" style="color: dodgerblue;"></fa-icon>
-                </a>
+                <a routerLink="/feeds"><fa-icon [icon]="iconhome" style="color: dodgerblue;"></fa-icon></a>
             </div>
             <div class="col">
-                <a>
-                    <fa-icon [icon]="iconmessage" style="color: dodgerblue;" (click)="test()"></fa-icon>
-                </a>
+                <a ><fa-icon [icon]="iconmessage" style="color: dodgerblue;" (click)= "test()"></fa-icon></a>
             </div>
             <div class="col">
-                <a routerLink="">
-                    <fa-icon [icon]="iconbell" style="color: dodgerblue;" (click)="logoutLocalstorege()"></fa-icon>
-                </a>
+                <a ><fa-icon [icon]="iconbell" style="color: dodgerblue;" ></fa-icon></a>
             </div>
             <div class="col">
-                <img class="imgToolbar" src="{{profile_img}}" alt="Avatar">
+                
+                <img  class="imgToolbar" src="{{profile_img}}" alt="Avatar" (click)="showPositionDialog('top-right')">
+                
             </div>
         </div>
 
+    <p-dialog header="My Account" [(visible)]="displayModal1" [style]="{width: '25vw'}" [baseZIndex]="10000" [position]= "position">
+        
+            <!-- <button pButton type="button" label="Edit Profile"></button> --> 
+            
+                <!--เขียนโพส-->
+                
+                
+                <div class="row">
+                        <button pButton pRipple type="button" label="Logout" class="p-button-outlined p-button-danger block" routerLink="" (click)="logoutLocalstorege()"></button>
+                    <!-- <a routerLink=""  class="black" (click)="logoutLocalstorege()"><button type="button" class="btn btn-outline-warning ">Warning</button></a> -->
+                    <!-- <a routerLink="" (click)="logoutLocalstorege()"></a> -->
+                </div>
+  
+    </p-dialog>    
+        
     </div>
 </p-toolbar>
 <!-- //****************** NavBar ************************ */ -->
@@ -120,6 +143,8 @@
         vertical-align: middle;
         width: 100%;
       }
+
+      
 
       @media screen and (max-width: 800px) {
         .column {
@@ -199,7 +224,7 @@
                             <br>
                             <div>
                                 <label for="nickname">ชื่อ</label><br>
-                            <input id="nickname" size="25%" type="text" aria-describedby="nickname-help"
+                            <input id="nickname" class="block" type="text" aria-describedby="nickname-help"
                                 [(ngModel)]="editname" pInputText />
                             </div>
                             <br><br>
