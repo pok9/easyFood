@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserpassService } from '../userpass.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
 import { Router } from '@angular/router';//router เปลี่ยนหน้าในไฟล์ .ts 1
-
+import { DataimgpassService} from '../dataimgpass.service';
 
 import { faHouseUser } from '@fortawesome/free-solid-svg-icons';//icon
 import { faComments } from '@fortawesome/free-regular-svg-icons';//icon
@@ -36,8 +36,10 @@ export class ProfileComponent implements OnInit {
   countFollowing:any
   countFollower:any
   countPost:any
+
+  data: any = new Array()
   // public datapass;
-  constructor(private datapass: UserpassService, private http: HttpClient, private router: Router) {
+  constructor(private datapass: UserpassService, private http: HttpClient, private router: Router, private imgpass: DataimgpassService ) {
     // this.nickname = datapass.nickname
 
     // console.log(this.nickname+"99999998888888")
@@ -81,7 +83,30 @@ export class ProfileComponent implements OnInit {
     this.getFollowerCount()
     this.getPostCount()
     //console.log(this.countFollowing)
+    //test
+    //console.log(this.imgTest())
+    this.imgTest()
+  }
 
+  imgTest(){
+    let header = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.token_user
+    });
+    let option = {
+      headers: header
+    }
+    let req = this.http.get("http://apifood.comsciproject.com/post/mypost",option).subscribe(response =>{
+      this.data = new Array()
+      let dataImg:any = response["data"]
+      for(let i = 0; i< dataImg.length;i++){
+        this.data.push(dataImg[i])
+
+      }
+      console.log(this.data)
+    });
+    
   }
 
   getInterpretations() {
