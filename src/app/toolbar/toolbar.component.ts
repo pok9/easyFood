@@ -5,7 +5,7 @@ import { faBell } from '@fortawesome/free-regular-svg-icons';
 // import { faHome } from '@fortawesome/free-regular-svg-icons';
 import { UserpassService } from '../userpass.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-toolbar',
@@ -28,7 +28,7 @@ export class ToolbarComponent implements OnInit {
 
   displayModal
   position
-  
+
 
   constructor(private datapass: UserpassService, private http: HttpClient) {
 
@@ -41,7 +41,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   getInterpretations() {
@@ -83,6 +83,31 @@ export class ToolbarComponent implements OnInit {
     this.position = position
     this.displayModal = true;
   }
- 
+
+  // numbers: string[] = ['onne','onne', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  output: string[];
+  selectNumber: any;
+  search(event) {
+    // console.log("123")
+    // console.log('event', event.query);
+    let filtered: any[] = [];
+    let query = event.query;
+    // console.log(query)
+    let req = this.http.get('http://apifood.comsciproject.com/users/searchUser/'+query).subscribe(response => {
+      // console.log(response["data"])
+      // var count = Object.keys(response["data"]).length;
+      // for(let i = 0; i<count ;i++){
+      //   console.log(response["data"][i].nickName)
+      // }
+      for(let datas in response["data"]){
+        // filtered.push(response["data"][datas].nickName)
+        filtered.push(response["data"][datas].nickName)
+      }
+      this.output = filtered;
+    })
+    // console.log("456")
+    // this.output = this.numbers.filter(c => c.startsWith(event.query));
+  }
+
 
 }

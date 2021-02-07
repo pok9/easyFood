@@ -47,10 +47,8 @@
 
     </div>
     <div class="col-xl-1">
-        <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input type="text" pInputText placeholder="ค้นหา" />
-        </span>
+        <p-autoComplete [(ngModel)]="selectNumber" [suggestions]="output" (completeMethod)="search($event)"
+            placeholder="ค้นหา" [dropdown]="false"></p-autoComplete>
     </div>
 
     <!-- <p-button (click)="showPositionDialog('top-right')" icon="pi pi-arrow-down" label="TopRight" styleClass="p-button-warning"></p-button> -->
