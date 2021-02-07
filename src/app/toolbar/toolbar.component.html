@@ -1,11 +1,12 @@
 <style>
-    .imgToolbar{
+    .imgToolbar {
         border-radius: 50%;
         width: 50px;
         height: 50px;
         cursor: pointer;
     }
-    a{
+
+    a {
         font-family: cursive;
         color: black;
         float: left;
@@ -14,44 +15,47 @@
         text-decoration: none;
         font-size: 17px;
     }
-    col{
+
+    col {
         display: flex;
         flex-wrap: wrap;
         align-content: center;
     }
+
     .block {
         display: block;
         width: 100%;
         border: none;
-        
+
         padding: 14px 28px;
-        
-    
+
+
         text-align: center;
     }
-    
 </style>
 
 <p-toolbar>
-    
+
     <div class="row">
         <div class="col-sm-8"></div>
-        <div class="col-sm-2"></div>  
+        <div class="col-sm-2"></div>
         <div class="col-sm-2">
             <div class="ui-toolbar-group-left">
-                <a ><span style="color: #007BFF;">Easy</span> <span style="color: #24ad18;">Food</span></a>
+                <a><span style="color: #007BFF;">Easy</span> <span style="color: #24ad18;">Food</span></a>
             </div>
         </div>
 
     </div>
-    <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input type="text" pInputText placeholder="ค้นหา"  />
-    </span>
-    
+    <div class="col-xl-1">
+        <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText placeholder="ค้นหา" />
+        </span>
+    </div>
+
     <!-- <p-button (click)="showPositionDialog('top-right')" icon="pi pi-arrow-down" label="TopRight" styleClass="p-button-warning"></p-button> -->
-    
-    
+
+
 
     <div class="p-toolbar-group-right">
         <!-- <a routerLink="/feeds"><fa-icon [icon]="iconhome" style="color: dodgerblue;" ></fa-icon></a>
@@ -60,41 +64,50 @@
         <img  class="imgToolbar" src="{{profile_img}}" alt="Avatar"> -->
         <div class="row">
             <div class="col">
-                <a routerLink="/feeds"><fa-icon [icon]="iconhome" style="color: dodgerblue;"></fa-icon></a>
+                <a routerLink="/feeds">
+                    <fa-icon [icon]="iconhome" style="color: dodgerblue;"></fa-icon>
+                </a>
             </div>
             <div class="col">
-                <a ><fa-icon [icon]="iconmessage" style="color: dodgerblue;" (click)= "test()"></fa-icon></a>
+                <a>
+                    <fa-icon [icon]="iconmessage" style="color: dodgerblue;" (click)="test()"></fa-icon>
+                </a>
             </div>
             <div class="col">
-                <a ><fa-icon [icon]="iconbell" style="color: dodgerblue;" ></fa-icon></a>
+                <a>
+                    <fa-icon [icon]="iconbell" style="color: dodgerblue;"></fa-icon>
+                </a>
             </div>
             <div class="col">
-                
-                <img  class="imgToolbar" src="{{profile_img}}" alt="Avatar" (click)="showPositionDialog('top-right')">
-                
+
+                <img class="imgToolbar" src="{{profile_img}}" alt="Avatar" (click)="showPositionDialog('top-right')">
+
             </div>
         </div>
 
-    <p-dialog header="My Account" [(visible)]="displayModal" [style]="{width: '25vw'}" [baseZIndex]="10000" [position]= "position">
-        
-            <!-- <button pButton type="button" label="Edit Profile"></button> --> 
+        <p-dialog header="My Account" [(visible)]="displayModal" [style]="{width: '25vw'}" [baseZIndex]="10000"
+            [position]="position">
+
+            <!-- <button pButton type="button" label="Edit Profile"></button> -->
             <div class="card-body">
                 <!--เขียนโพส-->
                 <div class="row">
-                    <button pButton pRipple type="button" label="My Profile" class="p-button-outlined p-button-warning block" routerLink="/profile/{{username}}" ></button>
+                    <button pButton pRipple type="button" label="My Profile"
+                        class="p-button-outlined p-button-warning block" routerLink="/profile/{{username}}"></button>
                 </div>
                 <br>
                 <div class="row">
-                        <button pButton pRipple type="button" label="Logout" class="p-button-outlined p-button-danger block" routerLink="" (click)="logoutLocalstorege()"></button>
+                    <button pButton pRipple type="button" label="Logout" class="p-button-outlined p-button-danger block"
+                        routerLink="" (click)="logoutLocalstorege()"></button>
                     <!-- <a routerLink=""  class="black" (click)="logoutLocalstorege()"><button type="button" class="btn btn-outline-warning ">Warning</button></a> -->
                     <!-- <a routerLink="" (click)="logoutLocalstorege()"></a> -->
                 </div>
-                
-                
+
+
             </div>
-            
-        
-    </p-dialog>    
-        
+
+
+        </p-dialog>
+
     </div>
 </p-toolbar>

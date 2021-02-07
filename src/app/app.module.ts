@@ -28,7 +28,7 @@ import {CaptchaModule} from 'primeng/captcha';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import {DialogModule} from 'primeng/dialog';
 import {FileUploadModule} from 'primeng/fileupload';//upload file
-
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -59,7 +59,8 @@ import {FileUploadModule} from 'primeng/fileupload';//upload file
     NgxCaptchaModule,
     CaptchaModule,
     DialogModule,
-    FileUploadModule
+    FileUploadModule,
+    AutoCompleteModule
     
     
     

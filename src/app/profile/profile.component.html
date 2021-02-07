@@ -25,70 +25,80 @@
     .block {
         display: block;
         width: 100%;
-       
-        
+
+
         padding: 14px 28px;
-        
-    
-       
+
+
+
     }
 </style>
 <!-- //****************** NavBar ************************ */ -->
 <p-toolbar>
-    
+
     <div class="row">
         <div class="col-sm-8"></div>
-        <div class="col-sm-2"></div>  
+        <div class="col-sm-2"></div>
         <div class="col-sm-2">
             <div class="ui-toolbar-group-left">
-                <a ><span style="color: #007BFF;">Easy</span> <span style="color: #24ad18;">Food</span></a>
+                <a><span style="color: #007BFF;">Easy</span> <span style="color: #24ad18;">Food</span></a>
             </div>
         </div>
 
     </div>
-    <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input type="text" pInputText placeholder="ค้นหา"  />
-    </span>
-    
+    <div class="col-xl-1">
+        <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText placeholder="ค้นหา" />
+        </span>
+    </div>
+
     <!-- <p-button (click)="showPositionDialog('top-right')" icon="pi pi-arrow-down" label="TopRight" styleClass="p-button-warning"></p-button> -->
-    
-    
+
+
 
     <div class="p-toolbar-group-right">
-        
+
         <div class="row">
             <div class="col">
-                <a routerLink="/feeds"><fa-icon [icon]="iconhome" style="color: dodgerblue;"></fa-icon></a>
+                <a routerLink="/feeds">
+                    <fa-icon [icon]="iconhome" style="color: dodgerblue;"></fa-icon>
+                </a>
             </div>
             <div class="col">
-                <a ><fa-icon [icon]="iconmessage" style="color: dodgerblue;" (click)= "test()"></fa-icon></a>
+                <a>
+                    <fa-icon [icon]="iconmessage" style="color: dodgerblue;" (click)="test()"></fa-icon>
+                </a>
             </div>
             <div class="col">
-                <a ><fa-icon [icon]="iconbell" style="color: dodgerblue;" ></fa-icon></a>
+                <a>
+                    <fa-icon [icon]="iconbell" style="color: dodgerblue;"></fa-icon>
+                </a>
             </div>
             <div class="col">
-                
-                <img  class="imgToolbar" src="{{profile_img}}" alt="Avatar" (click)="showPositionDialog('top-right')">
-                
+
+                <img class="imgToolbar" src="{{profile_img}}" alt="Avatar" (click)="showPositionDialog('top-right')">
+
             </div>
         </div>
 
-    <p-dialog header="My Account" [(visible)]="displayModal1" [style]="{width: '25vw'}" [baseZIndex]="10000" [position]= "position">
-        
-            <!-- <button pButton type="button" label="Edit Profile"></button> --> 
-            
-                <!--เขียนโพส-->
-                
-                
-                <div class="row">
-                        <button pButton pRipple type="button" label="Logout" class="p-button-outlined p-button-danger block" routerLink="" (click)="logoutLocalstorege()"></button>
-                    <!-- <a routerLink=""  class="black" (click)="logoutLocalstorege()"><button type="button" class="btn btn-outline-warning ">Warning</button></a> -->
-                    <!-- <a routerLink="" (click)="logoutLocalstorege()"></a> -->
-                </div>
-  
-    </p-dialog>    
-        
+        <p-dialog header="My Account" [(visible)]="displayModal1" [style]="{width: '25vw'}" [baseZIndex]="10000"
+            [position]="position">
+
+            <!-- <button pButton type="button" label="Edit Profile"></button> -->
+
+            <!--เขียนโพส-->
+
+
+            <div class="row">
+                <button pButton pRipple type="button" label="Logout" class="p-button-outlined p-button-danger block"
+                    routerLink="" (click)="logoutLocalstorege()"></button>
+                <!-- <a routerLink=""  class="black" (click)="logoutLocalstorege()"><button type="button" class="btn btn-outline-warning ">Warning</button></a> -->
+                <!-- <a routerLink="" (click)="logoutLocalstorege()"></a> -->
+            </div>
+
+        </p-dialog>
+
     </div>
 </p-toolbar>
 <!-- //****************** NavBar ************************ */ -->
@@ -120,49 +130,54 @@
         display: none;
 
     }
+
     .header {
         text-align: center;
         padding: 32px;
-      }
+    }
 
     .row {
-        display: -ms-flexbox; /* IE10 */
+        display: -ms-flexbox;
+        /* IE10 */
         display: flex;
-        -ms-flex-wrap: wrap; /* IE10 */
+        -ms-flex-wrap: wrap;
+        /* IE10 */
         flex-wrap: wrap;
         padding: 0 0px;
     }
+
     .column {
-        -ms-flex: 25%; /* IE10 */
+        -ms-flex: 25%;
+        /* IE10 */
         flex: 25%;
         max-width: 25%;
         padding: 10px 10px;
-      }
-      .column img {
+    }
+
+    .column img {
         margin-top: 8px;
         vertical-align: middle;
         width: 100%;
-      }
+    }
 
-      
 
-      @media screen and (max-width: 800px) {
+
+    @media screen and (max-width: 800px) {
         .column {
-          -ms-flex: 50%;
-          flex: 50%;
-          max-width: 50%;
-        }
-      }
-      
-      /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-      @media screen and (max-width: 600px) {
-        .column {
-          -ms-flex: 100%;
-          flex: 100%;
-          max-width: 100%;
+            -ms-flex: 50%;
+            flex: 50%;
+            max-width: 50%;
         }
     }
 
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+        .column {
+            -ms-flex: 100%;
+            flex: 100%;
+            max-width: 100%;
+        }
+    }
 </style>
 <div class="container">
     <br><br>
@@ -194,20 +209,21 @@
             <div class="row">
                 <!-- <div class="col-sm-2"> -->
                 <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                <div class="col-sm-2">
+                <div class="col-xs-7">
+
+
+                    <h2>{{nickname}}</h2>
+                </div>
+                <div class="col-md-4">
+                    <!-- &nbsp;&nbsp;&nbsp;&nbsp; -->
+                    <!-- ==========================================แก้ไขข้อมูล======================================================= -->
+                    <!-- <button pButton type="button" label="แก้ไขโปรไฟล์" class="p-button-secondary"></button> -->
+                    <p-button (click)="showModalDialog()" icon="pi pi-user-edit" label="แก้ไขข้อมูล"
+                        class="p-button-secondary">
+                    </p-button>
+                </div>
 
                 
-                <h2>{{nickname}}</h2>
-                </div>
-                <div class="col-sm-6">
-                <!-- &nbsp;&nbsp;&nbsp;&nbsp; -->
-                <!-- ==========================================แก้ไขข้อมูล======================================================= -->
-                <!-- <button pButton type="button" label="แก้ไขโปรไฟล์" class="p-button-secondary"></button> -->
-                <p-button (click)="showModalDialog()" icon="pi pi-user-edit" label="แก้ไขข้อมูล"
-                    class="p-button-secondary">
-                </p-button>
-                </div>
-
                 <p-dialog header="แก้ไขโปรไฟล์" [(visible)]="displayModal" [modal]="true" [style]="{width: '30%'}"
                     [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false">
                     <p-card>
@@ -217,15 +233,15 @@
                                 <!--แก้ไขโปรไฟล์-->
                                 <img class="imgEditAvtar" src="{{profile_img_Copy}}" alt="Avatar">
                             </div>
-                            
+
                             <input class="inputEditAvtar" id="file-input" type="file"
                                 (change)="onEditPro($event.target.files)" />
                             <!-- <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onEditPro($event.target.files)" [auto]="true"></p-fileUpload> -->
                             <br>
                             <div>
                                 <label for="nickname">ชื่อ</label><br>
-                            <input id="nickname" class="block" type="text" aria-describedby="nickname-help"
-                                [(ngModel)]="editname" pInputText />
+                                <input id="nickname" class="block" type="text" aria-describedby="nickname-help"
+                                    [(ngModel)]="editname" pInputText />
                             </div>
                             <br><br>
                         </div>
@@ -265,12 +281,12 @@
     <div class="header">
         <h1>โพสต์</h1>
         <!-- <p>Start capturing and sharing your moments.</p> -->
-      </div>
+    </div>
 
     <div class="row">
         <div class="column" *ngFor="let item of this.data">
-            <img src="{{this.item.image}}" alt="" style="width: 100%;" style="height: 100%;">        
-        </div>      
+            <img src="{{this.item.image}}" alt="" style="width: 100%;" style="height: 100%;">
+        </div>
     </div>
     <hr class="my-5">
 </div>
