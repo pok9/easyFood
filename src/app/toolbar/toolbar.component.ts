@@ -84,30 +84,35 @@ export class ToolbarComponent implements OnInit {
     this.displayModal = true;
   }
 
-  // numbers: string[] = ['onne','onne', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  //===============================================SearchUser=======================================
   output: string[];
   selectNumber: any;
   search(event) {
-    // console.log("123")
-    // console.log('event', event.query);
     let filtered: any[] = [];
     let query = event.query;
-    // console.log(query)
-    let req = this.http.get('http://apifood.comsciproject.com/users/searchUser/'+query).subscribe(response => {
-      // console.log(response["data"])
-      // var count = Object.keys(response["data"]).length;
-      // for(let i = 0; i<count ;i++){
-      //   console.log(response["data"][i].nickName)
-      // }
-      for(let datas in response["data"]){
-        // filtered.push(response["data"][datas].nickName)
-        filtered.push(response["data"][datas].nickName)
+    let country
+    let data;
+    let req = this.http.get('http://apifood.comsciproject.com/users/searchUser/' + query).subscribe(response => {
+      for (let datas in response["data"]) {
+        country = response["data"][datas].nickName
+        console.log(response["data"][datas].nickName)
+        console.log(response["data"][datas].profile_img)
+
+        data = {
+          "name": response["data"][datas].nickName,
+          "image": response["data"][datas].profile_img
+        }
+
+
+        filtered.push(data)
       }
       this.output = filtered;
     })
-    // console.log("456")
-    // this.output = this.numbers.filter(c => c.startsWith(event.query));
-  }
 
+  }
+  value(event){
+    console.log(event)
+  }
+  //===============================================SearchUser=======================================
 
 }

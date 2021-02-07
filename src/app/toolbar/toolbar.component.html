@@ -32,6 +32,10 @@
 
         text-align: center;
     }
+
+    
+    
+   
 </style>
 
 <p-toolbar>
@@ -47,8 +51,17 @@
 
     </div>
     <div class="col-xl-1">
-        <p-autoComplete [(ngModel)]="selectNumber" [suggestions]="output" (completeMethod)="search($event)"
-            placeholder="ค้นหา" [dropdown]="false"></p-autoComplete>
+        <!-- <p-autoComplete [(ngModel)]="selectNumber" [suggestions]="output" (completeMethod)="search($event)"
+            placeholder="ค้นหา" [dropdown]="false"></p-autoComplete> -->
+        <p-autoComplete [(ngModel)]="selectNumber" [suggestions]="output" (completeMethod)="search($event)" 
+            placeholder="ค้นหา" field="name" [dropdown]="false">
+            <ng-template let-selectNumber pTemplate="item" style="background-color: brown;">
+                <div (click)="value(selectNumber.name)">
+                    <img src="{{selectNumber.image}}" alt="Avatar" class="imgToolbar" />
+                    <div style="font-size:18px;float:right;margin:10px 10px 0 0">{{selectNumber.name}}</div>
+                </div>
+            </ng-template>
+        </p-autoComplete>
     </div>
 
     <!-- <p-button (click)="showPositionDialog('top-right')" icon="pi pi-arrow-down" label="TopRight" styleClass="p-button-warning"></p-button> -->

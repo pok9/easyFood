@@ -1,71 +1,90 @@
 import { Component, OnInit } from '@angular/core';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.css']
 })
-export class TestComponent implements OnInit {
-  selectedCountry: any;
-  filteredCountries: any[];
 
-  constructor() {
+
+export class TestComponent implements OnInit {
+  // selectedCountry: any;
+  // filteredCountries: any[];
+
+  // selectedCity3: string;
+  // groupedCities: any[];
+
+  constructor(private http: HttpClient) {
+  //   this.groupedCities = [
+  //     {
+  //         label: 'Germany', value: 'de', 
+  //         items: [
+  //             {label: 'Berlin', value: 'Berlin'},
+  //             {label: 'Frankfurt', value: 'Frankfurt'},
+  //             {label: 'Hamburg', value: 'Hamburg'},
+  //             {label: 'Munich', value: 'Munich'}
+  //         ]
+  //     },
+  //     {
+  //         label: 'USA', value: 'us', 
+  //         items: [
+  //             {label: 'Chicago', value: 'Chicago'},
+  //             {label: 'Los Angeles', value: 'Los Angeles'},
+  //             {label: 'New York', value: 'New York'},
+  //             {label: 'San Francisco', value: 'San Francisco'}
+  //         ]
+  //     },
+  //     {
+  //         label: 'Japan', value: 'jp', 
+  //         items: [
+  //             {label: 'Kyoto', value: 'Kyoto'},
+  //             {label: 'Osaka', value: 'Osaka'},
+  //             {label: 'Tokyo', value: 'Tokyo'},
+  //             {label: 'Yokohama', value: 'Yokohama'}
+  //         ]
+  //     }
+  // ];
 
   }
 
   ngOnInit(): void {
   }
 
-  // countries = ["1SSS", "2SSS", "3SSS"]
 
-  // filterCountry(event) {
-  //   //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
-  //   let filtered: any[] = [];
-  //   let query = event.query;
-  //   // console.log(query);
-  //   for (let i = 0; i < this.countries.length; i++) {
-  //     let country = this.countries[i];
 
-  //     // if(country == query)
-  //     filtered.push(country);
+  output: string[];
+  selectNumber: any;
+  search(event) {
+    let filtered: any[] = [];
+    let query = event.query;
+    let country
+    let data;
+    let req = this.http.get('http://apifood.comsciproject.com/users/searchUser/' + query).subscribe(response => {
+      for (let datas in response["data"]) {
+        country = response["data"][datas].nickName
+        console.log(response["data"][datas].nickName)
+        console.log(response["data"][datas].profile_img)
 
-  //     // if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-  //     //     filtered.push(country);
-  //     // }
-  //   }
+        data = {
+          "name" : response["data"][datas].nickName, 
+          "image" : response["data"][datas].profile_img
+        }
+        
 
-  //   this.filteredCountries = filtered;
-  // }
+        filtered.push(data)
+      }
+      this.output = filtered;
+    })
+
+  }
+
+  test(event){
+    console.log(this.selectNumber)
+    console.log(event)
+  }
 
   
 
-
-  selectNumber: any;
-  output: any[];
-  search(event) {
-    let numbers: string[] = ['onne', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-    
-    let filtered: any[] = [];
-    
-    // var keys = Object.keys(myObject).length;
-    for (let i = 0; i < numbers.length; i++) {
-      let country = numbers[i];
-
-      // if(country == query)
-      filtered.push(country);
-      console.log(i)
-      // if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-      //     filtered.push(country);
-      // }
-    }
-    // console.log('event', event);
-    // this.output = numbers.filter(c => c.startsWith(event.query));
-    this.output = filtered;
-  }
-
-
-
-
-
+  
 
 }

@@ -439,4 +439,36 @@ export class ProfileComponent implements OnInit {
   }
   //****************** NavBar ************************ */
 
+
+  //===============================================SearchUser=======================================
+  output: string[];
+  selectNumber: any;
+  search(event) {
+    let filtered: any[] = [];
+    let query = event.query;
+    let country
+    let data;
+    let req = this.http.get('http://apifood.comsciproject.com/users/searchUser/' + query).subscribe(response => {
+      for (let datas in response["data"]) {
+        country = response["data"][datas].nickName
+        console.log(response["data"][datas].nickName)
+        console.log(response["data"][datas].profile_img)
+
+        data = {
+          "name": response["data"][datas].nickName,
+          "image": response["data"][datas].profile_img
+        }
+
+
+        filtered.push(data)
+      }
+      this.output = filtered;
+    })
+
+  }
+  value(event){
+    console.log(event)
+  }
+  //===============================================SearchUser=======================================
+
 }
