@@ -236,6 +236,7 @@ export class ProfileComponent implements OnInit {
   profileImagePath: any;
   editname: String;
   showModalDialog() {
+    this.editname = this.nickname
     this.displayModal = true;
   }
 
@@ -255,11 +256,8 @@ export class ProfileComponent implements OnInit {
           let option = {
             headers: header
           }
-
-    let request0 = this.http.get('http://apifood.comsciproject.com/users/path_profileImage/' + this.user_id).subscribe(respone => {
-      this.profileImagePath = respone["data"].profile_img
-      console.log(this.profileImagePath)
-    })
+    
+    
     let request = this.http.post('http://apifood.comsciproject.com/users/uploadProfile', formdata)
       .subscribe(response => {
         if (response["success"] == 1) {
@@ -299,6 +297,10 @@ export class ProfileComponent implements OnInit {
   confirmEdit() {
     // this.methodUpload()
     console.log(this.editname)
+    let request0 = this.http.get('http://apifood.comsciproject.com/users/path_profileImage/' + this.user_id).subscribe(respone => {
+      this.profileImagePath = respone["data"].profile_img
+      console.log(this.profileImagePath)
+    })
     if (this.editname !== undefined) {
       let json = { newNickname: this.editname, user_id: this.user_id };
       let request = this.http.post('http://apifood.comsciproject.com/users/editNickname', json)
@@ -396,7 +398,7 @@ export class ProfileComponent implements OnInit {
           console.log('Error ' + JSON.stringify(error));
         });
     }
-
+    
     this.displayModal = false;
 
   }
