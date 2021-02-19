@@ -14,6 +14,7 @@
         height: 50px;
         cursor: pointer;
     }
+    
 </style>
 <app-toolbar></app-toolbar>
 
@@ -22,7 +23,7 @@
     <div class="row">
 
         <!-- พื้นที่ที่ไม่ได้ใช้ -->
-        <div class="d-none col-lg-3 d-md-block"></div>
+        <div class="d-none col-lg-4 d-md-block"></div>
 
         <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
         <div class="card">
@@ -34,11 +35,10 @@
                 <!--เขียนโพส-->
                 <div class="row">
                     <div class="col">
-                        <img class="imgToolbar" src="{{avatarProfile}}"
-                            alt="Avatar">
+                        <img class="imgToolbar" src="{{avatarProfile}}" alt="Avatar">
                     </div>
 
-                    <button [style]="{width: '43vw'}" (click)="showModalDialog()" pButton pRipple type="button"
+                    <button [style]="{width: '30vw'}" (click)="showModalDialog()" pButton pRipple type="button"
                         label="มีสูตรอาหารอะไรใหม่ๆมั้ย" class="p-button-rounded reasonButton colorWritePost"></button>
                 </div>
 
@@ -67,8 +67,37 @@
         </div>
     </div>
     <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
-    
+    <br>
     <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
-    
+    <div class="row">
+        <div class="d-none col-lg-4 d-md-block"></div>
+        <p-card header="ปก" subheader="Card Subheader" [style]="{width: '34vw'}" styleClass="p-card-shadow">
+
+            <ng-template pTemplate="header">
+                <img alt="Card" src="{{avatarProfile}}">
+            </ng-template>
+            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt
+                quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate
+                neque quas!</p> -->
+            <ng-template pTemplate="footer">
+                <p-button label="Save" icon="pi pi-check"></p-button>
+                <!-- <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary [style]="{'margin-left': '.5em'}""></p-button> -->
+            </ng-template>
+        </p-card>
+    </div>
+    <br>
+    <!-- <div class="row">
+        <div class="d-none col-lg-4 d-md-block"></div>
+        <p-card header="Simple Card" [style]="{'width': '34vw', 'margin-bottom': '2em'}">
+            <ng-template pTemplate="header">
+                <img alt="Card" src="{{avatarProfile}}">
+            </ng-template>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt
+                quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate
+                neque quas!</p>
+        </p-card>
+    </div>> -->
     <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
 </div>
