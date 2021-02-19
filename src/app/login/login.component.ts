@@ -75,7 +75,9 @@ export class LoginComponent implements OnInit {
                 'interpretations',
                 JSON.stringify(this.interpretations)
               );
-              this.router.navigateByUrl('/feeds');
+              //this.router.navigateByUrl('/feeds');
+              window.location.href='/feeds'
+
             }
 
           })

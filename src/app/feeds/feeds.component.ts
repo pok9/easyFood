@@ -25,8 +25,9 @@ export class FeedsComponent implements OnInit {
     //console.log('Constructor')
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     //console.log('ngOnInit')
+    
     if (localStorage.getItem('TOKEN') === null) {
       alert("Please login!")
       this.router.navigateByUrl('/login');
@@ -70,13 +71,13 @@ export class FeedsComponent implements OnInit {
 
     })
 
-    let req2 = this.http.get('http://apifood.comsciproject.com/post/newfeed', option).subscribe(response => {
+    let req2 = await this.http.get('http://apifood.comsciproject.com/post/newfeed', option).toPromise().then(response => {
       var d = new Date()
 
       var datePipe = new DatePipe('en-US');
-
-      console.log(d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear())
-      console.log(d.getHours()+":"+d.getMinutes()+":"+d.getSeconds)
+      console.log(Object.keys(response["feed"]).length)
+      // console.log(d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear())
+      // console.log(d.getHours()+":"+d.getMinutes()+":"+d.getSeconds)
       let year:Number
       let month:Number
       let day:Number
@@ -121,6 +122,7 @@ export class FeedsComponent implements OnInit {
       this.postnewFeed = response["feed"] 
      // console.log(this.postnewFeed)
       console.log(this.postnewFeed)
+      
     })
 
   }
@@ -147,7 +149,7 @@ export class FeedsComponent implements OnInit {
     this.displayModal = true;
   }
 
-  public onFileUpload(data: { files: File }): void {
+   public onFileUpload(data: { files: File }): void {
     const formData: FormData = new FormData();
     this.localstorage = JSON.parse(localStorage.getItem('TOKEN'))
     this.gettoken = this.localstorage.token
@@ -169,21 +171,32 @@ export class FeedsComponent implements OnInit {
         //this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Process Completed' });
         clearInterval(interval);
 
-        let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).subscribe(response => {
+        // let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).subscribe(response => {
 
-          console.log(response)
+        //   console.log(response)
+        // })
+        let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).toPromise().then(data =>{
+          console.log(data)
+          if(data["success"] == 1){
+            this.displayModal = false;
+            this.value = 0;
+            location.reload()
+          }
         })
 
 
-        this.displayModal = false;
-        this.value = 0;
-        location.reload()
+        
 
       }
     }, 400);
 
+    
+
     //formData.append('file', file, file.name);
   }
+  
+
   //-------------------------------------upload_Post------------------------------------//
+  
 
 }
