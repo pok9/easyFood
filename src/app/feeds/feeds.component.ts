@@ -60,7 +60,8 @@ export class FeedsComponent implements OnInit {
         );
         
 
-        this.avatarProfile = this.interpretations.profile_img
+        //this.avatarProfile = this.interpretations.profile_img
+        this.avatarProfile = this.interpretations.profile_img.replace("\\","\/")
       }
     })
     

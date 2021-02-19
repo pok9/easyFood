@@ -29,8 +29,8 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import {DialogModule} from 'primeng/dialog';
 import {FileUploadModule} from 'primeng/fileupload';//upload file
 import {AutoCompleteModule} from 'primeng/autocomplete';
-
-
+import {MatCardModule} from '@angular/material/card';//feed
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +60,9 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     CaptchaModule,
     DialogModule,
     FileUploadModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    MatCardModule,
+    MatIconModule
     
     
     
