@@ -32,10 +32,6 @@
 
         text-align: center;
     }
-
-    
-    
-   
 </style>
 
 <p-toolbar>
@@ -53,7 +49,7 @@
     <div class="col-xl-1">
         <!-- <p-autoComplete [(ngModel)]="selectNumber" [suggestions]="output" (completeMethod)="search($event)"
             placeholder="ค้นหา" [dropdown]="false"></p-autoComplete> -->
-        <p-autoComplete [(ngModel)]="selectNumber" [suggestions]="output" (completeMethod)="search($event)" 
+        <p-autoComplete [(ngModel)]="selectNumber" [suggestions]="output" (completeMethod)="search($event)"
             placeholder="ค้นหา" field="name" [dropdown]="false">
             <ng-template let-selectNumber pTemplate="item" style="background-color: brown;">
                 <div (click)="value(selectNumber.name)">
@@ -92,8 +88,12 @@
             <div class="col">
 
                 <img class="imgToolbar" src="{{profile_img}}" alt="Avatar" (click)="showPositionDialog('top-right')">
-
+                <!-- <form enctype="multipart/form-data">
+                    <input id="file-input" type="file" #fileUpload hidden
+                    [(ngModel)]="property"/>
+                </form> -->
             </div>
+           
         </div>
 
         <p-dialog header="My Account" [(visible)]="displayModal" [style]="{width: '25vw'}" [baseZIndex]="10000"
