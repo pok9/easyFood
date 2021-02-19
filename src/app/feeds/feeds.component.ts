@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserpassService } from '../userpass.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-feeds',
@@ -17,13 +18,15 @@ export class FeedsComponent implements OnInit {
   txt; //ข้อความ
   localstorage
   gettoken
-  avatarProfile:any
+  avatarProfile: any
+  postnewFeed: any//รับpost newfeed
   constructor(private datapass: UserpassService, private router: Router, private http: HttpClient) {
     // console.log(datapass.username);
-
+    //console.log('Constructor')
   }
 
   ngOnInit(): void {
+    //console.log('ngOnInit')
     if (localStorage.getItem('TOKEN') === null) {
       alert("Please login!")
       this.router.navigateByUrl('/login');
@@ -31,18 +34,18 @@ export class FeedsComponent implements OnInit {
 
     this.localstorage = JSON.parse(localStorage.getItem('TOKEN'))
     this.gettoken = this.localstorage.token
-          //this.decode = jwt_decode(token)
-          //console.log(this.decode.user)
-          let header = new HttpHeaders({
+    //this.decode = jwt_decode(token)
+    //console.log(this.decode.user)
+    let header = new HttpHeaders({
 
-            'Content-Type': 'application/json',
-            'authorization': 'Bearer ' + this.gettoken
-          });
-          let option = {
-            headers: header
-          }
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.gettoken
+    });
+    let option = {
+      headers: header
+    }
 
-    let req = this.http.get('http://apifood.comsciproject.com/users/myAccount',option).subscribe(response =>{
+    let req = this.http.get('http://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
       if (response["success"] == 1) {
         this.interpretations = {
           success: response["success"],
@@ -58,13 +61,68 @@ export class FeedsComponent implements OnInit {
           'interpretations',
           JSON.stringify(this.interpretations)
         );
-        
+
 
         //this.avatarProfile = this.interpretations.profile_img
-        this.avatarProfile = this.interpretations.profile_img.replace("\\","\/")
+        this.avatarProfile = this.interpretations.profile_img.replace("\\", "\/")
       }
+
+
     })
-    
+
+    let req2 = this.http.get('http://apifood.comsciproject.com/post/newfeed', option).subscribe(response => {
+      var d = new Date()
+
+      var datePipe = new DatePipe('en-US');
+
+      console.log(d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear())
+      console.log(d.getHours()+":"+d.getMinutes()+":"+d.getSeconds)
+      let year:Number
+      let month:Number
+      let day:Number
+      let hours:Number
+      let minutes:Number
+      let second:Number
+      for(let i=0;i<Object.keys(response["feed"]).length;i++){
+        response["feed"][i].profile_img = response["feed"][i].profile_img.replace("\\", "\/")
+        
+       // response["feed"][i].date = new Date(response["feed"][i].date)
+        
+        response["feed"][i].date = datePipe.transform(response["feed"][i].date, 'MM/dd/yyyy,HH:mm:ss a');
+        console.log(response["feed"][i].date)
+
+        year = Number(response["feed"][i].date.substring(6,10))
+        month = Number(response["feed"][i].date.substring(0,2))
+        day = Number(response["feed"][i].date.substring(3,5))
+        hours = Number(response["feed"][i].date.substring(11,13))
+        minutes = Number(response["feed"][i].date.substring(14,16))
+        second = Number(response["feed"][i].date.substring(17,19))
+
+       
+        if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes() == minutes && d.getSeconds() > second)
+            response["feed"][i].date = (d.getSeconds() - Number(second))+" วินาที"
+        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes() > minutes)
+            response["feed"][i].date = (d.getMinutes() - Number(minutes))+" นาที"
+        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() > hours) 
+            response["feed"][i].date = (d.getHours() - Number(hours))+" ชั่วโมง"
+        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() > day && (d.getDate() - Number(day) >= 6))
+            response["feed"][i].date = (((d.getDate()/7).toString().split('.')[0]))+" สัปดาห์"
+        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() > day)
+            response["feed"][i].date = (d.getDate() - Number(day)) + "วัน"
+        else if(d.getFullYear() == year && d.getMonth()+1 > month)
+            response["feed"][i].date = (d.getMonth() - Number(month)) + "เดือน"
+        else if(d.getFullYear() > year)
+            response["feed"][i].date = (d.getFullYear() - Number(year)) + "ปี"
+        
+      }
+      // for(var val of response["feed"]){
+      //   console.log(val)
+      // }
+      this.postnewFeed = response["feed"] 
+     // console.log(this.postnewFeed)
+      console.log(this.postnewFeed)
+    })
+
   }
 
   getInterpretations() {
@@ -94,17 +152,17 @@ export class FeedsComponent implements OnInit {
     this.localstorage = JSON.parse(localStorage.getItem('TOKEN'))
     this.gettoken = this.localstorage.token
 
-    formData.append("postImage",data.files[0])
-    formData.append("caption",this.txt)
-    formData.append("status_post","1")
-    formData.append("privacy_post","1")
-    formData.append("token",this.gettoken)
-    
+    formData.append("postImage", data.files[0])
+    formData.append("caption", this.txt)
+    formData.append("status_post", "1")
+    formData.append("privacy_post", "1")
+    formData.append("token", this.gettoken)
 
-    
+
+
 
     let interval = setInterval(() => {
-       this.value = this.value + Math.floor(Math.random() * 10) + 1;
+      this.value = this.value + Math.floor(Math.random() * 10) + 1;
       //this.value = 100;
       if (this.value >= 100) {
         this.value = 100;
@@ -112,13 +170,14 @@ export class FeedsComponent implements OnInit {
         clearInterval(interval);
 
         let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).subscribe(response => {
-          
+
           console.log(response)
         })
 
 
         this.displayModal = false;
         this.value = 0;
+        location.reload()
 
       }
     }, 400);

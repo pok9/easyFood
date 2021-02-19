@@ -75,20 +75,20 @@
     <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
     <br>
     <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
-    <div class="row">
+    <div class="row" *ngFor="let post of this.postnewFeed; index as i;first as isFirst">
         <div class="d-none col-lg-4 d-md-block"></div>
         <mat-card   style="width: 35vw;" >
             <mat-card-header>
                 <!-- <div mat-card-avatar class="example-header-image"></div> {{avatarProfile}}-->
                 <div mat-card-avatar
-                    style="background-image: url('{{avatarProfile}}')"
+                    style="background-image: url('{{post.profile_img}}')"
                     class="example-header-image"></div>
-                <mat-card-title>ปก</mat-card-title>
-                <mat-card-subtitle>19/02/64</mat-card-subtitle>
+                <mat-card-title>{{post.nickName}}</mat-card-title>
+                <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image  src="https://i.pinimg.com/originals/49/37/d7/4937d7c9e9cc87fa527c2d990975e7d7.gif" alt="Photo of pok">
+            <img mat-card-image  src="{{post.image}}" alt="Photo of pok">
             <mat-card-content>
-                <h5>ข้าวกะเพราหมูกรอบ</h5>
+                <h5>{{post.caption}}</h5>
                 <p>
                     วิธีทำ<br>
                     1.โคลกพริกกับกระเทียม หั่นหมูกรอบตามชอบ<br>
@@ -105,8 +105,9 @@
             <!-- <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon"> -->
                 <mat-icon>favorite</mat-icon>
               <!-- </button> -->
-
+                    
         </mat-card>
+        
     </div>
     <br>
     <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
