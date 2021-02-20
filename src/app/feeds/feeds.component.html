@@ -15,18 +15,24 @@
         cursor: pointer;
     }
 
-    
+
 
     .example-header-image {
         /* background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg'); */
         background-size: cover;
     }
 
-    .inner{overflow: hidden;}
-    .inner img{transition: all 1.5s ease;}
-    .inner:hover img{transform: scale(1.5);}
+    .inner {
+        overflow: hidden;
+    }
 
-    
+    .inner img {
+        transition: all 1.5s ease;
+    }
+
+    .inner:hover img {
+        transform: scale(1.5);
+    }
 </style>
 <app-toolbar></app-toolbar>
 
@@ -67,7 +73,8 @@
                     </div>
                     <div class="card-footer ">
 
-                        <p-fileUpload customUpload="true" (uploadHandler)="onFileUpload($event)" accept="image/*" maxFileSize="10000000" >
+                        <p-fileUpload customUpload="true" (uploadHandler)="onFileUpload($event)" accept="image/*"
+                            maxFileSize="10000000">
 
                         </p-fileUpload>
                         <p-progressBar [value]="value"></p-progressBar>
@@ -81,22 +88,22 @@
     <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
     <br>
     <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
-    <div class="row" *ngFor="let post of this.postnewFeed; index as i;first as isFirst">
-        <div class="d-none col-lg-4 d-md-block"></div>
-        <mat-card   style="width: 37.4vw;" >
-            <mat-card-header>
-                <!-- <div mat-card-avatar class="example-header-image"></div> {{avatarProfile}}-->
-                <div mat-card-avatar
-                    style="background-image: url('{{post.profile_img}}') "
-                    class="example-header-image ">
-                </div>
-                <mat-card-title>{{post.nickName}}</mat-card-title>
-                <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image  src="{{post.image}}" alt="Photo of pok">
-            <mat-card-content>
-                <h5>{{post.caption}}</h5>
-                <!-- <p>
+    <div *ngFor="let post of this.postnewFeed; index as i;first as isFirst">
+        <div class="row" >
+            <div class="d-none col-lg-4 d-md-block"></div>
+            <mat-card style="width: 37.4vw;">
+                <mat-card-header>
+                    <!-- <div mat-card-avatar class="example-header-image"></div> {{avatarProfile}}-->
+                    <div mat-card-avatar style="background-image: url('{{post.profile_img}}') "
+                        class="example-header-image ">
+                    </div>
+                    <mat-card-title>{{post.nickName}}</mat-card-title>
+                    <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image src="{{post.image}}" alt="Photo of pok">
+                <mat-card-content>
+                    <h5>{{post.caption}}</h5>
+                    <!-- <p>
                     วิธีทำ<br>
                     1.โคลกพริกกับกระเทียม หั่นหมูกรอบตามชอบ<br>
                     2.ตั้งกระทะใส่นำมัน ผัดพริกกระเทียม ผัดให้ฉุน ตามด้วยหมูกรอบ<br>
@@ -104,23 +111,25 @@
                     4.เสร็จแล้วใส่ใบกะเพราลงไป<br>
                     5.ตักใส่จานพร้อมเสิร์ฟ<br>
                 </p> -->
-            </mat-card-content>
-            <!-- <mat-card-actions>
+                </mat-card-content>
+                <!-- <mat-card-actions>
                 <button mat-button>LIKE</button>
                 <button mat-button>SHARE</button>
             </mat-card-actions> -->
-            <!-- <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon"> -->
+                <!-- <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon"> -->
                 <!-- <mat-icon>favorite</mat-icon> -->
-                <button pButton pRipple type="button" icon="pi pi-heart" class="p-button-rounded p-button-help p-button-outlined" >
-                    
+                <button pButton pRipple type="button" icon="pi pi-heart"
+                    class="p-button-rounded p-button-help p-button-outlined">
+
                 </button>
 
-              <!-- </button> -->
-                    
-        </mat-card>
-        
+                <!-- </button> -->
+
+            </mat-card>
+
+        </div>
+        <br>
     </div>
-    <br>
+
     <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
 </div>
-
