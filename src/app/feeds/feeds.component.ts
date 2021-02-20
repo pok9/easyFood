@@ -75,7 +75,7 @@ export class FeedsComponent implements OnInit {
       var d = new Date()
 
       var datePipe = new DatePipe('en-US');
-      console.log(Object.keys(response["feed"]).length)
+      //console.log(Object.keys(response["feed"]).length)
       // console.log(d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear())
       // console.log(d.getHours()+":"+d.getMinutes()+":"+d.getSeconds)
       let year:Number
@@ -90,7 +90,7 @@ export class FeedsComponent implements OnInit {
        // response["feed"][i].date = new Date(response["feed"][i].date)
         
         response["feed"][i].date = datePipe.transform(response["feed"][i].date, 'MM/dd/yyyy,HH:mm:ss a');
-        console.log(response["feed"][i].date)
+        //console.log(response["feed"][i].date)
 
         year = Number(response["feed"][i].date.substring(6,10))
         month = Number(response["feed"][i].date.substring(0,2))
@@ -99,11 +99,14 @@ export class FeedsComponent implements OnInit {
         minutes = Number(response["feed"][i].date.substring(14,16))
         second = Number(response["feed"][i].date.substring(17,19))
 
+        console.log(d.getMinutes() +" "+ minutes)
        
-        if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes() == minutes && d.getSeconds() > second)
-            response["feed"][i].date = (d.getSeconds() - Number(second))+" วินาที"
-        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes() > minutes)
-            response["feed"][i].date = (d.getMinutes() - Number(minutes))+" นาที"
+        // if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes()-4 == minutes && d.getSeconds() > second)
+        //     response["feed"][i].date = (d.getSeconds() - Number(second))+" วินาที"
+        if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes()-3 == minutes)
+            response["feed"][i].date = "เมื่อสักครู่"
+        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes()-3 > minutes)
+            response["feed"][i].date = ((d.getMinutes()-3) - Number(minutes))+" นาที"
         else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() > hours) 
             response["feed"][i].date = (d.getHours() - Number(hours))+" ชั่วโมง"
         else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() > day && (d.getDate() - Number(day) >= 6))
@@ -121,7 +124,7 @@ export class FeedsComponent implements OnInit {
       // }
       this.postnewFeed = response["feed"] 
      // console.log(this.postnewFeed)
-      console.log(this.postnewFeed)
+     // console.log(this.postnewFeed)
       
     })
 
@@ -176,7 +179,7 @@ export class FeedsComponent implements OnInit {
         //   console.log(response)
         // })
         let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).toPromise().then(data =>{
-          console.log(data)
+          //console.log(data)
           if(data["success"] == 1){
             this.displayModal = false;
             this.value = 0;
