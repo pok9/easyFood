@@ -1,4 +1,8 @@
 <style>
+    .col-md-3.sticky-top {
+        align-self: flex-start;
+    }
+
     .colorWritePost {
         color: #65676B;
     }
@@ -37,105 +41,88 @@
 <app-toolbar></app-toolbar>
 
 <div class="container-fluid">
-    
+
     <br>
 
     <div class="row">
-        <div class="col">
-            
-            
+
+        <div class="col-md-3 sticky-top">
+
+
         </div>
 
         <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
         <div class="col">
-            
-            <div class="card"style="width: 35vw;">
-                <div class="card-header h6">
-                    สร้างโพส
-                </div>
-
-                <div class="card-body">
-                    <!--เขียนโพส-->
-                    <div class="row">
-                        <div class="col">
-                            <img class="imgToolbar" src="{{avatarProfile}}" alt="Avatar">
-                        </div>
-
-                        <button [style]="{width: '30.7vw'}" (click)="showModalDialog()" pButton pRipple type="button"
-                            label="มีสูตรอาหารอะไรใหม่ๆมั้ย" class="p-button-rounded reasonButton colorWritePost"></button>
+            <div class="row">
+                <div class="card" style="width: 45vw;">
+                    <div class="card-header h6">
+                        สร้างโพส
                     </div>
 
-                    <p-dialog header="สร้างโพส" [(visible)]="displayModal" [style]="{width: '50vw'}" [baseZIndex]="10000">
-
-
-                        <div class="card-header h6">
-                            <!-- สร้างโพส -->
+                    <div class="card-body">
+                        <!--เขียนโพส-->
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                   
+                                    <div class="col">
+                                    <img class="imgToolbar" src="{{avatarProfile}}" alt="Avatar">
+                                </div>
+                                <div class="col">
+                                    <button [style]="{width: '35.7vw'}" (click)="showModalDialog()" pButton pRipple
+                                        type="button" label="มีสูตรอาหารอะไรใหม่ๆมั้ย"
+                                        class="p-button-rounded reasonButton colorWritePost"></button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <!--เขียนโพส-->
-                            <textarea [(ngModel)]="txt" class="form-control beautify-textarea" cols="70" rows="2"
-                                placeholder="มีสูตรอาหารอะไรใหม่ๆมั้ย"></textarea>
-                        </div>
-                        <div class="card-footer ">
 
-                            <p-fileUpload customUpload="true" (uploadHandler)="onFileUpload($event)" accept="image/*"
-                                maxFileSize="10000000">
+                        <p-dialog header="สร้างโพส" [(visible)]="displayModal" [style]="{width: '50vw'}"
+                            [baseZIndex]="10000">
 
-                            </p-fileUpload>
-                            <p-progressBar [value]="value"></p-progressBar>
 
-                        </div>
-                    </p-dialog>
+                            <div class="card-header h6">
+                                <!-- สร้างโพส -->
+                            </div>
+                            <div class="card-body">
+                                <!--เขียนโพส-->
+                                <textarea [(ngModel)]="txt" class="form-control beautify-textarea" cols="70" rows="2"
+                                    placeholder="มีสูตรอาหารอะไรใหม่ๆมั้ย"></textarea>
+                            </div>
+                            <div class="card-footer ">
 
+                                <p-fileUpload customUpload="true" (uploadHandler)="onFileUpload($event)"
+                                    accept="image/*" maxFileSize="10000000">
+
+                                </p-fileUpload>
+                                <p-progressBar [value]="value"></p-progressBar>
+
+                            </div>
+                        </p-dialog>
+
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col">   
-            <div class="row justify-content-start"></div>
-            <mat-card style="width: 20vw;">
-                <mat-card-header>
-                        
-                </mat-card-header>
-                    
-                <mat-card-content>
-                       
-                </mat-card-content>
-                    
-                <button pButton pRipple type="button" icon="pi pi-heart"
-                    class="p-button-rounded p-button-help p-button-outlined">
 
-                </button>
-
-                    <!-- </button> -->
-
-            </mat-card>
-        </div>
-    </div>
-    <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
-    <br>
-    <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
-    <div class="row" >
-        <div class="col">
-            <div class="row justify-content-start"></div>
-        
-        </div>
-        
-        <div class="col">
-    
-            <div *ngFor="let post of this.postnewFeed; index as i;first as isFirst">
-                <mat-card style="width: 35vw;">
-                    <mat-card-header>
-                        <!-- <div mat-card-avatar class="example-header-image"></div> {{avatarProfile}}-->
-                        <div mat-card-avatar style="background-image: url('{{post.profile_img}}') "
-                            class="example-header-image ">
-                        </div>
-                        <mat-card-title>{{post.nickName}}</mat-card-title>
-                        <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
-                    </mat-card-header>
-                    <img mat-card-image src="{{post.image}}" alt="Photo of pok">
-                    <mat-card-content>
-                        <h5>{{post.caption}}</h5>
-                        <!-- <p>
+            <br>
+            <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
+            <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
+            <div class="row">
+                <br>
+                <div *ngFor="let post of this.postnewFeed; index as i;first as isFirst">
+                    <mat-card style="width: 45vw;">
+                        <mat-card-header>
+                            <!-- <div mat-card-avatar class="example-header-image"></div> {{avatarProfile}}-->
+                            <div mat-card-avatar style="background-image: url('{{post.profile_img}}') "
+                                class="example-header-image ">
+                            </div>
+                            <mat-card-title>{{post.nickName}}</mat-card-title>
+                            <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
+                        </mat-card-header>
+                        <img mat-card-image src="{{post.image}}" alt="Photo of pok">
+                        <mat-card-content>
+                            <h5>{{post.caption}}</h5>
+                            <!-- <p>
                         วิธีทำ<br>
                         1.โคลกพริกกับกระเทียม หั่นหมูกรอบตามชอบ<br>
                         2.ตั้งกระทะใส่นำมัน ผัดพริกกระเทียม ผัดให้ฉุน ตามด้วยหมูกรอบ<br>
@@ -143,28 +130,51 @@
                         4.เสร็จแล้วใส่ใบกะเพราลงไป<br>
                         5.ตักใส่จานพร้อมเสิร์ฟ<br>
                     </p> -->
-                    </mat-card-content>
-                    <!-- <mat-card-actions>
+                        </mat-card-content>
+                        <!-- <mat-card-actions>
                     <button mat-button>LIKE</button>
                     <button mat-button>SHARE</button>
                 </mat-card-actions> -->
-                    <!-- <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon"> -->
-                    <!-- <mat-icon>favorite</mat-icon> -->
-                    <button pButton pRipple type="button" icon="pi pi-heart"
-                        class="p-button-rounded p-button-help p-button-outlined">
+                        <!-- <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon"> -->
+                        <!-- <mat-icon>favorite</mat-icon> -->
+                        <button pButton pRipple type="button" icon="pi pi-heart"
+                            class="p-button-rounded p-button-help p-button-outlined">
 
-                    </button>
+                        </button>
 
-                    <!-- </button> -->
+                        <!-- </button> -->
 
-                </mat-card>
+                    </mat-card>
+                </div>
             </div>
         </div>
-        <div class="col">
-            
+        <div class="col-md-3 sticky-top">
+
+            <mat-card style="width: 25vw;">
+                <mat-card-header>
+
+                </mat-card-header>
+
+                <mat-card-content>
+                    <p>
+                        วิธีทำ<br>
+                        1.โคลกพริกกับกระเทียม หั่นหมูกรอบตามชอบ<br>
+                        2.ตั้งกระทะใส่นำมัน ผัดพริกกระเทียม ผัดให้ฉุน ตามด้วยหมูกรอบ<br>
+                        3.เติมน้ำซุปนิดหน่อย ใส่น้ำตาล น้ำปลา น้ำมันหอย ผัดให้สุก<br>
+                        4.เสร็จแล้วใส่ใบกะเพราลงไป<br>
+                        5.ตักใส่จานพร้อมเสิร์ฟ<br>
+                    </p>
+
+                </mat-card-content>
+
+
+
+                <!-- </button> -->
+
+            </mat-card>
         </div>
-        </div>
-        <br>
     </div>
-   
-    <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
+    <br>
+</div>
+
+<!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
