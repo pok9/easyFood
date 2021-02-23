@@ -99,6 +99,7 @@ export class ToolbarComponent implements OnInit {
         console.log(response["data"][datas].profile_img)
 
         data = {
+          "username": response["data"][datas].username,
           "name": response["data"][datas].nickName,
           "image": response["data"][datas].profile_img
         }
@@ -109,6 +110,10 @@ export class ToolbarComponent implements OnInit {
       this.output = filtered;
     })
 
+  }
+  goMyProfile(){
+    var test = '/profile/'+this.username;
+            window.location.href = test
   }
 
   value(nickname){
@@ -122,18 +127,20 @@ export class ToolbarComponent implements OnInit {
    // this.router.navigateByUrl('/profile/'+response["data"] )
     //console.log(response['data']);
     //location.reload()
-
-    let response = this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise().then(data =>{
-          console.log(data)
-          if(data["success"] == 1){
-          //   this.displayModal = false;
-          //   this.value = 0;
-          var test = '/profile/'+data["data"];
+    var test = '/profile/'+nickname;
             window.location.href = test
-           // this.router.navigateByUrl('/profile/'+data["data"] )
-            //location.reload()
-          }
-        })
+
+    // let response = this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise().then(data =>{
+    //       console.log(data)
+    //       if(data["success"] == 1){
+    //       //   this.displayModal = false;
+    //       //   this.value = 0;
+    //       var test = '/profile/'+data["data"];
+    //         window.location.href = test
+    //        // this.router.navigateByUrl('/profile/'+data["data"] )
+    //         //location.reload()
+    //       }
+    //     })
   }
   //===============================================SearchUser=======================================
 }

@@ -52,7 +52,7 @@
         <p-autoComplete [(ngModel)]="selectNumber" [suggestions]="output" (completeMethod)="search($event)"
             placeholder="ค้นหา" field="name" [dropdown]="false">
             <ng-template let-selectNumber pTemplate="item" style="background-color: brown;">
-                <div (click)="value(selectNumber.name)">
+                <div (click)="value(selectNumber.username)">
                     <img src="{{selectNumber.image}}" alt="Avatar" class="imgToolbar" />
                     <div style="font-size:18px;float:right;margin:10px 10px 0 0">{{selectNumber.name}}</div>
                 </div>
@@ -104,7 +104,7 @@
                 <!--เขียนโพส-->
                 <div class="row">
                     <button pButton pRipple type="button" label="My Profile"
-                        class="p-button-outlined p-button-warning block" routerLink="/profile/{{username}}"></button>
+                        class="p-button-outlined p-button-warning block" (click)="goMyProfile()"></button>
                 </div>
                 <br>
                 <div class="row">
