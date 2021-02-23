@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { UserpassService } from '../userpass.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
 import { Router } from '@angular/router';//router เปลี่ยนหน้าในไฟล์ .ts 1
-import { DataimgpassService} from '../dataimgpass.service';
+import { DataimgpassService } from '../dataimgpass.service';
 
 import { faHouseUser } from '@fortawesome/free-solid-svg-icons';//icon
 import { faComments } from '@fortawesome/free-regular-svg-icons';//icon
 import { faBell } from '@fortawesome/free-regular-svg-icons';//icon
+import { ActivatedRoute } from '@angular/router'
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -33,62 +34,103 @@ export class ProfileComponent implements OnInit {
   localstorage
   gettoken
 
-  countFollowing:any
-  countFollower:any
-  countPost:any
+  countFollowing = 0
+  countFollower = 0
+  countPost = 0
   position
   data: any = new Array()
   // public datapass;
-  constructor(private datapass: UserpassService, private http: HttpClient, private router: Router, private imgpass: DataimgpassService ) {
-    // this.nickname = datapass.nickname
+  dataUser_id
+  testUser;
+  constructor(private datapass: UserpassService, private http: HttpClient, private router: Router, private imgpass: DataimgpassService, private route: ActivatedRoute) {
+    this.testUser = this.route.snapshot.params['username'];
 
-    // console.log(this.nickname+"99999998888888")
-    // console.log(datapass.nickname+"99999998888888")
-    // // this.nickname = this.interpretations.nickName
-    // // this.profile_img = datapass.imgProfile
-    // // this.user_id = datapass.user_id
-
-    // this.username = datapass.username
-    // console.log(this.username+"99999998888888")
-    // console.log(datapass.username+"99999998888888")
-    // // console.log("datapass.imgProfile = " + datapass.imgProfile);
-    // // console.log(this.datapass.user_id)
-    
     this.getInterpretations()
-    this.profile_img = this.interpretations.profile_img
-    this.username = this.interpretations.username;
+    this.getToken()
+    console.log('44444444')
+
   }
 
-   ngOnInit(): void {
+  ngOnInit(): void {
+    console.log('55555555')
     if (localStorage.getItem('interpretations') === null) {
       alert("Please login!")
       this.router.navigateByUrl('/login');
     }
-    this.getInterpretations()
-    this.getToken()
-    console.log(this.interpretations.profile_img)
-
     this.user_id = this.interpretations.user_ID
 
-    this.profile_img = this.interpretations.profile_img
-    this.profile_img_Copy = this.profile_img;//copy
+    let req = this.http.get("http://apifood.comsciproject.com/users/dataUser/" + this.testUser).subscribe(response => {
 
-    this.username = this.interpretations.username
-    this.nickname = this.interpretations.nickName
-    this.fullname = this.interpretations.fullName
+      console.log(response["data"].user_ID)
+      this.dataUser_id = response["data"].user_ID
+      if (response["success"] == 1 && (response["data"].user_ID) == this.user_id) {//ค้นหาตัวเอง เช่น pok แต่พิมพ์ pok
+        this.profile_img = this.interpretations.profile_img
+        this.profile_img_Copy = this.profile_img;//copy
 
-    this.token_user = this.TOKEN.token
-    //this.getFollowingCount()
-    this.getFollowingCount()
-    this.getFollowerCount()
-    this.getPostCount()
-    //console.log(this.countFollowing)
-    //test
-    //console.log(this.imgTest())
-    this.imgTest()
+        this.username = this.interpretations.username
+        this.nickname = this.interpretations.nickName
+        this.fullname = this.interpretations.fullName
+
+        this.token_user = this.TOKEN.token
+
+        this.getFollowingCount()
+        this.getFollowerCount()
+        this.getPostCount()
+
+        this.imgTest()
+      } else if (response["success"] == 1) {//ค้นหาเพื่อน เช่นพิมพ์ lek
+        this.profile_img = response["data"].profile_img
+        this.username = response["data"].username
+        this.nickname = response["data"].nickName
+
+        let req = this.http.get('http://apifood.comsciproject.com/follow/countFollowingUser/' + this.dataUser_id).subscribe(response => {
+          this.countFollowing = response['countMyFollowing']
+        })
+
+        let req1 = this.http.get('http://apifood.comsciproject.com/follow/countFollowerUser/' + this.dataUser_id).subscribe(response => {
+          this.countFollower = response['countMyFollower']
+        })
+
+        let req2 = this.http.get('http://apifood.comsciproject.com/post/countMyPostUser/' + this.dataUser_id).subscribe(response => {
+          this.countPost = response['countMyPost']
+        })
+
+        let req3 = this.http.get("http://apifood.comsciproject.com/post/mypostUser/"+ this.dataUser_id).subscribe(response => {
+          this.data = new Array()
+          let dataImg: any = response["data"]
+          for (let i = 0; i < dataImg.length; i++) {
+            this.data.push(dataImg[i])
+
+          }
+          console.log(this.data)
+        });
+
+      } else {//ค้นหาตัวเอง เช่น pok แต่พิมพ์ pokssasdfasdfsa
+        this.dataUser_id = this.user_id
+        this.profile_img = this.interpretations.profile_img
+        this.profile_img_Copy = this.profile_img;//copy
+
+        this.username = this.interpretations.username
+        this.nickname = this.interpretations.nickName
+        this.fullname = this.interpretations.fullName
+
+        this.token_user = this.TOKEN.token
+
+        this.getFollowingCount()
+        this.getFollowerCount()
+        this.getPostCount()
+
+        this.imgTest()
+      }
+    });
+    // this.getInterpretations()
+    // this.getToken()
+
+
+
   }
 
-  imgTest(){
+  imgTest() {
     let header = new HttpHeaders({
 
       'Content-Type': 'application/json',
@@ -97,16 +139,16 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let req = this.http.get("http://apifood.comsciproject.com/post/mypost",option).subscribe(response =>{
+    let req = this.http.get("http://apifood.comsciproject.com/post/mypost", option).subscribe(response => {
       this.data = new Array()
-      let dataImg:any = response["data"]
-      for(let i = 0; i< dataImg.length;i++){
+      let dataImg: any = response["data"]
+      for (let i = 0; i < dataImg.length; i++) {
         this.data.push(dataImg[i])
 
       }
       console.log(this.data)
     });
-    
+
   }
 
   getInterpretations() {
@@ -125,7 +167,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  getFollowingCount(){
+  getFollowingCount() {
     let header = new HttpHeaders({
 
       'Content-Type': 'application/json',
@@ -134,12 +176,12 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let req = this.http.get('http://apifood.comsciproject.com/follow/countFollowing',option).subscribe(response =>{
-       this.countFollowing = response['countMyFollowing']
+    let req = this.http.get('http://apifood.comsciproject.com/follow/countFollowing', option).subscribe(response => {
+      this.countFollowing = response['countMyFollowing']
     })
   }
 
-  getFollowerCount(){
+  getFollowerCount() {
     let header = new HttpHeaders({
 
       'Content-Type': 'application/json',
@@ -148,12 +190,12 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let req = this.http.get('http://apifood.comsciproject.com/follow/countFollower',option).subscribe(response =>{
-       this.countFollower = response['countMyFollower']
+    let req = this.http.get('http://apifood.comsciproject.com/follow/countFollower', option).subscribe(response => {
+      this.countFollower = response['countMyFollower']
     })
   }
 
-  getPostCount(){
+  getPostCount() {
     let header = new HttpHeaders({
 
       'Content-Type': 'application/json',
@@ -162,8 +204,8 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let req = this.http.get('http://apifood.comsciproject.com/post/countMyPost',option).subscribe(response =>{
-       this.countPost = response['countMyPost']
+    let req = this.http.get('http://apifood.comsciproject.com/post/countMyPost', option).subscribe(response => {
+      this.countPost = response['countMyPost']
     })
   }
 
@@ -195,7 +237,7 @@ export class ProfileComponent implements OnInit {
           let option = {
             headers: header
           }
-          let request = this.http.get('http://apifood.comsciproject.com/users/myAccount',option).subscribe(response => {
+          let request = this.http.get('http://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
 
             this.interpretations = {
               success: response["success"],
@@ -248,21 +290,21 @@ export class ProfileComponent implements OnInit {
 
     //getToken
 
-          let header = new HttpHeaders({
+    let header = new HttpHeaders({
 
-            'Content-Type': 'application/json',
-            'authorization': 'Bearer ' + this.token_user
-          });
-          let option = {
-            headers: header
-          }
-    
-    
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.token_user
+    });
+    let option = {
+      headers: header
+    }
+
+
     let request = this.http.post('http://apifood.comsciproject.com/users/uploadProfile', formdata)
       .subscribe(response => {
         if (response["success"] == 1) {
 
-          let request = this.http.get('http://apifood.comsciproject.com/users/myAccount',option ).subscribe(response => {
+          let request = this.http.get('http://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
 
             this.interpretations = {
               success: response["success"],
@@ -308,7 +350,7 @@ export class ProfileComponent implements OnInit {
           if (response["success"] == 1) {
             // let request = this.http.get('http://apifood.comsciproject.com/users/' + this.user_id).subscribe(response => {
 
-            
+
             this.interpretations = {
               success: response["success"],
               user_ID: response["data"].user_ID,
@@ -324,11 +366,11 @@ export class ProfileComponent implements OnInit {
               JSON.stringify(this.interpretations)
             );
 
-            
-            
+
+
             console.log(this.interpretations.nickName)
             this.nickname = this.interpretations.nickName
-            
+
             // this.profile_img = this.interpretations.profile_img
             // this.profile_img_Copy = this.profile_img
 
@@ -338,7 +380,7 @@ export class ProfileComponent implements OnInit {
             this.profile_img = this.interpretations.profile_img
             // this.datapass.profile_img = this.interpretations.profile_img
             this.editname = undefined
-            
+
             // location.reload()
 
 
@@ -348,11 +390,13 @@ export class ProfileComponent implements OnInit {
         }, error => {
           console.log('Error ' + JSON.stringify(error));
         });
-    }else{
-      location.reload()
+    } else {
+      // var test = '/profile/'+this.username;
+      //       window.location.href = test
+      this.ngOnInit()
     }
 
-    
+
     this.displayModal = false
   }
 
@@ -398,7 +442,7 @@ export class ProfileComponent implements OnInit {
           console.log('Error ' + JSON.stringify(error));
         });
     }
-    
+
     this.displayModal = false;
 
   }
@@ -466,8 +510,29 @@ export class ProfileComponent implements OnInit {
     })
 
   }
-  value(event){
-    console.log(event)
+  value(nickname){
+    // let response = await this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).subscribe(response => {
+
+    //   this.router.navigateByUrl('/profile/'+response["data"] )
+     
+    // })
+
+    //let response = await this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise();
+   // this.router.navigateByUrl('/profile/'+response["data"] )
+    //console.log(response['data']);
+    //location.reload()
+
+    // let response = this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise().then(data =>{
+    //       console.log(data)
+    //       if(data["success"] == 1){
+    //       //   this.displayModal = false;
+    //       //   this.value = 0;
+    //         //this.router.navigateByUrl('/profile/'+data["data"] )
+    //         var test = '/profile/'+data["data"];
+    //         window.location.href = test
+    //         //location.reload()
+    //       }
+    //     })
   }
   //===============================================SearchUser=======================================
 

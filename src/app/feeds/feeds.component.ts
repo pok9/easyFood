@@ -99,7 +99,7 @@ export class FeedsComponent implements OnInit {
         minutes = Number(response["feed"][i].date.substring(14,16))
         second = Number(response["feed"][i].date.substring(17,19))
 
-        console.log(d.getMinutes() +" "+ minutes)
+       // console.log(d.getMinutes() +" "+ minutes)
        
         // if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes()-4 == minutes && d.getSeconds() > second)
         //     response["feed"][i].date = (d.getSeconds() - Number(second))+" วินาที"

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';//router เปลี่ยนหน้าในไฟล์ .ts 1
-import { HttpClient } from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
+// import { HttpClient } from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
 import { UserpassService } from '../userpass.service';
 import jwt_decode from 'jwt-decode'
+import { HttpClient, HttpHeaders } from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -53,7 +54,17 @@ export class SignupComponent implements OnInit {
                 var token = response["token"]
                 this.decode = jwt_decode(token)
 
-                let req = this.http.get('http://apifood.comsciproject.com/users/' + this.decode.user).subscribe(response => {
+                let header = new HttpHeaders({
+
+                  'Content-Type': 'application/json',
+                  'authorization': 'Bearer ' + token
+                });
+                let option = {
+                  headers: header
+                }
+
+
+                let req = this.http.get('http://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
                   console.log(response["data"].username)
                   if (response["success"] == 1) {
                     this.interpretations = {
@@ -65,21 +76,23 @@ export class SignupComponent implements OnInit {
                       profile_img: response["data"].profile_img,
                       status: response["data"].status
                     };
+
                     localStorage.setItem(
                       'interpretations',
                       JSON.stringify(this.interpretations)
                     );
-
-                    this.TOKEN = {
-                      token: response["token"]
-                    }
-
-                    localStorage.setItem('TOKEN', JSON.stringify(this.TOKEN))
-
-                    this.router.navigateByUrl('/feeds');
+                    //this.router.navigateByUrl('/feeds');
+                    window.location.href = '/feeds'
 
                   }
+
                 }) // get user
+                this.TOKEN = {
+                  token: response["token"]
+                }
+      
+                localStorage.setItem('TOKEN', JSON.stringify(this.TOKEN))
+      
 
               }
 

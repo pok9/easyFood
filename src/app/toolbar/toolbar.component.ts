@@ -6,7 +6,7 @@ import { faBell } from '@fortawesome/free-regular-svg-icons';
 import { UserpassService } from '../userpass.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfirmationService } from 'primeng/api';
-
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -30,7 +30,7 @@ export class ToolbarComponent implements OnInit {
   position
 
 
-  constructor(private datapass: UserpassService, private http: HttpClient) {
+  constructor(private datapass: UserpassService, private http: HttpClient,private router : Router) {
 
 
     this.getInterpretations()
@@ -110,8 +110,30 @@ export class ToolbarComponent implements OnInit {
     })
 
   }
-  value(event){
-    console.log(event)
+
+  value(nickname){
+    // let response = await this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).subscribe(response => {
+
+    //   this.router.navigateByUrl('/profile/'+response["data"] )
+     
+    // })
+
+    //let response = await this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise();
+   // this.router.navigateByUrl('/profile/'+response["data"] )
+    //console.log(response['data']);
+    //location.reload()
+
+    let response = this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise().then(data =>{
+          console.log(data)
+          if(data["success"] == 1){
+          //   this.displayModal = false;
+          //   this.value = 0;
+          var test = '/profile/'+data["data"];
+            window.location.href = test
+           // this.router.navigateByUrl('/profile/'+data["data"] )
+            //location.reload()
+          }
+        })
   }
   //===============================================SearchUser=======================================
 }

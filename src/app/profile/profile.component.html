@@ -33,8 +33,12 @@
 
     }
 </style>
+
+
 <!-- //****************** NavBar ************************ */ -->
-<p-toolbar>
+<app-toolbar></app-toolbar>
+
+<!-- <p-toolbar>
 
     <div class="row">
         <div class="col-sm-8"></div>
@@ -57,8 +61,6 @@
             </ng-template>
         </p-autoComplete>
     </div>
-
-    <!-- <p-button (click)="showPositionDialog('top-right')" icon="pi pi-arrow-down" label="TopRight" styleClass="p-button-warning"></p-button> -->
 
 
 
@@ -90,22 +92,17 @@
         <p-dialog header="My Account" [(visible)]="displayModal1" [style]="{width: '25vw'}" [baseZIndex]="10000"
             [position]="position">
 
-            <!-- <button pButton type="button" label="Edit Profile"></button> -->
-
-            <!--เขียนโพส-->
-
+    
 
             <div class="row">
                 <button pButton pRipple type="button" label="Logout" class="p-button-outlined p-button-danger block"
                     routerLink="" (click)="logoutLocalstorege()"></button>
-                <!-- <a routerLink=""  class="black" (click)="logoutLocalstorege()"><button type="button" class="btn btn-outline-warning ">Warning</button></a> -->
-                <!-- <a routerLink="" (click)="logoutLocalstorege()"></a> -->
             </div>
 
         </p-dialog>
 
     </div>
-</p-toolbar>
+</p-toolbar> -->
 <!-- //****************** NavBar ************************ */ -->
 <style>
     .imgEditAvtar {
@@ -183,7 +180,6 @@
             max-width: 100%;
         }
     }
-    
 </style>
 <div class="container">
     <br><br>
@@ -195,11 +191,13 @@
                     <!--รูปโปรไฟล์&อัปโหลดรูป-->
                     <img class="imgProfile" height="100px" width="100px" src="{{profile_img}}" alt="">
                 </label>
-
-                <form enctype="multipart/form-data">
-                    <input id="file-input" type="file" #fileUpload hidden
-                        (change)="updateImagePro($event.target.files)" />
-                </form>
+                <div *ngIf="this.user_id == this.dataUser_id ">
+                    <form enctype="multipart/form-data">
+                        <input id="file-input" type="file" #fileUpload hidden
+                            (change)="updateImagePro($event.target.files)" />
+                    </form>
+                </div>
+               
 
             </div>
         </div>
@@ -224,12 +222,20 @@
                     <!-- &nbsp;&nbsp;&nbsp;&nbsp; -->
                     <!-- ==========================================แก้ไขข้อมูล======================================================= -->
                     <!-- <button pButton type="button" label="แก้ไขโปรไฟล์" class="p-button-secondary"></button> -->
-                    <p-button (click)="showModalDialog()" icon="pi pi-user-edit" label="แก้ไขข้อมูล"
+                    <div *ngIf="this.user_id == this.dataUser_id ; else elseBlock">
+                        <p-button (click)="showModalDialog()" icon="pi pi-user-edit" label="แก้ไขข้อมูล"
                         class="p-button-secondary">
                     </p-button>
+                    </div>
+                    <ng-template #elseBlock>
+                        <!-- <p-button (click)="showModalDialog()" icon="" label="ติดตาม"
+                        class="p-button-danger">
+                    </p-button> -->
+                    <button pButton type="button" label="ติดตาม" class="p-button-danger"></button>
+                    </ng-template>  
                 </div>
 
-                
+
                 <p-dialog header="แก้ไขโปรไฟล์" [(visible)]="displayModal" [modal]="true" [style]="{width: '30%'}"
                     [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false">
                     <p-card>
@@ -246,7 +252,7 @@
                             <br>
                             <div>
                                 <label for="nickname">ชื่อ</label><br>
-                                <input id="nickname" class="block" type="text"  aria-describedby="nickname-help"
+                                <input id="nickname" class="block" type="text" aria-describedby="nickname-help"
                                     [(ngModel)]="editname" pInputText />
                             </div>
                             <br><br>
@@ -286,7 +292,6 @@
     <!-- ==========================แสดงโพส========================== -->
     <div class="header">
         <h1>โพสต์</h1>
-        <!-- <p>Start capturing and sharing your moments.</p> -->
     </div>
 
     <div class="row">
@@ -296,5 +301,5 @@
     </div>
     <hr class="my-5">
 </div>
-
+<!-- ==========================แสดงโพส========================== -->
 <br>
