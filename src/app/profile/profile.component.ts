@@ -3,7 +3,7 @@ import { UserpassService } from '../userpass.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //เชื่อต่อ http เช่น get post put delete
 import { Router } from '@angular/router';//router เปลี่ยนหน้าในไฟล์ .ts 1
 import { DataimgpassService } from '../dataimgpass.service';
-
+import { DatePipe } from '@angular/common';
 import { faHouseUser } from '@fortawesome/free-solid-svg-icons';//icon
 import { faComments } from '@fortawesome/free-regular-svg-icons';//icon
 import { faBell } from '@fortawesome/free-regular-svg-icons';//icon
@@ -187,6 +187,55 @@ export class ProfileComponent implements OnInit {
       //console.log(this.data)
     });
 
+  }
+
+  displayImg : boolean
+  selectedImg : any
+  dateConvert : any
+  selectImg(item : any){
+    this.selectedImg = item
+    
+    console.log(this.selectedImg.date)
+    var d = new Date()
+    var datePipe = new DatePipe('en-US');
+    let year:Number
+    let month:Number
+    let day:Number
+    let hours:Number
+    let minutes:Number
+    let second:Number
+
+    this.dateConvert = datePipe.transform(this.selectedImg.date, 'MM/dd/yyyy,HH:mm:ss a');
+    console.log(this.dateConvert)
+      year = Number(this.dateConvert.substring(6,10))
+      month = Number(this.dateConvert.substring(0,2))
+      day = Number(this.dateConvert.substring(3,5))
+      hours = Number(this.dateConvert.substring(11,13))
+      minutes = Number(this.dateConvert.substring(14,16))
+      second = Number(this.dateConvert.substring(17,19))
+
+      if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes()-3 == minutes)
+      this.dateConvert = "เมื่อสักครู่"
+      else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes()-3 > minutes)
+      this.dateConvert = ((d.getMinutes()-3) - Number(minutes))+" นาที"
+        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() > hours) 
+        this.dateConvert = (d.getHours() - Number(hours))+" ชั่วโมง"
+        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() > day && (d.getDate() - Number(day) >= 6))
+        this.dateConvert = (((d.getDate()/7).toString().split('.')[0]))+" สัปดาห์"
+        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() > day)
+        this.dateConvert = (d.getDate() - Number(day)) + " วัน"
+        else if(d.getFullYear() == year && d.getMonth()+1 > month)
+        this.dateConvert = (d.getMonth() - Number(month)) + " เดือน"
+        else if(d.getFullYear() > year)
+        this.dateConvert= (d.getFullYear() - Number(year)) + " ปี"
+
+        this.displayImg = true
+  }
+
+
+  cancelSelectedImg(){
+    this.displayImg = false
+    
   }
 
   getInterpretations() {

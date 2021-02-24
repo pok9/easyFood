@@ -9,6 +9,8 @@ import { DatePipe } from '@angular/common';
   templateUrl: './feeds.component.html',
   styleUrls: ['./feeds.component.css']
 })
+
+
 export class FeedsComponent implements OnInit {
   interpretations
   TOKEN
@@ -118,11 +120,11 @@ export class FeedsComponent implements OnInit {
         else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() > day && (d.getDate() - Number(day) >= 6))
             response["feed"][i].date = (((d.getDate()/7).toString().split('.')[0]))+" สัปดาห์"
         else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() > day)
-            response["feed"][i].date = (d.getDate() - Number(day)) + "วัน"
+            response["feed"][i].date = (d.getDate() - Number(day)) + " วัน"
         else if(d.getFullYear() == year && d.getMonth()+1 > month)
-            response["feed"][i].date = (d.getMonth() - Number(month)) + "เดือน"
+            response["feed"][i].date = (d.getMonth() - Number(month)) + " เดือน"
         else if(d.getFullYear() > year)
-            response["feed"][i].date = (d.getFullYear() - Number(year)) + "ปี"
+            response["feed"][i].date = (d.getFullYear() - Number(year)) + " ปี"
         
       }
       // for(var val of response["feed"]){
