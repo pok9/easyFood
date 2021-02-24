@@ -43,7 +43,9 @@
 <div class="container-fluid">
 
     <br>
+    <div class="col-sm-12">
 
+    
     <div class="row">
 
         <div class="col-md-3 sticky-top">
@@ -109,6 +111,7 @@
             <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
             <div class="row">
                 <br>
+                
                 <div *ngFor="let post of this.postnewFeed; index as i;first as isFirst">
                     <mat-card style="width: 45vw;">
                         <mat-card-header>
@@ -145,7 +148,9 @@
                         <!-- </button> -->
 
                     </mat-card>
+                    <br>
                 </div>
+                
             </div>
         </div>
         <div class="col-md-3 sticky-top">
@@ -156,14 +161,50 @@
                 </mat-card-header>
 
                 <mat-card-content>
-                    <p>
-                        วิธีทำ<br>
-                        1.โคลกพริกกับกระเทียม หั่นหมูกรอบตามชอบ<br>
-                        2.ตั้งกระทะใส่นำมัน ผัดพริกกระเทียม ผัดให้ฉุน ตามด้วยหมูกรอบ<br>
-                        3.เติมน้ำซุปนิดหน่อย ใส่น้ำตาล น้ำปลา น้ำมันหอย ผัดให้สุก<br>
-                        4.เสร็จแล้วใส่ใบกะเพราลงไป<br>
-                        5.ตักใส่จานพร้อมเสิร์ฟ<br>
-                    </p>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <img class="imgToolbar" src="{{avatarProfile}}" alt="Avatar">
+                        </div>
+                        <div class="col-sm-3"></div>
+                        <div clss="col-sm-8">
+                           <div class="row">
+                                <div class="col-xs-7">
+                                    <div class="row">
+                                        <h2>{{mynickname}}</h2>
+                                    </div>
+                                    
+                                    <div class="row-10px">
+                                        <p>{{myusername}}</p>
+                                    </div>
+                                </div>
+                                
+                           </div>
+                           <br>
+                           
+                        </div>
+                       
+                    </div>
+                    
+                   <div class="row">
+                    <div class="col-sm-10">
+                        <p>แนะนำสำหรับคุณ</p>
+                    </div>
+                </div>
+                <div *ngFor="let p of this.testIndex;">
+
+                
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img style="border-radius: 50%;
+                        width: 30px;
+                        height: 30px;
+                        cursor: pointer;" src="{{avatarProfile}}" alt="Avatar">
+                    </div>
+                    <div class="col-sm-4"><p>{{p.gh}}</p></div>
+                    <div class="col-sm-6"><a class="primary" style="cursor: pointer;">ติดตาม</a> </div>
+                </div>
+                <br>
+            </div>
 
                 </mat-card-content>
 
@@ -174,6 +215,7 @@
             </mat-card>
         </div>
     </div>
+</div>
     <br>
 </div>
 

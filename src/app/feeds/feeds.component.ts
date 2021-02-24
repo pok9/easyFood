@@ -14,6 +14,9 @@ export class FeedsComponent implements OnInit {
   TOKEN
   displayModal: boolean;//dialog
   value: number = 0;
+  myusername
+  mynickname
+  testIndex = [{gh:123},{gh:1655565},{gh:165656},{gh:16446464},{gh:100000}]
 
   txt; //ข้อความ
   localstorage
@@ -57,6 +60,9 @@ export class FeedsComponent implements OnInit {
           profile_img: response["data"].profile_img,
           status: response["data"].status
         };
+
+        this.mynickname = response["data"].nickName
+        this.myusername = response["data"].username
 
         localStorage.setItem(
           'interpretations',
