@@ -41,27 +41,42 @@ export class ProfileComponent implements OnInit {
   data: any = new Array()
   // public datapass;
   dataUser_id
-  testUser;
+  searchUser;
+  checkFollow
   constructor(private datapass: UserpassService, private http: HttpClient, private router: Router, private imgpass: DataimgpassService, private route: ActivatedRoute) {
-    this.testUser = this.route.snapshot.params['username'];
+    this.searchUser = this.route.snapshot.params['username'];
 
     this.getInterpretations()
     this.getToken()
-    console.log('44444444')
+    //console.log('44444444')
 
+    // let header = new HttpHeaders({
+
+    //   'Content-Type': 'application/json',
+    //   'authorization': 'Bearer ' + this.token_user
+    // });
+    // let option = {
+    //   headers: header
+    // }
+
+    // this.http.get('http://apifood.comsciproject.com/follow/searchFollow', option).subscribe(response => {
+    //   //this.countFollowing = response['data'].username
+    //   console.log(response)
+    // })
   }
 
   ngOnInit(): void {
-    console.log('55555555')
+    //console.log('55555555')
+    this.token_user = this.TOKEN.token
     if (localStorage.getItem('interpretations') === null) {
       alert("Please login!")
       this.router.navigateByUrl('/login');
     }
     this.user_id = this.interpretations.user_ID
 
-    let req = this.http.get("http://apifood.comsciproject.com/users/dataUser/" + this.testUser).subscribe(response => {
+    let req = this.http.get("http://apifood.comsciproject.com/users/dataUser/" + this.searchUser).subscribe(response => {
 
-      console.log(response["data"].user_ID)
+      //console.log(response["data"].user_ID)
       this.dataUser_id = response["data"].user_ID
       if (response["success"] == 1 && (response["data"].user_ID) == this.user_id) {//ค้นหาตัวเอง เช่น pok แต่พิมพ์ pok
         this.profile_img = this.interpretations.profile_img
@@ -71,14 +86,25 @@ export class ProfileComponent implements OnInit {
         this.nickname = this.interpretations.nickName
         this.fullname = this.interpretations.fullName
 
-        this.token_user = this.TOKEN.token
+        
 
         this.getFollowingCount()
         this.getFollowerCount()
         this.getPostCount()
 
         this.imgTest()
+        
       } else if (response["success"] == 1) {//ค้นหาเพื่อน เช่นพิมพ์ lek
+
+        let header = new HttpHeaders({
+
+          'Content-Type': 'application/json',
+          'authorization': 'Bearer ' + this.token_user
+        });
+        let option = {
+          headers: header
+        }
+
         this.profile_img = response["data"].profile_img
         this.username = response["data"].username
         this.nickname = response["data"].nickName
@@ -95,14 +121,17 @@ export class ProfileComponent implements OnInit {
           this.countPost = response['countMyPost']
         })
 
-        let req3 = this.http.get("http://apifood.comsciproject.com/post/mypostUser/"+ this.dataUser_id).subscribe(response => {
+        let req3 = this.http.get("http://apifood.comsciproject.com/post/mypostUser/" + this.dataUser_id).subscribe(response => {
           this.data = new Array()
           let dataImg: any = response["data"]
           for (let i = 0; i < dataImg.length; i++) {
             this.data.push(dataImg[i])
 
           }
-          console.log(this.data)
+          //console.log(this.data)
+        });
+        this.http.get("http://apifood.comsciproject.com/follow/checkFollow/"+this.dataUser_id , option).subscribe(response => {
+          this.checkFollow = response['checkFollow']
         });
 
       } else {//ค้นหาตัวเอง เช่น pok แต่พิมพ์ pokssasdfasdfsa
@@ -113,8 +142,6 @@ export class ProfileComponent implements OnInit {
         this.username = this.interpretations.username
         this.nickname = this.interpretations.nickName
         this.fullname = this.interpretations.fullName
-
-        this.token_user = this.TOKEN.token
 
         this.getFollowingCount()
         this.getFollowerCount()
@@ -128,6 +155,17 @@ export class ProfileComponent implements OnInit {
 
 
 
+  }
+
+  testpok(){
+    let header = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.token_user
+    });
+    let option = {
+      headers: header
+    }
   }
 
   imgTest() {
@@ -146,7 +184,7 @@ export class ProfileComponent implements OnInit {
         this.data.push(dataImg[i])
 
       }
-      console.log(this.data)
+      //console.log(this.data)
     });
 
   }
@@ -338,10 +376,10 @@ export class ProfileComponent implements OnInit {
   }
   confirmEdit() {
     // this.methodUpload()
-    console.log(this.editname)
+    //console.log(this.editname)
     let request0 = this.http.get('http://apifood.comsciproject.com/users/path_profileImage/' + this.user_id).subscribe(respone => {
       this.profileImagePath = respone["data"].profile_img
-      console.log(this.profileImagePath)
+      //console.log(this.profileImagePath)
     })
     if (this.editname !== undefined) {
       let json = { newNickname: this.editname, user_id: this.user_id };
@@ -368,7 +406,7 @@ export class ProfileComponent implements OnInit {
 
 
 
-            console.log(this.interpretations.nickName)
+            //console.log(this.interpretations.nickName)
             this.nickname = this.interpretations.nickName
 
             // this.profile_img = this.interpretations.profile_img
@@ -495,8 +533,8 @@ export class ProfileComponent implements OnInit {
     let req = this.http.get('http://apifood.comsciproject.com/users/searchUser/' + query).subscribe(response => {
       for (let datas in response["data"]) {
         country = response["data"][datas].nickName
-        console.log(response["data"][datas].nickName)
-        console.log(response["data"][datas].profile_img)
+        //console.log(response["data"][datas].nickName)
+        //console.log(response["data"][datas].profile_img)
 
         data = {
           "name": response["data"][datas].nickName,
@@ -510,15 +548,15 @@ export class ProfileComponent implements OnInit {
     })
 
   }
-  value(nickname){
+  value(nickname) {
     // let response = await this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).subscribe(response => {
 
     //   this.router.navigateByUrl('/profile/'+response["data"] )
-     
+
     // })
 
     //let response = await this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise();
-   // this.router.navigateByUrl('/profile/'+response["data"] )
+    // this.router.navigateByUrl('/profile/'+response["data"] )
     //console.log(response['data']);
     //location.reload()
 
@@ -535,5 +573,45 @@ export class ProfileComponent implements OnInit {
     //     })
   }
   //===============================================SearchUser=======================================
+  followUser() {
+    let json = { following_ID : this.dataUser_id};
+    let header = new HttpHeaders({
 
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.token_user,
+    });
+    let option = {
+      headers: header
+    }
+    let request = this.http.post('http://apifood.comsciproject.com/follow/following',json,option)
+        .subscribe(response => {
+         
+          console.log(response)
+          
+        }, error => {
+          console.log('Error ' + JSON.stringify(error));
+        });
+        this.ngOnInit()
+  }
+
+  unfollowUser(){
+    let json = { following_ID : this.dataUser_id};
+    let header = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.token_user,
+    });
+    let option = {
+      headers: header
+    }
+    let request = this.http.post('http://apifood.comsciproject.com/follow/unfollowing',json,option)
+        .subscribe(response => {
+         
+          console.log(response)
+          
+        }, error => {
+          console.log('Error ' + JSON.stringify(error));
+        });
+        this.ngOnInit()
+  }
 }

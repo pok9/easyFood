@@ -222,15 +222,22 @@
                     <!-- &nbsp;&nbsp;&nbsp;&nbsp; -->
                     <!-- ==========================================แก้ไขข้อมูล======================================================= -->
                     <!-- <button pButton type="button" label="แก้ไขโปรไฟล์" class="p-button-secondary"></button> -->
-                    <div *ngIf="this.user_id == this.dataUser_id ; else elseBlock">
+                    <div *ngIf="this.user_id == this.dataUser_id ; else follow">
                         <p-button (click)="showModalDialog()" icon="pi pi-user-edit" label="แก้ไขข้อมูล"
                         class="p-button-secondary">
                     </p-button>
                     </div>
                     
-                    <ng-template #elseBlock>
-                       
-                    <button pButton type="button" label="ติดตาม" class="p-button-danger"></button>
+                    <ng-template #follow>
+                        <!-- <p-button label="ติดตาม" icon="pi pi-users" styleClass="p-button-warning" badge="8" badgeClass="p-badge-danger"></p-button> -->
+                        <div *ngIf="this.checkFollow == 0 ; else unfollow">
+                            <p-button (click)="followUser()" label="ติดตาม" icon="pi pi-user-plus" styleClass="p-button-danger"></p-button>
+                        </div>
+
+                        <ng-template #unfollow>
+                            <!-- <p-button label="ติดตาม" icon="pi pi-users" styleClass="p-button-warning" badge="8" badgeClass="p-badge-danger"></p-button> -->
+                            <p-button  (click)="unfollowUser()" label="ติดตามแล้ว" icon="pi pi-users" styleClass="p-button-secondary"></p-button>
+                        </ng-template>
                     </ng-template>
                     
                     
