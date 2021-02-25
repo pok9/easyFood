@@ -37,96 +37,199 @@
     .inner:hover img {
         transform: scale(1.5);
     }
+
+    #myImg {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #myImg:hover {
+        opacity: 0.7;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.9);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content (image) */
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+    }
+
+    /* Caption of Modal Image */
+    #caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+    }
+
+    /* Add Animation */
+    .modal-content,
+    #caption {
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+    @keyframes zoom {
+        from {
+            transform: scale(0.1)
+        }
+
+        to {
+            transform: scale(1)
+        }
+    }
+
+    /* The Close Button */
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* 100% Image Width on Smaller Screens */
+    @media only screen and (max-width: 700px) {
+        .modal-content {
+            width: 100%;
+        }
+    }
+
+    .imgEditAvtar {
+        border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        margin-left: 30%;
+    }
 </style>
 
 <app-toolbar></app-toolbar>
 
-<div class="container-fluid" >
+<div class="container-fluid">
 
     <br>
     <div class="col-sm-12">
 
-    
-    <div class="row">
 
-        <div class="col-md-3 sticky-top">
+        <div class="row">
+
+            <div class="col-md-3 sticky-top">
 
 
-        </div>
+            </div>
 
-        <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
-        <div class="col">
-            <div class="row">
-                <div class="card" style="width: 45vw;">
-                    <div class="card-header h6" >
-                        สร้างโพส
-                    </div>
+            <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
+            <div class="col">
+                <div class="row">
+                    <div class="card" style="width: 45vw;">
+                        <div class="card-header h6">
+                            สร้างโพส
+                        </div>
 
-                    <div class="card-body">
-                        <!--เขียนโพส-->
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                   
-                                    <div class="col">
-                                    <img class="imgToolbar" src="{{avatarProfile}}" alt="Avatar">
-                                </div>
+                        <div class="card-body">
+                            <!--เขียนโพส-->
+                            <div class="row">
                                 <div class="col">
-                                    <button [style]="{width: '35.7vw'}" (click)="showModalDialog()" pButton pRipple
-                                        type="button" label="มีสูตรอาหารอะไรใหม่ๆมั้ย"
-                                        class="p-button-rounded reasonButton colorWritePost"></button>
+                                    <div class="row">
+
+                                        <div class="col">
+                                            <img class="imgToolbar" src="{{avatarProfile}}" alt="Avatar">
+                                        </div>
+                                        <div class="col">
+                                            <button [style]="{width: '35.7vw'}" (click)="showModalDialog()" pButton
+                                                pRipple type="button" label="มีสูตรอาหารอะไรใหม่ๆมั้ย"
+                                                class="p-button-rounded reasonButton colorWritePost"></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <p-dialog header="สร้างโพส" [(visible)]="displayModal" [style]="{width: '50vw'}"
+                                [baseZIndex]="10000">
+
+
+                                <div class="card-header h6">
+                                    <!-- สร้างโพส -->
+                                </div>
+                                <div class="card-body">
+                                    <!--เขียนโพส-->
+                                    <textarea [(ngModel)]="txt" class="form-control beautify-textarea" cols="70"
+                                        rows="2" placeholder="มีสูตรอาหารอะไรใหม่ๆมั้ย"></textarea>
+                                </div>
+                                <div class="card-footer ">
+
+                                    <p-fileUpload customUpload="true" (uploadHandler)="onFileUpload($event)"
+                                        accept="image/*" maxFileSize="10000000">
+
+                                    </p-fileUpload>
+                                    <p-progressBar [value]="value"></p-progressBar>
+
+                                </div>
+                            </p-dialog>
+
                         </div>
-
-                        <p-dialog header="สร้างโพส" [(visible)]="displayModal" [style]="{width: '50vw'}"
-                            [baseZIndex]="10000">
-
-
-                            <div class="card-header h6">
-                                <!-- สร้างโพส -->
-                            </div>
-                            <div class="card-body">
-                                <!--เขียนโพส-->
-                                <textarea [(ngModel)]="txt" class="form-control beautify-textarea" cols="70" rows="2"
-                                    placeholder="มีสูตรอาหารอะไรใหม่ๆมั้ย"></textarea>
-                            </div>
-                            <div class="card-footer ">
-
-                                <p-fileUpload customUpload="true" (uploadHandler)="onFileUpload($event)"
-                                    accept="image/*" maxFileSize="10000000">
-
-                                </p-fileUpload>
-                                <p-progressBar [value]="value"></p-progressBar>
-
-                            </div>
-                        </p-dialog>
-
                     </div>
                 </div>
-            </div>
 
-            <br>
-            <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
-            <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
-            <div class="row">
                 <br>
-                
-                <div *ngFor="let post of this.postnewFeed; index as i;first as isFirst">
-                    <mat-card style="width: 45vw;">
-                        <mat-card-header>
-                            <!-- <div mat-card-avatar class="example-header-image"></div> {{avatarProfile}}-->
-                            <div mat-card-avatar style="background-image: url('{{post.profile_img}}') "
-                                class="example-header-image ">
-                            </div>
-                            <mat-card-title>{{post.nickName}}</mat-card-title>
-                            <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
-                        </mat-card-header>
-                        <img mat-card-image src="{{post.image}}" alt="Photo of pok">
-                        <mat-card-content>
-                            <h5>{{post.caption}}</h5>
-                            <!-- <p>
+                <!-- -----------------------------------------สร้างโพส-------------------------------------------------------- -->
+                <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
+                <div class="row">
+                    <br>
+
+                    <div *ngFor="let post of this.postnewFeed; index as i;first as isFirst">
+                        <mat-card style="width: 45vw;">
+                            <mat-card-header>
+                                <!-- <div mat-card-avatar class="example-header-image"></div> {{avatarProfile}}-->
+                                <div mat-card-avatar style="background-image: url('{{post.profile_img}}') "
+                                    class="example-header-image ">
+                                </div>
+                                <mat-card-title>{{post.nickName}}</mat-card-title>
+                                <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
+                            </mat-card-header>
+                            <img mat-card-image src="{{post.image}}" alt="Photo of pok" (click)="selectImg(post)">
+                            <mat-card-content>
+                                <h5>{{post.caption}}</h5>
+                                <!-- <p>
                         วิธีทำ<br>
                         1.โคลกพริกกับกระเทียม หั่นหมูกรอบตามชอบ<br>
                         2.ตั้งกระทะใส่นำมัน ผัดพริกกระเทียม ผัดให้ฉุน ตามด้วยหมูกรอบ<br>
@@ -134,91 +237,170 @@
                         4.เสร็จแล้วใส่ใบกะเพราลงไป<br>
                         5.ตักใส่จานพร้อมเสิร์ฟ<br>
                     </p> -->
-                        </mat-card-content>
-                        <!-- <mat-card-actions>
+                            </mat-card-content>
+                            <!-- <mat-card-actions>
                     <button mat-button>LIKE</button>
                     <button mat-button>SHARE</button>
                 </mat-card-actions> -->
-                        <!-- <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon"> -->
-                        <!-- <mat-icon>favorite</mat-icon> -->
-                        <button pButton pRipple type="button" icon="pi pi-heart"
-                            class="p-button-rounded p-button-help p-button-outlined">
+                            <!-- <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon"> -->
+                            <!-- <mat-icon>favorite</mat-icon> -->
+                            <button pButton pRipple type="button" icon="pi pi-heart"
+                                class="p-button-rounded p-button-help p-button-outlined">
 
-                        </button>
+                            </button>
 
-                        <!-- </button> -->
+                            <!-- </button> -->
 
-                    </mat-card>
-                    <br>
+                        </mat-card>
+                        <br>
+                    </div>
+
                 </div>
-                
             </div>
-        </div>
-        <div class="col-md-3 sticky-top">
+            <div class="col-md-3 sticky-top">
 
-            <mat-card style="width: 25vw;">
-                <mat-card-header>
+                <mat-card style="width: 25vw;">
+                    <mat-card-header>
 
-                </mat-card-header>
+                    </mat-card-header>
 
-                <mat-card-content>
-                    <div class="row">
-                        <div class="col-sm-1">
-                            <img class="imgToolbar" src="{{avatarProfile}}" alt="Avatar">
-                        </div>
-                        <div class="col-sm-3"></div>
-                        <div clss="col-sm-8">
-                           <div class="row">
-                                <div class="col-xs-7">
-                                    <div class="row">
-                                        <h2>{{mynickname}}</h2>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <img class="imgToolbar" src="{{avatarProfile}}" alt="Avatar">
+                            </div>
+                            <div class="col-sm-3"></div>
+                            <div clss="col-sm-8">
+                                <div class="row">
+                                    <div class="col-xs-7">
+                                        <div class="row">
+                                            <h2>{{mynickname}}</h2>
+                                        </div>
+
+                                        <div class="row-10px">
+                                            <small><s>{{myusername}}</s></small>
+                                        </div>
                                     </div>
-                                    
-                                    <div class="row-10px">
-                                        <small><s>{{myusername}}</s></small>
-                                    </div>
+
                                 </div>
-                                
-                           </div>
-                           <br>
-                           
-                        </div>
-                       
-                    </div>
-                    
-                   <div class="row">
-                    <div class="col-sm-10">
-                        <p>แนะนำสำหรับคุณ</p>
-                    </div>
-                </div>
-                <div *ngFor="let p of this.testIndex;">
+                                <br>
 
-                
-                <div class="row">
-                    <div class="col-sm-2">
-                        <img style="border-radius: 50%;
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <p>แนะนำสำหรับคุณ</p>
+                            </div>
+                        </div>
+                        <div *ngFor="let p of this.testIndex;">
+
+
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <img style="border-radius: 50%;
                         width: 30px;
                         height: 30px;
                         cursor: pointer;" src="{{avatarProfile}}" alt="Avatar">
-                    </div>
-                    <div class="col-sm-4"><p>{{p.gh}}</p></div>
-                    <div class="col-sm-6"><a class="primary" style="cursor: pointer;">ติดตาม</a> </div>
-                </div>
-                
-                <br>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p>{{p.gh}}</p>
+                                </div>
+                                <div class="col-sm-6"><a class="primary" style="cursor: pointer;">ติดตาม</a> </div>
+                            </div>
+
+                            <br>
+                        </div>
+
+                    </mat-card-content>
+
+
+
+                    <!-- </button> -->
+
+                </mat-card>
             </div>
-
-                </mat-card-content>
-
-
-
-                <!-- </button> -->
-
-            </mat-card>
         </div>
     </div>
-</div>
     <br>
 </div>
 
 <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
+
+<p-dialog header="โพสต์" [(visible)]="displayImg" [modal]="true" [style]="{width: '70%'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false" [closable]="true" (onHide)="cancelSelectedImg()">
+
+    <ng-template pTemplate>
+        <p-card>
+
+            <div class="p-field">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <img style="display: block;
+                                    margin-left: auto;
+                                    margin-right: auto;
+                                    width: 100%;" src="{{selectedImg.image}}" alt="Avatar">
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <div class="row">
+                                <div class="col-sm-3"><img class="imgEditAvtar" src="{{selectedImg.profile_img}}"
+                                        alt="Avatar">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <h4>{{selectedImg.nickName}}</h4>
+                                    </div>
+                                    <div class="row">
+                                        <p>{{selectedImg.date}}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <br>
+
+
+                            <div class="row" *ngIf="true; else noedit"></div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-7">
+                                <h4>{{selectedImg.caption}}</h4>
+                            </div>
+                            <div class="col-sm-3">
+                                <p-button icon="pi pi-check" label="Edit" styleClass="p-button-info"></p-button>
+                            </div>
+
+                        </div>
+                        <hr class="my-5">
+                        <ng-template #noedit>
+                            <div class="row">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-3">
+                                    <h4>{{selectedImg.caption}}</h4>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <!-- <div class="card-body">
+                                            
+                                            <textarea [(ngModel)]="txt" class="form-control beautify-textarea" cols="70" rows="2"
+                                                placeholder="มีสูตรอาหารอะไรใหม่ๆมั้ย"></textarea>
+                                        </div> -->
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- </div> -->
+
+
+        </p-card>
+
+
+
+
+    </ng-template>
+</p-dialog>

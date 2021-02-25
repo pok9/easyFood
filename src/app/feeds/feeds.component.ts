@@ -25,6 +25,8 @@ export class FeedsComponent implements OnInit {
   gettoken
   avatarProfile: any
   postnewFeed: any//รับpost newfeed
+
+  
   constructor(private datapass: UserpassService, private router: Router, private http: HttpClient) {
     // console.log(datapass.username);
     //console.log('Constructor')
@@ -209,5 +211,17 @@ export class FeedsComponent implements OnInit {
 
   //-------------------------------------upload_Post------------------------------------//
   
+  displayImg : boolean
+  selectedImg : any
+  dateConvert : any
+  selectImg(item : any){
+    this.selectedImg = item
+    this.displayImg = true
+  }
 
+  cancelSelectedImg(){
+    this.displayImg = false
+    
+  }
+  
 }
