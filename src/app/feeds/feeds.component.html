@@ -223,7 +223,9 @@
                                 <div mat-card-avatar style="background-image: url('{{post.profile_img}}') "
                                     class="example-header-image ">
                                 </div>
-                                <mat-card-title>{{post.nickName}}</mat-card-title>
+
+                                
+                                <mat-card-title><a href="/profile/{{post.username}}"><span style="color: #000000;">{{post.nickName}}</span> </a></mat-card-title>
                                 <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
                             </mat-card-header>
                             <img mat-card-image src="{{post.image}}" alt="Photo of pok" (click)="selectImg(post)">
@@ -328,6 +330,7 @@
 
 <!-- -----------------------------------------ส่วนหลัก-------------------------------------------------------- -->
 
+<!-- -----------------------------------------dialog-------------------------------------------------------- -->
 <p-dialog header="โพสต์" [(visible)]="displayImg" [modal]="true" [style]="{width: '70%'}" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false" [closable]="true" (onHide)="cancelSelectedImg()">
 
@@ -418,3 +421,4 @@
 
     </ng-template>
 </p-dialog>
+<!-- -----------------------------------------dialog-------------------------------------------------------- -->

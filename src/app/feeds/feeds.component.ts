@@ -216,6 +216,7 @@ export class FeedsComponent implements OnInit {
 
   //-------------------------------------upload_Post------------------------------------//
   
+  // <!-- -----------------------------------------dialog-------------------------------------------------------- -->
   displayImg : boolean
   selectedImg : any
   dateConvert : any
@@ -243,6 +244,7 @@ export class FeedsComponent implements OnInit {
     this.divEdit1 = false
     
   }
+  // <!-- -----------------------------------------dialog-------------------------------------------------------- -->
   
 
   

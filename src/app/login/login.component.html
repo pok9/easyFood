@@ -19,14 +19,26 @@
         </ul>
     </nav>
 
-    <div *ngIf="alert" class="alert alert-{{txtalert}} alert-dismissible fade show" role="alert">
-        <div>
-            <strong>เข้าสู่ระบบไม่สำเร็จ !</strong> {{txtmessageAlert}}.
-            <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+    <div *ngIf="this.txtalert == 'success' ; else fall">
+        <div *ngIf="alert" class="alert alert-{{txtalert}} alert-dismissible fade show" role="alert">
+            <div>
+                <strong>เข้าสู่ระบบสำเร็จ !</strong> {{txtmessageAlert}}.
+                <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </div>
     </div>
+    <ng-template #fall>
+        <div *ngIf="alert" class="alert alert-{{txtalert}} alert-dismissible fade show" role="alert">
+            <div>
+                <strong>เข้าสู่ระบบไม่สำเร็จ !</strong> {{txtmessageAlert}}.
+                <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </ng-template>
     <!-- <nav>
         <span class="nav-toggle" id="js-nav-toggle">
             <li class="fas fa-bars"></li>
