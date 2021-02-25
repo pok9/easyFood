@@ -3,6 +3,7 @@ import { UserpassService } from '../userpass.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import jwt_decode from "jwt-decode"
 
 @Component({
   selector: 'app-feeds',
@@ -18,6 +19,7 @@ export class FeedsComponent implements OnInit {
   value: number = 0;
   myusername
   mynickname
+  my_ID 
   testIndex = [{gh:123},{gh:1655565},{gh:165656},{gh:16446464},{gh:100000}]
 
   txt; //ข้อความ
@@ -42,6 +44,9 @@ export class FeedsComponent implements OnInit {
 
     this.localstorage = JSON.parse(localStorage.getItem('TOKEN'))
     this.gettoken = this.localstorage.token
+    this.my_ID = jwt_decode(this.gettoken)
+    console.log(this.my_ID)
+    console.log(this.selectedImg)
     //this.decode = jwt_decode(token)
     //console.log(this.decode.user)
     let header = new HttpHeaders({
@@ -217,11 +222,28 @@ export class FeedsComponent implements OnInit {
   selectImg(item : any){
     this.selectedImg = item
     this.displayImg = true
+    console.log(this.selectedImg)
   }
 
   cancelSelectedImg(){
     this.displayImg = false
+    this.divEdit = true
+    this.divEdit1 = false
+  }
+
+  divEdit: boolean = true
+  divEdit1: boolean = false
+  selectImgEdit(){
+    this.divEdit = false
+    this.divEdit1 = true
+  }
+
+  cancelSelectedImgEdit(){
+    this.divEdit = true
+    this.divEdit1 = false
     
   }
+  
+
   
 }

@@ -364,14 +364,28 @@
                             <br>
 
 
-                            <div class="row" *ngIf="true; else noedit"></div>
+                            <div class="row" *ngIf="this.my_ID.user == this.selectedImg.uID; else noedit">
                             <div class="col-sm-2"></div>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" *ngIf="divEdit">
                                 <h4>{{selectedImg.caption}}</h4>
                             </div>
-                            <div class="col-sm-3">
-                                <p-button icon="pi pi-check" label="Edit" styleClass="p-button-info"></p-button>
+                            <div class="col-sm-7" *ngIf="divEdit1">
+                                <!-- <h4>{{selectedImg.caption}}</h4> -->
+                                <textarea rows="5" cols="30" [ngModel]="selectedImg.caption" style="border: none;
+                                border-color: transparent;" pInputTextarea> </textarea>
+                                <!-- <input type="text" style="border: none;
+                                border-color: transparent;" [ngModel]="selectedImg.caption"> -->
                             </div>
+
+                            <div class="col-sm-3" *ngIf="divEdit">
+                                <p-button icon="pi pi-check" label="Edit" styleClass="p-button-info" (click)="selectImgEdit()"></p-button>
+                            </div>
+                            <div class="col-sm-3" *ngIf="divEdit1">
+                                <p-button icon="pi pi-check" label="555" styleClass="p-button-info" (click)="selectImgEdit()"></p-button>
+                            </div>
+                            
+                            
+                        </div>
 
                         </div>
                         <hr class="my-5">
