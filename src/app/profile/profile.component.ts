@@ -622,7 +622,11 @@ export class ProfileComponent implements OnInit {
     //     })
   }
   //===============================================SearchUser=======================================
+  iconFollow = "pi-user-plus"
   followUser() {
+
+    this.iconFollow = "pi-spin pi-spinner"
+    
     let json = { following_ID : this.dataUser_id};
     let header = new HttpHeaders({
 
@@ -641,9 +645,11 @@ export class ProfileComponent implements OnInit {
           console.log('Error ' + JSON.stringify(error));
         });
         this.ngOnInit()
+
   }
 
   unfollowUser(){
+    this.iconFollow = "pi-user-plus"
     let json = { following_ID : this.dataUser_id};
     let header = new HttpHeaders({
 
