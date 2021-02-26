@@ -154,7 +154,7 @@
 
         <div class="row">
 
-            <div class="col-md-3 sticky-top">
+            <div class="col-md-3">
 
 
             </div>
@@ -261,9 +261,8 @@
 
                 </div>
             </div>
-            <div class="col-md-3 ">
-
-                <mat-card style="width: 25vw;">
+            <div class="col-md-3  " style="position: fixed;right: 0;">
+                <mat-card style="width: 25vw; " >
                     <mat-card-header>
 
                     </mat-card-header>
@@ -298,22 +297,27 @@
                                 <p>แนะนำสำหรับคุณ</p>
                             </div>
                         </div>
-                        <div *ngFor="let p of this.testIndex;">
+                        <div *ngFor="let p of this.followSugg; index as i" >
 
-
+                            
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <img style="border-radius: 50%;
-                        width: 30px;
-                        height: 30px;
-                        cursor: pointer;" src="{{avatarProfile}}" alt="Avatar">
+                                    <img style="border-radius: 50%;width: 30px; height: 30px;cursor: pointer;"src="{{p.profile_img}}" alt="Avatar">
+                                           
                                 </div>
                                 <div class="col-sm-4">
-                                    <p>{{p.gh}}</p>
+                                    <a href="/profile/{{p.username}}" style="color: black;"><p>{{p.nickName}}</p></a>
                                 </div>
-                                <div class="col-sm-6"><a class="primary" style="cursor: pointer;">ติดตาม</a> </div>
+                                <div class="col-sm-6"><a class="primary" style="cursor: pointer;" *ngIf="indexOfFollow[i] == 0 ; else following" (click)= "follow(p.user_ID,i)">ติดตาม</a> </div>
+                                <ng-template #following>
+                                    <div class="col-sm-2"><a class="primary" style="cursor: pointer; color: red;"  *ngIf="indexOfFollow[i] == 1 ; else following" (click)= "unfollow(p.user_ID,i)">กำลังติดตาม</a> </div>
+                                </ng-template>
+                                <ng-template #following>
+                                    <div class="col-sm-2"><a class="primary" style="cursor: pointer;"  *ngIf="indexOfFollow[i] == 0 ; else following" (click)= "follow(p.user_ID,i)">ติดตาม</a> </div>
+                                </ng-template>
                             </div>
-
+                        
+                        
                             <br>
                         </div>
 
@@ -375,11 +379,10 @@
                                 <h4>{{selectedImg.caption}}</h4>
                             </div>
                             <div class="col-sm-7" *ngIf="divEdit1">
-                                <!-- <h4>{{selectedImg.caption}}</h4> -->
+                                
                                 <textarea rows="5" cols="30" [ngModel]="selectedImg.caption" style="border: none;
                                 border-color: transparent;" pInputTextarea> </textarea>
-                                <!-- <input type="text" style="border: none;
-                                border-color: transparent;" [ngModel]="selectedImg.caption"> -->
+                                
                             </div>
 
                             <div class="col-sm-3" *ngIf="divEdit">
@@ -388,7 +391,7 @@
                             <div class="col-sm-3" *ngIf="divEdit1">
                                 <p-button icon="pi pi-check" label="555" styleClass="p-button-info" (click)="selectImgEdit()"></p-button>
                             </div>
-                            
+                            <div class="col-sm-3"></div>
                             
                         </div>
 
@@ -397,9 +400,10 @@
                         <ng-template #noedit>
                             <div class="row">
                                 <div class="col-sm-3"></div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-9">
                                     <h4>{{selectedImg.caption}}</h4>
                                 </div>
+                                <!-- <div class="col-sm-1"></div> -->
                             </div>
                         </ng-template>
                         <!-- <div class="card-body">

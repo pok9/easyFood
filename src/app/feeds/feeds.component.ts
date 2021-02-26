@@ -19,16 +19,16 @@ export class FeedsComponent implements OnInit {
   value: number = 0;
   myusername
   mynickname
-  my_ID 
-  testIndex = [{gh:123},{gh:1655565},{gh:165656},{gh:16446464},{gh:100000}]
+  my_ID
+  followSugg: any = new Array()
 
   txt; //ข้อความ
   localstorage
   gettoken
   avatarProfile: any
   postnewFeed: any//รับpost newfeed
+  checkFollow: any
 
-  
   constructor(private datapass: UserpassService, private router: Router, private http: HttpClient) {
     // console.log(datapass.username);
     //console.log('Constructor')
@@ -36,7 +36,7 @@ export class FeedsComponent implements OnInit {
 
   async ngOnInit() {
     //console.log('ngOnInit')
-    
+
     if (localStorage.getItem('TOKEN') === null) {
       alert("Please login!")
       this.router.navigateByUrl('/login');
@@ -49,6 +49,7 @@ export class FeedsComponent implements OnInit {
     console.log(this.selectedImg)
     //this.decode = jwt_decode(token)
     //console.log(this.decode.user)
+    this.getSuggestion()
     let header = new HttpHeaders({
 
       'Content-Type': 'application/json',
@@ -93,57 +94,58 @@ export class FeedsComponent implements OnInit {
       //console.log(Object.keys(response["feed"]).length)
       // console.log(d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear())
       // console.log(d.getHours()+":"+d.getMinutes()+":"+d.getSeconds)
-      let year:Number
-      let month:Number
-      let day:Number
-      let hours:Number
-      let minutes:Number
-      let second:Number
-      for(let i=0;i<Object.keys(response["feed"]).length;i++){
+      let year: Number
+      let month: Number
+      let day: Number
+      let hours: Number
+      let minutes: Number
+      let second: Number
+      for (let i = 0; i < Object.keys(response["feed"]).length; i++) {
         response["feed"][i].profile_img = response["feed"][i].profile_img.replace("\\", "\/")
-        
-       // response["feed"][i].date = new Date(response["feed"][i].date)
-        
+
+        response["feed"][i].date = new Date(response["feed"][i].date)
+
         response["feed"][i].date = datePipe.transform(response["feed"][i].date, 'MM/dd/yyyy,HH:mm:ss a');
         //console.log(response["feed"][i].date)
 
-        year = Number(response["feed"][i].date.substring(6,10))
-        month = Number(response["feed"][i].date.substring(0,2))
-        day = Number(response["feed"][i].date.substring(3,5))
-        hours = Number(response["feed"][i].date.substring(11,13))
-        minutes = Number(response["feed"][i].date.substring(14,16))
-        second = Number(response["feed"][i].date.substring(17,19))
+        year = Number(response["feed"][i].date.substring(6, 10))
+        month = Number(response["feed"][i].date.substring(0, 2))
+        day = Number(response["feed"][i].date.substring(3, 5))
+        hours = Number(response["feed"][i].date.substring(11, 13))
+        minutes = Number(response["feed"][i].date.substring(14, 16))
+        second = Number(response["feed"][i].date.substring(17, 19))
 
-       // console.log(d.getMinutes() +" "+ minutes)
-       
+        // console.log(d.getDate() +" "+ day)
+
         // if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes()-4 == minutes && d.getSeconds() > second)
         //     response["feed"][i].date = (d.getSeconds() - Number(second))+" วินาที"
-        if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes()-3 == minutes)
-            response["feed"][i].date = "เมื่อสักครู่"
-        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes()-3 > minutes)
-            response["feed"][i].date = ((d.getMinutes()-3) - Number(minutes))+" นาที"
-        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() > hours) 
-            response["feed"][i].date = (d.getHours() - Number(hours))+" ชั่วโมง"
-        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() > day && (d.getDate() - Number(day) >= 6))
-            response["feed"][i].date = (((d.getDate()/7).toString().split('.')[0]))+" สัปดาห์"
-        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() > day)
-            response["feed"][i].date = (d.getDate() - Number(day)) + " วัน"
-        else if(d.getFullYear() == year && d.getMonth()+1 > month)
-            response["feed"][i].date = (d.getMonth() - Number(month)) + " เดือน"
-        else if(d.getFullYear() > year)
-            response["feed"][i].date = (d.getFullYear() - Number(year)) + " ปี"
-        
+        if (d.getFullYear() == year && d.getMonth() + 1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes() - 3 <= minutes)
+          response["feed"][i].date = "เมื่อสักครู่"
+        else if (d.getFullYear() == year && d.getMonth() + 1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes() - 3 > minutes)
+          response["feed"][i].date = ((d.getMinutes() - 3) - Number(minutes)) + " นาที"
+        else if (d.getFullYear() == year && d.getMonth() + 1 == month && d.getDate() == day && d.getHours() > hours)
+          response["feed"][i].date = (d.getHours() - Number(hours)) + " ชั่วโมง"
+        else if (d.getFullYear() == year && d.getMonth() + 1 == month && d.getDate() > day && (d.getDate() - Number(day) >= 6))
+          response["feed"][i].date = (((d.getDate() / 7).toString().split('.')[0])) + " สัปดาห์"
+        else if (d.getFullYear() == year && d.getMonth() + 1 == month && d.getDate() > day)
+          response["feed"][i].date = (d.getDate() - Number(day)) + " วัน"
+        else if (d.getFullYear() == year && d.getMonth() + 1 > month)
+          response["feed"][i].date = (d.getMonth() - Number(month)) + " เดือน"
+        else if (d.getFullYear() > year)
+          response["feed"][i].date = (d.getFullYear() - Number(year)) + " ปี"
+
       }
       // for(var val of response["feed"]){
       //   console.log(val)
       // }
-      this.postnewFeed = response["feed"] 
-     // console.log(this.postnewFeed)
-     // console.log(this.postnewFeed)
-      
+      this.postnewFeed = response["feed"]
+      // console.log(this.postnewFeed)
+      // console.log(this.postnewFeed)
+
     })
 
   }
+
 
   getInterpretations() {
     if (localStorage.getItem('interpretations') === null) {
@@ -167,7 +169,7 @@ export class FeedsComponent implements OnInit {
     this.displayModal = true;
   }
 
-   public onFileUpload(data: { files: File }): void {
+  public onFileUpload(data: { files: File }): void {
     const formData: FormData = new FormData();
     this.localstorage = JSON.parse(localStorage.getItem('TOKEN'))
     this.gettoken = this.localstorage.token
@@ -193,9 +195,9 @@ export class FeedsComponent implements OnInit {
 
         //   console.log(response)
         // })
-        let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).toPromise().then(data =>{
+        let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).toPromise().then(data => {
           //console.log(data)
-          if(data["success"] == 1){
+          if (data["success"] == 1) {
             this.displayModal = false;
             this.value = 0;
             location.reload()
@@ -203,30 +205,30 @@ export class FeedsComponent implements OnInit {
         })
 
 
-        
+
 
       }
     }, 400);
 
-    
+
 
     //formData.append('file', file, file.name);
   }
-  
+
 
   //-------------------------------------upload_Post------------------------------------//
-  
+
   // <!-- -----------------------------------------dialog-------------------------------------------------------- -->
-  displayImg : boolean
-  selectedImg : any
-  dateConvert : any
-  selectImg(item : any){
+  displayImg: boolean
+  selectedImg: any
+  dateConvert: any
+  selectImg(item: any) {
     this.selectedImg = item
     this.displayImg = true
     console.log(this.selectedImg)
   }
 
-  cancelSelectedImg(){
+  cancelSelectedImg() {
     this.displayImg = false
     this.divEdit = true
     this.divEdit1 = false
@@ -234,18 +236,95 @@ export class FeedsComponent implements OnInit {
 
   divEdit: boolean = true
   divEdit1: boolean = false
-  selectImgEdit(){
+  selectImgEdit() {
     this.divEdit = false
     this.divEdit1 = true
   }
 
-  cancelSelectedImgEdit(){
+  cancelSelectedImgEdit() {
     this.divEdit = true
     this.divEdit1 = false
-    
+
   }
   // <!-- -----------------------------------------dialog-------------------------------------------------------- -->
+
+  getSuggestion() {
+    let header = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.gettoken
+    });
+    let option = {
+      headers: header
+    }
+
+    let req = this.http.get("http://apifood.comsciproject.com/follow/randFollow", option).subscribe(response => {
+      
+      
+
+      for (let i = 0; i < 5; i++) {
+        this.http.get("http://apifood.comsciproject.com/follow/checkFollow/" + response["results"][i].user_ID, option).subscribe(response1 => {
+          this.checkFollow = response1['checkFollow']
+          console.log(response1['checkFollow'])
+          if (response1['checkFollow'] != 1) {
+            this.followSugg.push(response["results"][i])
+          }
+
+        })
+      }
+    })
+  }
   
+  indexOfFollow = [0,0,0,0,0]
+  follow(id,index) {
+    
+      let header = new HttpHeaders({
+
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer ' + this.gettoken
+      });
+      let option = {
+        headers: header
+      }
+      console.log(index)
+      let json = { following_ID : id};
+      let request = this.http.post('http://apifood.comsciproject.com/follow/following',json,option)
+        .subscribe(response => {
+         
+          if(response["success"] == 1){
+            this.indexOfFollow[index] = 1
+          }
+          //console.log(response)
+          
+        })
+
+    
+  }
+
+  unfollow(id,index) {
+    
+    let header = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.gettoken
+    });
+    let option = {
+      headers: header
+    }
+    console.log(index)
+    let json = { following_ID : id};
+    let request = this.http.post('http://apifood.comsciproject.com/follow/unfollowing',json,option)
+      .subscribe(response => {
+       
+        if(response["success"] == 1){
+          this.indexOfFollow[index] = 0
+        }
+        //console.log(response)
+        
+      })
 
   
+}
+
+
 }
