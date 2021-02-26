@@ -35,8 +35,7 @@
     
 </style>
 
-<p-toolbar>
-
+<p-toolbar >
     <div class="row">
         <div class="col-sm-8"></div>
         <div class="col-sm-2"></div>
@@ -48,8 +47,6 @@
 
     </div>
     <div class="col-xl-1">
-        <!-- <p-autoComplete [(ngModel)]="selectNumber" [suggestions]="output" (completeMethod)="search($event)"
-            placeholder="ค้นหา" [dropdown]="false"></p-autoComplete> -->
         <p-autoComplete [(ngModel)]="selectNumber" [suggestions]="output" (completeMethod)="search($event)"
             placeholder="ค้นหา" field="name" [dropdown]="false">
             <ng-template let-selectNumber pTemplate="item" style="background-color: brown;">
@@ -66,10 +63,6 @@
 
 
     <div class="p-toolbar-group-right">
-        <!-- <a routerLink="/feeds"><fa-icon [icon]="iconhome" style="color: dodgerblue;" ></fa-icon></a>
-        <a routerLink=""><fa-icon [icon]="iconmessage" style="color: dodgerblue;"></fa-icon></a>
-        <a routerLink=""><fa-icon [icon]="iconbell" style="color: dodgerblue;"></fa-icon></a>
-        <img  class="imgToolbar" src="{{profile_img}}" alt="Avatar"> -->
         <div class="row">
             <div class="col">
                 <a href="/feeds">
