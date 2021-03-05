@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import jwt_decode from "jwt-decode"
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-feeds',
@@ -28,7 +29,12 @@ export class FeedsComponent implements OnInit {
   avatarProfile: any
   postnewFeed: any//รับpost newfeed
   checkFollow: any
-
+  items: MenuItem[];
+  
+  displayResponsiveDelete = false;//ลบโพสต์
+  displayResponsiveEdit = false;//แก้ไขโพสต์
+  //text : any;
+  property :any
   constructor(private datapass: UserpassService, private router: Router, private http: HttpClient) {
     // console.log(datapass.username);
     //console.log('Constructor')
@@ -144,8 +150,87 @@ export class FeedsComponent implements OnInit {
 
     })
 
+
+    this.items = [
+      {
+        label: 'แก้ไขโพสต์', icon: 'pi pi-refresh', command: () => {
+          //console.log("12312312 = "+this.text)
+          this.displayEdit();
+        }
+      },
+      {
+        label: 'ลบโพสต์', icon: 'pi pi-times', command: () => {
+          this.displaydelete();
+        }
+      },
+      { label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io' },
+      { separator: true },
+      { label: 'Setup', icon: 'pi pi-cog', routerLink: ['/setup'] }
+    ];
+
+    console.log(this.postnewFeed);
   }
 
+  ////////////////////////////////// -ลบโพสต์- /////////////////////////////////////
+  displaydelete(){
+    this.displayResponsiveDelete = true;
+  }
+  displayResponsivedelete(postId){
+    console.log(postId.post_ID);
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.gettoken
+    });
+    let option = {
+      headers: header
+    }
+
+    let json = { post_ID : postId.post_ID };
+    let request = this.http.post('http://apifood.comsciproject.com/post/deletePost', json, option)
+      .subscribe(response => {
+
+        if (response["success"] == 1) {
+          location.reload();
+        }
+        
+
+      })
+
+    this.displayResponsiveDelete = false;
+  }
+  ////////////////////////////////// -ลบโพสต์- /////////////////////////////////////
+
+  ////////////////////////////////// -แก้ไขโพสต์- /////////////////////////////////////
+ 
+  displayEdit(){
+    this.displayResponsiveEdit = true;
+  }
+  displayResponsiveEdits(postId){
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.gettoken
+    });
+    let option = {
+      headers: header
+    }
+    let json = { post_ID : postId.post_ID,caption : this.property  };
+
+    let request = this.http.post('http://apifood.comsciproject.com/post/editPost', json, option)
+      .subscribe(response => {
+        console.log(response)
+        if (response["success"] == 1) {
+          location.reload();
+        }
+        
+
+      })
+
+    console.log(postId.post_ID)
+    console.log(this.property);
+    this.displayResponsiveEdit = false;
+  }
+
+  ////////////////////////////////// -แก้ไขโพสต์- /////////////////////////////////////
 
   getInterpretations() {
     if (localStorage.getItem('interpretations') === null) {
@@ -222,7 +307,9 @@ export class FeedsComponent implements OnInit {
   displayImg: boolean
   selectedImg: any
   dateConvert: any
+  
   selectImg(item: any) {
+    this.property = item["caption"]
     this.selectedImg = item
     this.displayImg = true
     console.log(this.selectedImg)
@@ -259,8 +346,8 @@ export class FeedsComponent implements OnInit {
     }
 
     let req = this.http.get("http://apifood.comsciproject.com/follow/randFollow", option).subscribe(response => {
-      
-      
+
+
 
       for (let i = 0; i < 5; i++) {
         this.http.get("http://apifood.comsciproject.com/follow/checkFollow/" + response["results"][i].user_ID, option).subscribe(response1 => {
@@ -274,35 +361,10 @@ export class FeedsComponent implements OnInit {
       }
     })
   }
-  
-  indexOfFollow = [0,0,0,0,0]
-  follow(id,index) {
-    
-      let header = new HttpHeaders({
 
-        'Content-Type': 'application/json',
-        'authorization': 'Bearer ' + this.gettoken
-      });
-      let option = {
-        headers: header
-      }
-      console.log(index)
-      let json = { following_ID : id};
-      let request = this.http.post('http://apifood.comsciproject.com/follow/following',json,option)
-        .subscribe(response => {
-         
-          if(response["success"] == 1){
-            this.indexOfFollow[index] = 1
-          }
-          //console.log(response)
-          
-        })
+  indexOfFollow = [0, 0, 0, 0, 0]
+  follow(id, index) {
 
-    
-  }
-
-  unfollow(id,index) {
-    
     let header = new HttpHeaders({
 
       'Content-Type': 'application/json',
@@ -312,19 +374,44 @@ export class FeedsComponent implements OnInit {
       headers: header
     }
     console.log(index)
-    let json = { following_ID : id};
-    let request = this.http.post('http://apifood.comsciproject.com/follow/unfollowing',json,option)
+    let json = { following_ID: id };
+    let request = this.http.post('http://apifood.comsciproject.com/follow/following', json, option)
       .subscribe(response => {
-       
-        if(response["success"] == 1){
+
+        if (response["success"] == 1) {
+          this.indexOfFollow[index] = 1
+        }
+        //console.log(response)
+
+      })
+
+
+  }
+
+  unfollow(id, index) {
+
+    let header = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.gettoken
+    });
+    let option = {
+      headers: header
+    }
+    console.log(index)
+    let json = { following_ID: id };
+    let request = this.http.post('http://apifood.comsciproject.com/follow/unfollowing', json, option)
+      .subscribe(response => {
+
+        if (response["success"] == 1) {
           this.indexOfFollow[index] = 0
         }
         //console.log(response)
-        
+
       })
 
-  
-}
+
+  }
 
 
 }

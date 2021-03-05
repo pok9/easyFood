@@ -31,6 +31,8 @@ import {FileUploadModule} from 'primeng/fileupload';//upload file
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {MatCardModule} from '@angular/material/card';//feed
 import {MatIconModule} from '@angular/material/icon';
+
+import {SplitButtonModule} from 'primeng/splitbutton';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,8 +64,8 @@ import {MatIconModule} from '@angular/material/icon';
     FileUploadModule,
     AutoCompleteModule,
     MatCardModule,
-    MatIconModule
-    
+    MatIconModule,
+    SplitButtonModule,   
     
     
   ],

@@ -145,7 +145,7 @@
 
 
 <div class="container-fluid">
-    <div class="sticky-top"> 
+    <div class="sticky-top">
         <app-toolbar></app-toolbar>
     </div>
     <br>
@@ -225,9 +225,10 @@
                                 <div mat-card-avatar style="background-image: url('{{post.profile_img}}') "
                                     class="example-header-image ">
                                 </div>
-
                                 
-                                <mat-card-title><a href="/profile/{{post.username}}"><span style="color: #000000;">{{post.nickName}}</span> </a></mat-card-title>
+
+                                <mat-card-title><a href="/profile/{{post.username}}"><span
+                                            style="color: #000000;">{{post.nickName}}</span> </a></mat-card-title>
                                 <mat-card-subtitle>{{post.date}}</mat-card-subtitle>
                             </mat-card-header>
                             <img mat-card-image src="{{post.image}}" alt="Photo of pok" (click)="selectImg(post)">
@@ -262,7 +263,7 @@
                 </div>
             </div>
             <div class="col-md-3  " style="position: fixed;right: 0;">
-                <mat-card style="width: 25vw; " >
+                <mat-card style="width: 25vw; ">
                     <mat-card-header>
 
                     </mat-card-header>
@@ -297,27 +298,36 @@
                                 <p>แนะนำสำหรับคุณ</p>
                             </div>
                         </div>
-                        <div *ngFor="let p of this.followSugg; index as i" >
+                        <div *ngFor="let p of this.followSugg; index as i">
 
-                            
+
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <img style="border-radius: 50%;width: 30px; height: 30px;cursor: pointer;"src="{{p.profile_img}}" alt="Avatar">
-                                           
+                                    <img style="border-radius: 50%;width: 30px; height: 30px;cursor: pointer;"
+                                        src="{{p.profile_img}}" alt="Avatar">
+
                                 </div>
                                 <div class="col-sm-4">
-                                    <a href="/profile/{{p.username}}" style="color: black;"><p>{{p.nickName}}</p></a>
+                                    <a href="/profile/{{p.username}}" style="color: black;">
+                                        <p>{{p.nickName}}</p>
+                                    </a>
                                 </div>
-                                <div class="col-sm-6"><a class="primary" style="cursor: pointer;" *ngIf="indexOfFollow[i] == 0 ; else following" (click)= "follow(p.user_ID,i)">ติดตาม</a> </div>
+                                <div class="col-sm-6"><a class="primary" style="cursor: pointer;"
+                                        *ngIf="indexOfFollow[i] == 0 ; else following"
+                                        (click)="follow(p.user_ID,i)">ติดตาม</a> </div>
                                 <ng-template #following>
-                                    <div class="col-sm-2"><a class="primary" style="cursor: pointer; color: red;"  *ngIf="indexOfFollow[i] == 1 ; else following" (click)= "unfollow(p.user_ID,i)">กำลังติดตาม</a> </div>
+                                    <div class="col-sm-2"><a class="primary" style="cursor: pointer; color: red;"
+                                            *ngIf="indexOfFollow[i] == 1 ; else following"
+                                            (click)="unfollow(p.user_ID,i)">กำลังติดตาม</a> </div>
                                 </ng-template>
                                 <ng-template #following>
-                                    <div class="col-sm-2"><a class="primary" style="cursor: pointer;"  *ngIf="indexOfFollow[i] == 0 ; else following" (click)= "follow(p.user_ID,i)">ติดตาม</a> </div>
+                                    <div class="col-sm-2"><a class="primary" style="cursor: pointer;"
+                                            *ngIf="indexOfFollow[i] == 0 ; else following"
+                                            (click)="follow(p.user_ID,i)">ติดตาม</a> </div>
                                 </ng-template>
                             </div>
-                        
-                        
+
+
                             <br>
                         </div>
 
@@ -362,6 +372,68 @@
                                 <div class="col-sm-6">
                                     <div class="row">
                                         <h4>{{selectedImg.nickName}}</h4>
+                                        <div class="col-sm-5"></div>
+
+                                        <div *ngIf="this.my_ID.user == this.selectedImg.uID">
+                                            <p-splitButton label="ตั้งค่า" icon="pi pi-cog" [model]="items">
+                                            </p-splitButton>
+
+                                            <!-- ลบโพสต์ -->
+                                            <p-dialog header="ลบโพสต์" [(visible)]="displayResponsiveDelete"
+                                                [style]="{width: '20vw'}" [baseZIndex]="50" [draggable]="false"
+                                                [resizable]="false">
+
+                                                <ng-template pTemplate="footer">
+                                                    <p-button (onClick)="displayResponsivedelete(this.selectedImg)"
+                                                        label="Yes" styleClass="p-button-text"></p-button>
+                                                    <p-button (click)="displayResponsiveDelete=false" label="No"
+                                                        styleClass="p-button-text"></p-button>
+                                                </ng-template>
+                                            </p-dialog>
+                                            <!-- ลบโพสต์ -->
+
+                                            <!-- แก้ไขโพสต์ -->
+                                            <p-dialog header="แก้ไขโพสต์" [(visible)]="displayResponsiveEdit"
+                                                [modal]="true" [style]="{width: '30%'}" [baseZIndex]="10000"
+                                                [draggable]="false" [resizable]="false" [closable]="false">
+
+                                                <p-card>
+
+                                                    <div class="p-field">
+                                                        <div>
+                                                            <!-- <textarea rows="5" cols="30" [ngModel]="text" style="border: none; 
+                                                                border-color: transparent;" pInputTextarea> </textarea> -->
+                                                            <textarea rows="5" cols="30" pInputTextarea
+                                                                autoResize="autoResize"
+                                                                [(ngModel)]="property"></textarea>
+                                                        </div>
+
+                                                        <!-- <input class="inputEditAvtar" id="file-input" type="file"
+                                                            (change)="onEditPro($event.target.files)" /> -->
+                                                        <!-- <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onEditPro($event.target.files)" [auto]="true"></p-fileUpload> -->
+                                                        <br>
+                                                        <div>
+
+                                                        </div>
+                                                        <br><br>
+                                                    </div>
+
+                                                </p-card>
+
+                                                <ng-template pTemplate="footer">
+                                                    <p-button icon="pi pi-check"
+                                                        (click)="displayResponsiveEdits(this.selectedImg)" label="แก้ไข"
+                                                        styleClass="p-button-info">
+                                                    </p-button>
+                                                    <p-button icon="pi pi-times" (click)="displayResponsiveEdit=false"
+                                                        label="ยกเลิก" styleClass="p-button-danger">
+                                                    </p-button>
+                                                </ng-template>
+
+                                            </p-dialog>
+                                            <!-- แก้ไขโพสต์ -->
+                                        </div>
+
                                     </div>
                                     <div class="row">
                                         <p>{{selectedImg.date}}</p>
@@ -374,26 +446,36 @@
 
 
                             <div class="row" *ngIf="this.my_ID.user == this.selectedImg.uID; else noedit">
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-7" *ngIf="divEdit">
-                                <h4>{{selectedImg.caption}}</h4>
-                            </div>
-                            <div class="col-sm-7" *ngIf="divEdit1">
-                                
-                                <textarea rows="5" cols="30" [ngModel]="selectedImg.caption" style="border: none;
-                                border-color: transparent;" pInputTextarea> </textarea>
-                                
-                            </div>
+                                <div class="col-sm-2"></div>
 
-                            <div class="col-sm-3" *ngIf="divEdit">
+                                <div *ngIf="divEdit">
+                                    <div class="row">
+                                        <!--caption-->
+                                        <h4>{{selectedImg.caption}}</h4>
+
+                                    </div>
+
+                                </div>
+                                <!-- <div class="col-sm-7" *ngIf="divEdit1"> -->
+                                <!-- Edit -->
+
+
+                                <!-- <textarea rows="5" cols="30" [ngModel]="selectedImg.caption" style="border: none;
+                                border-color: transparent;" pInputTextarea> </textarea> -->
+
+
+                                <!-- </div> -->
+
+                                <!-- <div class="col-sm-3" *ngIf="divEdit">
                                 <p-button icon="pi pi-check" label="Edit" styleClass="p-button-info" (click)="selectImgEdit()"></p-button>
                             </div>
                             <div class="col-sm-3" *ngIf="divEdit1">
                                 <p-button icon="pi pi-check" label="555" styleClass="p-button-info" (click)="selectImgEdit()"></p-button>
+                            </div> -->
+
+                                <div class="col-sm-3"></div>
+
                             </div>
-                            <div class="col-sm-3"></div>
-                            
-                        </div>
 
                         </div>
                         <hr class="my-5">
