@@ -23,6 +23,11 @@ export class FeedsComponent implements OnInit {
   my_ID
   followSugg: any = new Array()
 
+  ////about likeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  likeCount : any = new Array()
+  //divLike: any
+  divLike :any = new Array()
+  ////////////////////////////////
   txt; //ข้อความ
   localstorage
   gettoken
@@ -35,6 +40,8 @@ export class FeedsComponent implements OnInit {
   displayResponsiveEdit = false;//แก้ไขโพสต์
   //text : any;
   property :any
+
+
   constructor(private datapass: UserpassService, private router: Router, private http: HttpClient) {
     // console.log(datapass.username);
     //console.log('Constructor')
@@ -100,6 +107,8 @@ export class FeedsComponent implements OnInit {
       //console.log(Object.keys(response["feed"]).length)
       // console.log(d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear())
       // console.log(d.getHours()+":"+d.getMinutes()+":"+d.getSeconds)
+
+
       let year: Number
       let month: Number
       let day: Number
@@ -107,6 +116,8 @@ export class FeedsComponent implements OnInit {
       let minutes: Number
       let second: Number
       for (let i = 0; i < Object.keys(response["feed"]).length; i++) {
+
+
         response["feed"][i].profile_img = response["feed"][i].profile_img.replace("\\", "\/")
 
         response["feed"][i].date = new Date(response["feed"][i].date)
@@ -140,15 +151,37 @@ export class FeedsComponent implements OnInit {
         else if (d.getFullYear() > year)
           response["feed"][i].date = (d.getFullYear() - Number(year)) + " ปี"
 
+        //console.log(response["feed"][i].post_ID)
+        //
+        //////////////////เรียกหาจำนวน like เมื่อรอบแรก
+
+        let reqestLike = this.http.get("http://apifood.comsciproject.com/post/getLikePost/"+response["feed"][i].post_ID,option).toPromise().then(response1 =>{
+          this.likeCount[i] = response1["countLike"]
+          if(response1["user_ID"] == 1){  //ไม่ใช่ user_ID แต่มันคือcount ใส่ผิด เบลออ
+            this.divLike[i] = 1
+            //console.log(this.divLike+"<<<<<<<<<<<<<<<")
+          }else{
+            this.divLike[i] = 0
+          }
+          //console.log(response1["countLike"]+" like")
+        })
+
+
       }
+
+      
+
       // for(var val of response["feed"]){
       //   console.log(val)
       // }
       this.postnewFeed = response["feed"]
+      console.log(this.likeCount)
       // console.log(this.postnewFeed)
       // console.log(this.postnewFeed)
 
     })
+
+
 
 
     this.items = [
@@ -169,6 +202,31 @@ export class FeedsComponent implements OnInit {
     ];
 
     console.log(this.postnewFeed);
+  }
+
+  //กด likeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  like(index,pid){
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.gettoken
+    });
+    let option = {
+      headers: header
+    }
+
+    let json = {pid: pid}
+    let request = this.http.post('http://apifood.comsciproject.com/post/likepost', json, option).subscribe(response =>{
+      if(response["success"] == 1){
+        this.likeCount[index] = response["countLike"]
+        if(response["countMyLiked"]==1){
+          this.divLike[index] = 1
+        }else{
+          this.divLike[index] = 0
+        }
+        
+        //console.log(this.divLike+"<<<<<<<<<<<")
+      }
+    })
   }
 
   ////////////////////////////////// -ลบโพสต์- /////////////////////////////////////

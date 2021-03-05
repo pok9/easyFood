@@ -249,12 +249,18 @@
                 </mat-card-actions> -->
                             <!-- <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon"> -->
                             <!-- <mat-icon>favorite</mat-icon> -->
-                            <button pButton pRipple type="button" icon="pi pi-heart"
-                                class="p-button-rounded p-button-help p-button-outlined">
+                            <button pButton pRipple type="button" icon="pi pi-heart" *ngIf="divLike[i] == 0"
+                                class="p-button-rounded p-button-help  p-button-outlined" (click)="like(i,post.post_ID)">
+
+                            </button>
+
+                            <button pButton pRipple type="button" icon="pi pi-heart" *ngIf="divLike[i] == 1" 
+                            class="p-button-rounded p-button-help " (click)="like(i,post.post_ID)">
 
                             </button>
 
                             <!-- </button> -->
+                            <p *ngIf="likeCount[i] != 0">ถูกใจ {{likeCount[i]}} คน</p>
 
                         </mat-card>
                         <br>
@@ -375,7 +381,7 @@
                                         <div class="col-sm-5"></div>
 
                                         <div *ngIf="this.my_ID.user == this.selectedImg.uID">
-                                            <p-splitButton label="ตั้งค่า" icon="pi pi-cog" [model]="items">
+                                            <p-splitButton label="ตั้งค่า" icon="pi pi-cog" [model]="items" >
                                             </p-splitButton>
 
                                             <!-- ลบโพสต์ -->
