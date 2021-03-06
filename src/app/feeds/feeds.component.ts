@@ -319,7 +319,7 @@ export class FeedsComponent implements OnInit {
     this.gettoken = this.localstorage.token
 
     formData.append("postImage", data.files[0])
-    formData.append("caption", this.txt)
+    formData.append("caption", this.txt)    
     formData.append("status_post", "1")
     formData.append("privacy_post", "1")
     formData.append("token", this.gettoken)
