@@ -312,14 +312,14 @@ export class FeedsComponent implements OnInit {
     this.displayModal = true;
     this.uploadSS = true
   }
-  uploadSS = true
+  uploadSS = false
   public onFileUpload(data: { files: File }): void {
     const formData: FormData = new FormData();
     this.localstorage = JSON.parse(localStorage.getItem('TOKEN'))
     this.gettoken = this.localstorage.token
 
     formData.append("postImage", data.files[0])
-    formData.append("caption", this.txt)    
+    formData.append("caption", this.txt)
     formData.append("status_post", "1")
     formData.append("privacy_post", "1")
     formData.append("token", this.gettoken)
@@ -341,27 +341,28 @@ export class FeedsComponent implements OnInit {
       //this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Process Completed' });
 
 
-      if(this.uploadSS){
-      let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).toPromise().then(data => {
-        //console.log(data)
-        //if (this.value >= 100) {
-        
+      if (this.uploadSS == true) {
+        this.uploadSS = false
+        let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).toPromise().then(data => {
+          //console.log(data)
+          //if (this.value >= 100) {
 
-        if (data["success"] == 1) {
 
-          clearInterval(interval);
-          this.value = 100;
-          setTimeout(() => {
-            this.displayModal = false;
-            location.reload()
-            this.uploadSS = false
-          }, 3000)
+          if (data["success"] == 1) {
 
-        }
-        // }
+            clearInterval(interval);
+            this.value = 100;
+            setTimeout(() => {
+              this.displayModal = false;
+              location.reload()
 
-      })
-    }
+            }, 3000)
+
+          }
+          // }
+
+        })
+      }
 
 
 
