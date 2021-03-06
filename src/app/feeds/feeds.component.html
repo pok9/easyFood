@@ -234,21 +234,9 @@
                             <img mat-card-image src="{{post.image}}" alt="Photo of pok" (click)="selectImg(post)">
                             <mat-card-content>
                                 <h5>{{post.caption}}</h5>
-                                <!-- <p>
-                        วิธีทำ<br>
-                        1.โคลกพริกกับกระเทียม หั่นหมูกรอบตามชอบ<br>
-                        2.ตั้งกระทะใส่นำมัน ผัดพริกกระเทียม ผัดให้ฉุน ตามด้วยหมูกรอบ<br>
-                        3.เติมน้ำซุปนิดหน่อย ใส่น้ำตาล น้ำปลา น้ำมันหอย ผัดให้สุก<br>
-                        4.เสร็จแล้วใส่ใบกะเพราลงไป<br>
-                        5.ตักใส่จานพร้อมเสิร์ฟ<br>
-                    </p> -->
+                                
                             </mat-card-content>
-                            <!-- <mat-card-actions>
-                    <button mat-button>LIKE</button>
-                    <button mat-button>SHARE</button>
-                </mat-card-actions> -->
-                            <!-- <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon"> -->
-                            <!-- <mat-icon>favorite</mat-icon> -->
+                           
                             <button pButton pRipple type="button" icon="pi pi-heart" *ngIf="divLike[i] == 0"
                                 class="p-button-rounded p-button-help  p-button-outlined" (click)="like(i,post.post_ID)">
 

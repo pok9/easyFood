@@ -8,6 +8,8 @@ import { faHouseUser } from '@fortawesome/free-solid-svg-icons';//icon
 import { faComments } from '@fortawesome/free-regular-svg-icons';//icon
 import { faBell } from '@fortawesome/free-regular-svg-icons';//icon
 import { ActivatedRoute } from '@angular/router'
+
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -43,6 +45,9 @@ export class ProfileComponent implements OnInit {
   dataUser_id
   searchUser;
   checkFollow
+
+  item: any = new Array()
+  caption: any = new Array()
   constructor(private datapass: UserpassService, private http: HttpClient, private router: Router, private imgpass: DataimgpassService, private route: ActivatedRoute) {
     this.searchUser = this.route.snapshot.params['username'];
 
@@ -86,14 +91,14 @@ export class ProfileComponent implements OnInit {
         this.nickname = this.interpretations.nickName
         this.fullname = this.interpretations.fullName
 
-        
+
 
         this.getFollowingCount()
         this.getFollowerCount()
         this.getPostCount()
 
         this.imgTest()
-        
+
       } else if (response["success"] == 1) {//ค้นหาเพื่อน เช่นพิมพ์ lek
 
         let header = new HttpHeaders({
@@ -130,7 +135,7 @@ export class ProfileComponent implements OnInit {
           }
           //console.log(this.data)
         });
-        this.http.get("http://apifood.comsciproject.com/follow/checkFollow/"+this.dataUser_id , option).subscribe(response => {
+        this.http.get("http://apifood.comsciproject.com/follow/checkFollow/" + this.dataUser_id, option).subscribe(response => {
           this.checkFollow = response['checkFollow']
         });
 
@@ -152,12 +157,75 @@ export class ProfileComponent implements OnInit {
     });
     // this.getInterpretations()
     // this.getToken()
+    this.item = [
+      {
+        label: 'แก้ไขโพสต์', icon: 'pi pi-refresh', command: () => {
+          //console.log("12312312 = "+this.text)
+          this.displayEdit();
+        }
+      },
+      {
+        label: 'ลบโพสต์', icon: 'pi pi-times', command: () => {
+          this.displaydelete();
+        }
+      },
+      { label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io' },
+      { separator: true },
+      { label: 'Setup', icon: 'pi pi-cog', routerLink: ['/setup'] }
+    ];
 
 
 
   }
+  indexOfPost: any
+  disEdit = false
+  textboxOfEdit: any
+  itemPost: any
+  captionPost: any
+  displayEdit() {
+    this.disEdit = true
+    console.log("Edit" + " " + this.indexOfPost)
+    this.textboxOfEdit = this.itemPost.caption
 
-  testpok(){
+  }
+  disDel = false
+  displaydelete() {
+    this.disDel = true
+    console.log("Delete")
+  }
+  confirmEditPost() {
+    //this.textboxOfEdit = this.itemPost.caption 
+    this.captionPost = this.textboxOfEdit
+    let option = this.testpok()
+    let json = { post_ID: this.itemPost.post_ID, caption: this.textboxOfEdit };
+    let req = this.http.post('http://apifood.comsciproject.com/post/editPost', json, option).subscribe(responese => {
+      console.log(responese)
+    })
+    console.log(this.textboxOfEdit)
+    this.data[this.indexOfPost].caption = this.textboxOfEdit
+    this.disEdit = false
+  }
+  confirmDelPost() {
+    let option = this.testpok()
+    let json = { post_ID: this.itemPost.post_ID };
+    let request = this.http.post('http://apifood.comsciproject.com/post/deletePost', json, option)
+      .subscribe(response => {
+
+        if (response["success"] == 1) {
+          location.reload();
+        }
+
+
+      })
+    this.disDel = false
+  }
+  onSubmit() {
+    return this.textboxOfEdit
+  }
+
+
+
+  testpok() {
     let header = new HttpHeaders({
 
       'Content-Type': 'application/json',
@@ -166,6 +234,7 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
+    return option
   }
 
   imgTest() {
@@ -189,53 +258,56 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  displayImg : boolean
-  selectedImg : any
-  dateConvert : any
-  selectImg(item : any){
+  displayImg: boolean
+  selectedImg: any
+  dateConvert: any
+  selectImg(item: any, index) {
     this.selectedImg = item
-    
-    console.log(this.selectedImg.date)
+    this.indexOfPost = index
+    this.itemPost = item
+
+    this.captionPost = item.caption
+    //console.log(index)
     var d = new Date()
     var datePipe = new DatePipe('en-US');
-    let year:Number
-    let month:Number
-    let day:Number
-    let hours:Number
-    let minutes:Number
-    let second:Number
+    let year: Number
+    let month: Number
+    let day: Number
+    let hours: Number
+    let minutes: Number
+    let second: Number
 
     this.dateConvert = datePipe.transform(this.selectedImg.date, 'MM/dd/yyyy,HH:mm:ss a');
     console.log(this.dateConvert)
-      year = Number(this.dateConvert.substring(6,10))
-      month = Number(this.dateConvert.substring(0,2))
-      day = Number(this.dateConvert.substring(3,5))
-      hours = Number(this.dateConvert.substring(11,13))
-      minutes = Number(this.dateConvert.substring(14,16))
-      second = Number(this.dateConvert.substring(17,19))
+    year = Number(this.dateConvert.substring(6, 10))
+    month = Number(this.dateConvert.substring(0, 2))
+    day = Number(this.dateConvert.substring(3, 5))
+    hours = Number(this.dateConvert.substring(11, 13))
+    minutes = Number(this.dateConvert.substring(14, 16))
+    second = Number(this.dateConvert.substring(17, 19))
 
-      if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes()-3 == minutes)
+    if (d.getFullYear() == year && d.getMonth() + 1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes() - 3 == minutes)
       this.dateConvert = "เมื่อสักครู่"
-      else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes()-3 > minutes)
-      this.dateConvert = ((d.getMinutes()-3) - Number(minutes))+" นาที"
-        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() == day && d.getHours() > hours) 
-        this.dateConvert = (d.getHours() - Number(hours))+" ชั่วโมง"
-        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() > day && (d.getDate() - Number(day) >= 6))
-        this.dateConvert = (((d.getDate()/7).toString().split('.')[0]))+" สัปดาห์"
-        else if(d.getFullYear() == year && d.getMonth()+1 == month && d.getDate() > day)
-        this.dateConvert = (d.getDate() - Number(day)) + " วัน"
-        else if(d.getFullYear() == year && d.getMonth()+1 > month)
-        this.dateConvert = (d.getMonth() - Number(month)) + " เดือน"
-        else if(d.getFullYear() > year)
-        this.dateConvert= (d.getFullYear() - Number(year)) + " ปี"
+    else if (d.getFullYear() == year && d.getMonth() + 1 == month && d.getDate() == day && d.getHours() == hours && d.getMinutes() - 3 > minutes)
+      this.dateConvert = ((d.getMinutes() - 3) - Number(minutes)) + " นาที"
+    else if (d.getFullYear() == year && d.getMonth() + 1 == month && d.getDate() == day && d.getHours() > hours)
+      this.dateConvert = (d.getHours() - Number(hours)) + " ชั่วโมง"
+    else if (d.getFullYear() == year && d.getMonth() + 1 == month && d.getDate() > day && (d.getDate() - Number(day) >= 6))
+      this.dateConvert = (((d.getDate() / 7).toString().split('.')[0])) + " สัปดาห์"
+    else if (d.getFullYear() == year && d.getMonth() + 1 == month && d.getDate() > day)
+      this.dateConvert = (d.getDate() - Number(day)) + " วัน"
+    else if (d.getFullYear() == year && d.getMonth() + 1 > month)
+      this.dateConvert = (d.getMonth() - Number(month)) + " เดือน"
+    else if (d.getFullYear() > year)
+      this.dateConvert = (d.getFullYear() - Number(year)) + " ปี"
 
-        this.displayImg = true
+    this.displayImg = true
   }
 
 
-  cancelSelectedImg(){
+  cancelSelectedImg() {
     this.displayImg = false
-    
+
   }
 
   getInterpretations() {
@@ -369,6 +441,11 @@ export class ProfileComponent implements OnInit {
     this.displayModal = true;
   }
 
+  disProfile = false
+  refreshProfile() {
+    location.reload()
+  }
+
   onEditPro(files: FileList) {
     var formdata = new FormData();
     formdata.append("profile_picture", files.item(0))
@@ -410,7 +487,7 @@ export class ProfileComponent implements OnInit {
 
             this.profile_img_Copy = this.interpretations.profile_img
 
-
+            this.disProfile = true
 
             // location.reload()
 
@@ -626,8 +703,8 @@ export class ProfileComponent implements OnInit {
   followUser() {
 
     this.iconFollow = "pi-spin pi-spinner"
-    
-    let json = { following_ID : this.dataUser_id};
+
+    let json = { following_ID: this.dataUser_id };
     let header = new HttpHeaders({
 
       'Content-Type': 'application/json',
@@ -636,21 +713,21 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let request = this.http.post('http://apifood.comsciproject.com/follow/following',json,option)
-        .subscribe(response => {
-         
-          console.log(response)
-          
-        }, error => {
-          console.log('Error ' + JSON.stringify(error));
-        });
-        this.ngOnInit()
+    let request = this.http.post('http://apifood.comsciproject.com/follow/following', json, option)
+      .subscribe(response => {
+
+        console.log(response)
+
+      }, error => {
+        console.log('Error ' + JSON.stringify(error));
+      });
+    this.ngOnInit()
 
   }
 
-  unfollowUser(){
+  unfollowUser() {
     this.iconFollow = "pi-user-plus"
-    let json = { following_ID : this.dataUser_id};
+    let json = { following_ID: this.dataUser_id };
     let header = new HttpHeaders({
 
       'Content-Type': 'application/json',
@@ -659,14 +736,19 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let request = this.http.post('http://apifood.comsciproject.com/follow/unfollowing',json,option)
-        .subscribe(response => {
-         
-          console.log(response)
-          
-        }, error => {
-          console.log('Error ' + JSON.stringify(error));
-        });
-        this.ngOnInit()
+    let request = this.http.post('http://apifood.comsciproject.com/follow/unfollowing', json, option)
+      .subscribe(response => {
+
+        console.log(response)
+
+      }, error => {
+        console.log('Error ' + JSON.stringify(error));
+      });
+    this.ngOnInit()
   }
+
+
+
+
+
 }

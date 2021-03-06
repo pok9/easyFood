@@ -24,9 +24,9 @@ export class FeedsComponent implements OnInit {
   followSugg: any = new Array()
 
   ////about likeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-  likeCount : any = new Array()
+  likeCount: any = new Array()
   //divLike: any
-  divLike :any = new Array()
+  divLike: any = new Array()
   ////////////////////////////////
   txt; //ข้อความ
   localstorage
@@ -35,11 +35,11 @@ export class FeedsComponent implements OnInit {
   postnewFeed: any//รับpost newfeed
   checkFollow: any
   items: MenuItem[];
-  
+
   displayResponsiveDelete = false;//ลบโพสต์
   displayResponsiveEdit = false;//แก้ไขโพสต์
   //text : any;
-  property :any
+  property: any
 
 
   constructor(private datapass: UserpassService, private router: Router, private http: HttpClient) {
@@ -155,12 +155,12 @@ export class FeedsComponent implements OnInit {
         //
         //////////////////เรียกหาจำนวน like เมื่อรอบแรก
 
-        let reqestLike = this.http.get("http://apifood.comsciproject.com/post/getLikePost/"+response["feed"][i].post_ID,option).toPromise().then(response1 =>{
+        let reqestLike = this.http.get("http://apifood.comsciproject.com/post/getLikePost/" + response["feed"][i].post_ID, option).toPromise().then(response1 => {
           this.likeCount[i] = response1["countLike"]
-          if(response1["user_ID"] == 1){  //ไม่ใช่ user_ID แต่มันคือcount ใส่ผิด เบลออ
+          if (response1["user_ID"] == 1) {  //ไม่ใช่ user_ID แต่มันคือcount ใส่ผิด เบลออ
             this.divLike[i] = 1
             //console.log(this.divLike+"<<<<<<<<<<<<<<<")
-          }else{
+          } else {
             this.divLike[i] = 0
           }
           //console.log(response1["countLike"]+" like")
@@ -169,7 +169,7 @@ export class FeedsComponent implements OnInit {
 
       }
 
-      
+
 
       // for(var val of response["feed"]){
       //   console.log(val)
@@ -205,7 +205,7 @@ export class FeedsComponent implements OnInit {
   }
 
   //กด likeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-  like(index,pid){
+  like(index, pid) {
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
       'authorization': 'Bearer ' + this.gettoken
@@ -214,26 +214,26 @@ export class FeedsComponent implements OnInit {
       headers: header
     }
 
-    let json = {pid: pid}
-    let request = this.http.post('http://apifood.comsciproject.com/post/likepost', json, option).subscribe(response =>{
-      if(response["success"] == 1){
+    let json = { pid: pid }
+    let request = this.http.post('http://apifood.comsciproject.com/post/likepost', json, option).subscribe(response => {
+      if (response["success"] == 1) {
         this.likeCount[index] = response["countLike"]
-        if(response["countMyLiked"]==1){
+        if (response["countMyLiked"] == 1) {
           this.divLike[index] = 1
-        }else{
+        } else {
           this.divLike[index] = 0
         }
-        
+
         //console.log(this.divLike+"<<<<<<<<<<<")
       }
     })
   }
 
   ////////////////////////////////// -ลบโพสต์- /////////////////////////////////////
-  displaydelete(){
+  displaydelete() {
     this.displayResponsiveDelete = true;
   }
-  displayResponsivedelete(postId){
+  displayResponsivedelete(postId) {
     console.log(postId.post_ID);
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -243,14 +243,14 @@ export class FeedsComponent implements OnInit {
       headers: header
     }
 
-    let json = { post_ID : postId.post_ID };
+    let json = { post_ID: postId.post_ID };
     let request = this.http.post('http://apifood.comsciproject.com/post/deletePost', json, option)
       .subscribe(response => {
 
         if (response["success"] == 1) {
           location.reload();
         }
-        
+
 
       })
 
@@ -259,11 +259,11 @@ export class FeedsComponent implements OnInit {
   ////////////////////////////////// -ลบโพสต์- /////////////////////////////////////
 
   ////////////////////////////////// -แก้ไขโพสต์- /////////////////////////////////////
- 
-  displayEdit(){
+
+  displayEdit() {
     this.displayResponsiveEdit = true;
   }
-  displayResponsiveEdits(postId){
+  displayResponsiveEdits(postId) {
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
       'authorization': 'Bearer ' + this.gettoken
@@ -271,7 +271,7 @@ export class FeedsComponent implements OnInit {
     let option = {
       headers: header
     }
-    let json = { post_ID : postId.post_ID,caption : this.property  };
+    let json = { post_ID: postId.post_ID, caption: this.property };
 
     let request = this.http.post('http://apifood.comsciproject.com/post/editPost', json, option)
       .subscribe(response => {
@@ -279,7 +279,7 @@ export class FeedsComponent implements OnInit {
         if (response["success"] == 1) {
           location.reload();
         }
-        
+
 
       })
 
@@ -310,8 +310,9 @@ export class FeedsComponent implements OnInit {
   //-------------------------------------upload_Post------------------------------------//
   showModalDialog() {
     this.displayModal = true;
+    this.uploadSS = true
   }
-
+  uploadSS = true
   public onFileUpload(data: { files: File }): void {
     const formData: FormData = new FormData();
     this.localstorage = JSON.parse(localStorage.getItem('TOKEN'))
@@ -327,30 +328,46 @@ export class FeedsComponent implements OnInit {
 
 
     let interval = setInterval(() => {
-      this.value = this.value + Math.floor(Math.random() * 10) + 1;
+      //this.value = this.value + Math.floor(Math.random() * 1) + 1;
+      this.value += 1
       //this.value = 100;
+      //this.value = 0
+
+
       if (this.value >= 100) {
         this.value = 100;
-        //this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Process Completed' });
-        clearInterval(interval);
-
-        // let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).subscribe(response => {
-
-        //   console.log(response)
-        // })
-        let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).toPromise().then(data => {
-          //console.log(data)
-          if (data["success"] == 1) {
-            this.displayModal = false;
-            this.value = 0;
-            location.reload()
-          }
-        })
-
-
-
-
       }
+      //
+      //this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Process Completed' });
+
+
+      if(this.uploadSS){
+      let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).toPromise().then(data => {
+        //console.log(data)
+        //if (this.value >= 100) {
+        
+
+        if (data["success"] == 1) {
+
+          clearInterval(interval);
+          this.value = 100;
+          setTimeout(() => {
+            this.displayModal = false;
+            location.reload()
+            this.uploadSS = false
+          }, 3000)
+
+        }
+        // }
+
+      })
+    }
+
+
+
+
+      //}
+
     }, 400);
 
 
@@ -365,7 +382,7 @@ export class FeedsComponent implements OnInit {
   displayImg: boolean
   selectedImg: any
   dateConvert: any
-  
+
   selectImg(item: any) {
     this.property = item["caption"]
     this.selectedImg = item

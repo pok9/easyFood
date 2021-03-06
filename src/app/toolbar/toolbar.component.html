@@ -83,7 +83,7 @@
             </div>
             <div class="col">
 
-                <img class="imgToolbar" src="{{profile_img}}" alt="Avatar" (click)="showPositionDialog('top-right')">
+                <img class="imgToolbar" src="{{profile_img}}" alt="Avatar" (click)="showPositionDialog('top-right')" [ngModel]="profile_img">
                 <!-- <form enctype="multipart/form-data">
                     <input id="file-input" type="file" #fileUpload hidden
                     [(ngModel)]="property"/>

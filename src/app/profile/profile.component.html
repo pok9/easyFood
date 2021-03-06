@@ -366,6 +366,7 @@
 
                     </p-card>
                     <ng-template pTemplate="footer">
+
                         <p-button icon="pi pi-check" (click)="confirmEdit()" label="แก้ไข" styleClass="p-button-info">
                         </p-button>
                         <p-button icon="pi pi-times" (click)="cancelEdit()" label="ยกเลิก" styleClass="p-button-danger">
@@ -401,9 +402,10 @@
     </div>
 
     <div class="row" *ngIf="this.user_id == this.dataUser_id || this.checkFollow == 1  ; else nofollow">
-        <div class="column" *ngFor="let item of this.data">
+        <div class="column" *ngFor="let item of this.data index as i">
 
-            <img src="{{this.item.image}}" alt="" style="width: 100%;" style="height: 100%;" (click)="selectImg(item)">
+            <img src="{{this.item.image}}" alt="" style="width: 100%;" style="height: 100%;"
+                (click)="selectImg(item,i)">
         </div>
     </div>
     <ng-template #nofollow>
@@ -419,6 +421,7 @@
     </ng-template>
 
     <hr class="my-5">
+
 
     <p-dialog header="โพสต์" [(visible)]="displayImg" [modal]="true" [style]="{width: '70%'}" [baseZIndex]="10000"
         [draggable]="false" [resizable]="false" [closable]="true" (onHide)="cancelSelectedImg()">
@@ -451,17 +454,22 @@
 
                                     </div>
                                 </div>
-
+                                <!-- <p-splitButton label="ตั้งค่า" icon="pi pi-cog" [model]="" >
+                                </p-splitButton> -->
                                 <br>
 
 
                                 <div class="row" *ngIf="this.user_id == this.dataUser_id ; else noedit">
                                     <div class="col-sm-2"></div>
-                                    <div class="col-sm-7">
-                                        <h4>{{selectedImg.caption}}</h4>
+                                    <div class="col-sm-6">
+                                        <h3>{{captionPost}}</h3>
+
+                                        <!-- <h4>{{selectedImg.caption}}</h4> -->
                                     </div>
-                                    <div class="col-sm-3">
-                                        <p-button icon="pi pi-check" label="Edit" styleClass="p-button-info"></p-button>
+                                    <div class="col-sm-4">
+
+                                        <p-splitButton label="ตั้งค่า" icon="pi pi-cog" [model]="item">
+                                        </p-splitButton>
                                     </div>
 
                                 </div>
@@ -489,10 +497,53 @@
                 </div>
 
             </p-card>
+            <p-dialog header="แก้ไขโพสต์" [(visible)]="disEdit" [style]="{width: '20vw'}" [baseZIndex]="50"
+                [draggable]="false" [resizable]="false">
+                <ng-template pTemplate="body">
+
+                    <p>ต้องการที่จะแก้ไข</p>
+                    <p-inplace>
+                        <ng-template pTemplate="display">
+                            <h3>{{selectedImg.caption}}</h3>
+                        </ng-template>
+                        <ng-template pTemplate="content">
+                            <form (submit)="onSubmit()">
+                                <input type="text" pInputText [(ngModel)]="textboxOfEdit"
+                                    [ngModelOptions]="{standalone: true}">
+                            </form>
+                        </ng-template>
+                    </p-inplace>
+                </ng-template>
+                <ng-template pTemplate="footer">
+
+                    <p-button (onClick)="confirmEditPost()" label="Yes" styleClass="p-button-text"></p-button>
+                    <p-button (click)="disEdit=false" label="No" styleClass="p-button-text"></p-button>
+                </ng-template>
+            </p-dialog>
+            <p-dialog header="ลบโพสต์" [(visible)]="disDel" [style]="{width: '20vw'}" [baseZIndex]="50"
+                [draggable]="false" [resizable]="false">
+                <ng-template pTemplate="body">
+                    <p>คุณต้องการจะลบโพสต์นี้หรือไม่?</p>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <p-button (onClick)="confirmDelPost()" label="Yes" styleClass="p-button-text"></p-button>
+                    <p-button (click)="disDel=false" label="No" styleClass="p-button-text"></p-button>
+                </ng-template>
+            </p-dialog>
 
 
 
+        </ng-template>
+    </p-dialog>
+    <p-dialog header="Update Profile" [(visible)]="disProfile" [style]="{width: '20vw'}" [baseZIndex]="50"
+        [draggable]="false" [resizable]="false">
+        <ng-template pTemplate="body">
+            <p>ระบบรีเฟรชเพื่ออัพเดทโปรไฟล์</p>
+        </ng-template>
+        <ng-template pTemplate="footer">
 
+            <p-button (click)="disDel=false" label="yes!" (onClick)="refreshProfile()" styleClass="p-button-text">
+            </p-button>
         </ng-template>
     </p-dialog>
 </div>

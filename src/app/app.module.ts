@@ -33,6 +33,8 @@ import {MatCardModule} from '@angular/material/card';//feed
 import {MatIconModule} from '@angular/material/icon';
 
 import {SplitButtonModule} from 'primeng/splitbutton';
+import {InplaceModule} from 'primeng/inplace';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +68,7 @@ import {SplitButtonModule} from 'primeng/splitbutton';
     MatCardModule,
     MatIconModule,
     SplitButtonModule,   
-    
+    InplaceModule,
     
   ],
   providers: [],
