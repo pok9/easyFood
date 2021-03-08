@@ -410,7 +410,7 @@ export class FeedsComponent implements OnInit {
 
   }
   // <!-- -----------------------------------------dialog-------------------------------------------------------- -->
-
+  setNullAccount = false
   getSuggestion() {
     let header = new HttpHeaders({
 
@@ -423,8 +423,10 @@ export class FeedsComponent implements OnInit {
 
     let req = this.http.get("http://apifood.comsciproject.com/follow/randFollow", option).subscribe(response => {
 
-
-
+      if(response["results"]==""){
+        this.setNullAccount = true
+      }else{
+      //let i = 0
       for (let i = 0; i < 5; i++) {
         this.http.get("http://apifood.comsciproject.com/follow/checkFollow/" + response["results"][i].user_ID, option).subscribe(response1 => {
           this.checkFollow = response1['checkFollow']
@@ -435,6 +437,7 @@ export class FeedsComponent implements OnInit {
 
         })
       }
+    }
     })
   }
 

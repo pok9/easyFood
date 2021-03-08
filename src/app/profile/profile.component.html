@@ -385,13 +385,75 @@
                     <h6>{{countPost}} โพสต์ </h6>
                 </div>
                 <div class="col-sm-3">
-                    <h6>ผู้ติดตาม {{countFollower}} คน</h6>
+                    <h6 style="cursor: pointer;" (click)="showFollow('ผู้ติดตาม','follower')">ผู้ติดตาม {{countFollower}} คน</h6>
+                    
                 </div>
                 <div class="col-sm-5">
-                    <h6>กำลังติดตาม {{countFollowing}} คน</h6>
+                    <h6 style="cursor: pointer;" (click)="showFollow('กำลังติดตาม',following)">กำลังติดตาม {{countFollowing}} คน</h6>
                 </div>
             </div>
             <!-- </div> -->
+
+            <p-dialog header={{titleOfFollow}} [(visible)]="displayFollow" [modal]="true" [style]="{width: '30%'}"
+                    [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="true">
+                    <ng-template pTemplate="body">
+                        <div *ngIf="this.user_id == this.dataUser_id || this.checkFollow == 1; else nocontent">
+                            <div *ngIf="this.followTags==0">
+                                <div *ngFor="let item of this.follower index as i">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <img src="{{this.follower[i].profile_img}}" class="imgToolbar">
+                                        </div>
+                                        <div class="col-sm-5"><h5><a href="/profile/{{this.follower[i].username}}">{{this.follower[i].nickName}}</a></h5></div>
+                                        <div class="col-sm-4">
+                                            <a *ngIf="this.checkFollowTags[i] == 0 && this.user_id == this.dataUser_id " style="cursor: pointer; color: dodgerblue;" (click)="followByID(this.follower[i].user_ID,i)">ติดตาม</a>
+                                            
+                                            <a *ngIf="this.checkFollowTags[i] == 1 && this.user_id == this.dataUser_id " style="cursor: pointer; color: red;" (click)="unfollowByID(this.follower[i].user_ID,i)">เลิกติดตาม</a>
+                                            
+                                        </div>
+                                    </div>
+                                    <br>
+                                    
+                                    
+                                </div>
+                            </div>
+                            <div *ngIf="this.followTags==1">
+                                <div *ngFor="let item of this.following index as i">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <img src="{{this.following[i].profile_img}}" class="imgToolbar">
+                                        </div>
+                                        <div class="col-sm-5"><h5><a href="/profile/{{this.following[i].username}}">{{this.following[i].nickName}}</a></h5></div>
+                                        <div class="col-sm-4">
+                                            <a *ngIf="this.checkFollowTags[i] == 0 && this.user_id == this.dataUser_id " style="cursor: pointer; color: dodgerblue; "(click)="followByID(this.following[i].user_ID,i)">ติดตาม</a>
+                                            
+                                                <a *ngIf="this.checkFollowTags[i] == 1 && this.user_id == this.dataUser_id " style="cursor: pointer; color: red;" (click)="unfollowByID(this.following[i].user_ID,i)">เลิกติดตาม</a>
+                                            
+                                        </div>
+                                    </div>
+                                    <br>
+                                   
+                                </div>
+                            </div>
+                        </div>
+
+                        <ng-template #nocontent>
+                            <p>กดติดตาม เพื่อดูเนื้อหา 😃</p>
+                        </ng-template>
+
+                        
+                        
+                    </ng-template>
+
+                    <ng-template pTemplate="footer">
+
+                        <!-- <p-button icon="pi pi-check"  label="แก้ไข" styleClass="p-button-info">
+                        </p-button>
+                        <p-button icon="pi pi-times" label="ยกเลิก"(onClick)="displayFollow=false" styleClass="p-button-danger">
+                        </p-button> -->
+                    </ng-template>
+                </p-dialog>
+
         </div>
 
     </div>
@@ -509,7 +571,7 @@
                         <ng-template pTemplate="content">
                             <form (submit)="onSubmit()">
                                 <input type="text" pInputText [(ngModel)]="textboxOfEdit"
-                                    [ngModelOptions]="{standalone: true}">
+                                    [ngModelOptions]="{standalone: true}" >
                             </form>
                         </ng-template>
                     </p-inplace>

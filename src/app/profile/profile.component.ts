@@ -39,6 +39,9 @@ export class ProfileComponent implements OnInit {
   countFollowing = 0
   countFollower = 0
   countPost = 0
+
+  follower : any
+  following: any
   position
   data: any = new Array()
   // public datapass;
@@ -116,10 +119,14 @@ export class ProfileComponent implements OnInit {
 
         let req = this.http.get('http://apifood.comsciproject.com/follow/countFollowingUser/' + this.dataUser_id).subscribe(response => {
           this.countFollowing = response['countMyFollowing']
+          this.following = response['following']
+          console.log(this.following)
         })
 
         let req1 = this.http.get('http://apifood.comsciproject.com/follow/countFollowerUser/' + this.dataUser_id).subscribe(response => {
           this.countFollower = response['countMyFollower']
+          this.follower = response['follower']
+          console.log(this.follower)
         })
 
         let req2 = this.http.get('http://apifood.comsciproject.com/post/countMyPostUser/' + this.dataUser_id).subscribe(response => {
@@ -326,6 +333,80 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  displayFollow = false
+  titleOfFollow:any
+  followTags:any
+  checkFollowTags:any = new Array()
+  showFollow(title,req){
+    this.displayFollow = true
+    this.titleOfFollow = title
+    let option = this.testpok()
+    if(req=="follower"){
+      this.followTags = 0
+
+      for(let i =0; i<this.countFollower;i++){
+        this.http.get("http://apifood.comsciproject.com/follow/checkFollow/" + this.follower[i].user_ID, option).subscribe(response =>{
+            this.checkFollowTags[i] = response['checkFollow']
+        })
+      }
+      //console.log(this.checkFollowTags)
+
+     
+    }else{
+      this.followTags = 1
+
+      for(let i =0; i<this.countFollowing;i++){
+        this.http.get("http://apifood.comsciproject.com/follow/checkFollow/" + this.following[i].user_ID, option).subscribe(response =>{
+            this.checkFollowTags[i] = response['checkFollow']
+        })
+      }
+    }
+    //console.log("5556")
+  }
+
+  followByID(id,index){
+    let option = this.testpok()
+    let json = { following_ID: id };
+    this.http.post('//apifood.comsciproject.com/follow/following', json, option).subscribe(response =>{
+      if (response["success"] == 1) {
+        this.checkFollowTags[index] = 1
+        this.following[index+1] = {
+          user_ID: id,
+          username: this.follower[index].username,
+          nickName:this.follower[index].nickName,
+          profile_img:this.follower[index].profile_img}
+          this.countFollowing += 1
+      }
+    })
+  }
+
+  unfollowByID(id,index){
+    let option = this.testpok()
+    let json = { following_ID: id };
+    this.http.post('//apifood.comsciproject.com/follow/unfollowing', json, option).subscribe(response =>{
+      if (response["success"] == 1) {
+        this.checkFollowTags[index] = 0
+        for(let i = 0;i<this.countFollowing;i++){
+          if(this.following[i].user_ID == id){
+            
+              this.following[i] = this.following[i+1]
+              this.following[this.countFollowing-1] = null
+              this.following.splice(this.countFollowing-1,1)
+              this.countFollowing -=1
+              break
+            
+            
+          }
+        }
+        // this.following[index] = null
+        //   this.countFollowing -= 1
+      }
+    })
+  }
+
+
+  
+
   getFollowingCount() {
     let header = new HttpHeaders({
 
@@ -337,6 +418,8 @@ export class ProfileComponent implements OnInit {
     }
     let req = this.http.get('http://apifood.comsciproject.com/follow/countFollowing', option).subscribe(response => {
       this.countFollowing = response['countMyFollowing']
+      this.following = response['following']
+      console.log(this.following)
     })
   }
 
@@ -351,6 +434,8 @@ export class ProfileComponent implements OnInit {
     }
     let req = this.http.get('http://apifood.comsciproject.com/follow/countFollower', option).subscribe(response => {
       this.countFollower = response['countMyFollower']
+      this.follower = response['follower']
+      console.log(this.follower)
     })
   }
 
