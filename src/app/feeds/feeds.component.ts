@@ -307,6 +307,19 @@ export class FeedsComponent implements OnInit {
     }
   }
 
+  getHeader(){
+    let header = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + this.gettoken
+    });
+    let option = {
+      headers: header
+    }
+
+    return option
+  }
+
   //-------------------------------------upload_Post------------------------------------//
   showModalDialog() {
     this.displayModal = true;
@@ -425,7 +438,7 @@ export class FeedsComponent implements OnInit {
 
       if(response["results"]==""){
         this.setNullAccount = true
-      }else{
+      }else{ 
       //let i = 0
       for (let i = 0; i < 5; i++) {
         this.http.get("http://apifood.comsciproject.com/follow/checkFollow/" + response["results"][i].user_ID, option).subscribe(response1 => {
@@ -490,6 +503,90 @@ export class FeedsComponent implements OnInit {
       })
 
 
+  }
+  //////////////////comment//////////////////////
+  showComments:any = new Array()
+  
+  showCommentsUser :any = new Array()
+  commentPostByUser:any 
+  getCommentPost(pid,i){
+    this.commentPostByUser = null
+    this.myCommentValue = null
+    for(let j=0;j<this.postnewFeed.length;j++){
+      this.showComments[j] = false
+    }
+    this.showComments[i] = true
+    let option = this.getHeader()
+    //console.log(this.postnewFeed.length)
+    
+    this.http.get('http://apifood.comsciproject.com/post/getCommentPost/'+pid,option).subscribe(response =>{
+      console.log(response["comment"])
+      if(response['comment'] != ""){
+        this.showCommentsUser[i] = true
+        this.commentPostByUser = response["comment"]
+      }else{
+        this.showCommentsUser[i] = true
+      }
+      
+      
+
+      
+    })
+  }
+  newshowCommentUser: any =  new Array()
+  myCommentValue: any
+  setcommentPost(pid,i){
+    let option = this.getHeader()
+    //console.log(this.myCommentValue+" post_ID =="+pid)
+    //console.log(this.interpretations.username)
+    
+    this.showCommentsUser[i] = true
+    this.showComments[i] = true
+    if(this.commentPostByUser==null){
+      this.commentPostByUser = new Array(1)
+      this.newshowCommentUser[i] = true
+      this.commentPostByUser[this.commentPostByUser.length-1] = {
+        user_ID: this.interpretations.user_ID,
+        username: this.interpretations.username,
+        nickName: this.interpretations.nickName,
+        profile_img: this.interpretations.profile_img,
+        post_ID: pid,
+        caption: this.myCommentValue,
+        date: new Date()
+      
+      }
+
+    }else{
+      this.commentPostByUser[this.commentPostByUser.length] = {
+        user_ID: this.interpretations.user_ID,
+        username: this.interpretations.username,
+        nickName: this.interpretations.nickName,
+        profile_img: this.interpretations.profile_img,
+        post_ID: pid,
+        caption: this.myCommentValue,
+        date: new Date()
+      
+      }
+
+      
+
+    }
+   // console.log(pid)
+    let json = {uID: this.interpretations.user_ID,
+      post_ID: pid,
+      caption:this.myCommentValue
+    }
+
+      this.http.post('http://apifood.comsciproject.com/post/commentPost',json,option).subscribe(response =>{
+        //console.log(response)
+      })
+
+    this.myCommentValue = null
+    
+  }
+
+  onSubmit(){
+    return this.myCommentValue
   }
 
 

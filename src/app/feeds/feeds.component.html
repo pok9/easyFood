@@ -18,6 +18,12 @@
         height: 50px;
         cursor: pointer;
     }
+    .imgcomment {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
 
 
 
@@ -225,7 +231,7 @@
                                 <div mat-card-avatar style="background-image: url('{{post.profile_img}}') "
                                     class="example-header-image ">
                                 </div>
-                                
+
 
                                 <mat-card-title><a href="/profile/{{post.username}}"><span
                                             style="color: #000000;">{{post.nickName}}</span> </a></mat-card-title>
@@ -234,21 +240,97 @@
                             <img mat-card-image src="{{post.image}}" alt="Photo of pok" (click)="selectImg(post)">
                             <mat-card-content>
                                 <h5>{{post.caption}}</h5>
-                                
+
                             </mat-card-content>
-                           
-                            <button pButton pRipple type="button" icon="pi pi-heart" *ngIf="divLike[i] == 0"
-                                class="p-button-rounded p-button-help  p-button-outlined" (click)="like(i,post.post_ID)">
 
-                            </button>
 
-                            <button pButton pRipple type="button" icon="pi pi-heart" *ngIf="divLike[i] == 1" 
-                            class="p-button-rounded p-button-help " (click)="like(i,post.post_ID)">
+                            <!-- <mat-card-footer> -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <button pButton pRipple type="button" icon="pi pi-heart" *ngIf="divLike[i] == 0"
+                                        class="p-button-rounded p-button-help  p-button-outlined"
+                                        (click)="like(i,post.post_ID)">
 
-                            </button>
+                                    </button>
 
-                            <!-- </button> -->
-                            <p *ngIf="likeCount[i] != 0">ถูกใจ {{likeCount[i]}} คน</p>
+                                    <button pButton pRipple type="button" icon="pi pi-heart" *ngIf="divLike[i] == 1"
+                                        class="p-button-rounded p-button-help " (click)="like(i,post.post_ID)">
+
+                                    </button>
+
+
+                                    <p *ngIf="likeCount[i] != 0">ถูกใจ {{likeCount[i]}} คน</p>
+                                </div>
+                                <div class="col">
+                                    <button pButton pRipple type="button" icon="pi pi-comments" 
+                                        class="p-button-rounded p-button-help  p-button-outlined" (click)="getCommentPost(post.post_ID,i)"> 
+
+                                    </button>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row" *ngIf="showComments[i]==true">
+                                
+                                <div class="col-sm-1"></div>
+                                
+                                <div class="col-sm-10">
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <img class="imgToolbar" src="{{avatarProfile}}" alt="Avatar">
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <form (submit)="onSubmit()">
+                                               
+                                            
+                                            <span class="p-input-icon-left" style="width: 100%;">
+                                                <i class="pi pi-comment"></i>
+                                                <input type="text" pInputText  placeholder="เขียนคอมเมนต์" style="width: 100%;border-radius: 25px; " [(ngModel)]="myCommentValue" [ngModelOptions]="{standalone: true}" >         
+                                            </span>
+                                            </form>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <button pButton pRipple type="button" icon="pi pi-send" 
+                                            class="p-button-rounded p-button-help  p-button-outlined"(click)="setcommentPost(post.post_ID)" > 
+    
+                                        </button>
+                                        </div>
+                                       
+                                       
+                                    </div>
+                                    <br>
+                                    <div *ngIf="showCommentsUser[i] == true && showComments[i] == true">
+                                       
+
+                    
+                                        <div class="row" *ngFor="let comment of this.commentPostByUser; index as j;first as isFirst">
+                                            <div class="col-sm-1">
+                                                <a href="/profile/{{comment.username}}">
+                                                <img src="{{commentPostByUser[j].profile_img}}" class="imgcomment"></a>
+                                            </div>
+                                            <div class="col-sm-11">
+                                                <span class="p-input-icon-left" style="width: 100%;">
+                                                    <i class="pi pi-comment"></i>
+                                                    <input type="text" pInputText  value="{{commentPostByUser[j].caption}}" readonly style="width: 100%;border-radius: 25px; background-color: aliceblue;">         
+                                                </span>
+                                                
+                                            </div>
+                                           
+                                           
+                                          </div>
+                                          
+                                          
+                                        
+                                    </div>
+
+
+                                   
+                                    
+                                </div>
+                                <div class="col"></div>
+                            </div>
+
+                            <!-- </mat-card-footer> -->
 
                         </mat-card>
                         <br>
@@ -369,7 +451,7 @@
                                         <div class="col-sm-5"></div>
 
                                         <div *ngIf="this.my_ID.user == this.selectedImg.uID">
-                                            <p-splitButton label="ตั้งค่า" icon="pi pi-cog" [model]="items" >
+                                            <p-splitButton label="ตั้งค่า" icon="pi pi-cog" [model]="items">
                                             </p-splitButton>
 
                                             <!-- ลบโพสต์ -->

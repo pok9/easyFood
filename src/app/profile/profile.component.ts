@@ -337,6 +337,8 @@ export class ProfileComponent implements OnInit {
   titleOfFollow:any
   followTags:any
   checkFollowTags:any = new Array()
+
+  /////////Bug////////////////////
   showFollow(title,req){
     this.displayFollow = true
     this.titleOfFollow = title
