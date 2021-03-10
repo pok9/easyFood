@@ -93,10 +93,11 @@ export class ToolbarComponent implements OnInit {
     let country
     let data;
     let req = this.http.get('http://apifood.comsciproject.com/users/searchUser/' + query).subscribe(response => {
-      for (let datas in response["data"]) {
+    console.log("response = "+response["data"])  
+    for (let datas in response["data"]) {
         country = response["data"][datas].nickName
-        console.log(response["data"][datas].nickName)
-        console.log(response["data"][datas].profile_img)
+        //console.log(response["data"][datas].nickName)
+        //console.log(response["data"][datas].profile_img)
 
         data = {
           "username": response["data"][datas].username,
