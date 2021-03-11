@@ -143,8 +143,9 @@ export class LoginComponent implements OnInit {
   profile_fbimg
   facebookData: any
   fbJson : any
+   json: any 
    submitLogin() {
-    let json: any 
+    
     FB.login((response) => {
       console.log('submitLogin', response);
       if (response.authResponse) {
@@ -165,7 +166,7 @@ export class LoginComponent implements OnInit {
             this.profile_fbimg = response.picture.data.url
             this. name = response.name
               //{ userID: this.id, name: this.name,profile_fbimg:this.profile_fbimg };
-             json = { userID: this.id, name: this.name,profile_fbimg:this.profile_fbimg }
+             this.json = { userID: this.id, name: this.name,profile_fbimg:this.profile_fbimg }
 
             //  let request = this.http.post('http://localhost:3000/users/loginFacebook', json).subscribe(response1=>{
             //    console.log(response1)
@@ -196,7 +197,7 @@ export class LoginComponent implements OnInit {
         //   console.log(JSON.stringify(response));
         // });
 
-
+        
 
 
 
@@ -204,14 +205,15 @@ export class LoginComponent implements OnInit {
       else {
         console.log('User login failed');
       }
+      
     });
 
    
 
     this.fbJson = JSON.parse(localStorage.getItem('FB'))
-    json = { userID: this.fbJson['userID'], name: this.fbJson['name'],profile_fbimg:this.fbJson['profile_fbimg'] }
+    this.json = { userID: this.fbJson['userID'], name: this.fbJson['name'],profile_fbimg:this.fbJson['profile_fbimg'] }
     //json = JSON.stringify(json)
-     let request = this.http.post('http://apifood.comsciproject.com/users/loginFacebook', json).subscribe(response1=>{
+     let request = this.http.post('http://apifood.comsciproject.com/users/loginFacebook', this.json).subscribe(response1=>{
        //console.log(response1)
        this.TOKEN = {
         token: response1["token"]
