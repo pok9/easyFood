@@ -6,6 +6,10 @@
 </style>
 
 <body>
+    <!-- <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=428663138434493&autoLogAppEvents=1" nonce="kciy2Zv2"></script> -->
+
+
     <nav class="navbar navbar-expand-sm bg-light navbar-light">
         <img src="../../assets/images/logo.svg" alt="" width="30px">
         <ul class="navbar-nav">
@@ -85,8 +89,17 @@
                             <br><br>
                             <button (click)="signUp()" type="button" class="btn btn-secondary btn-block">Sign
                                 Up</button>
-                        </div>
+                                <br>
 
+                                <!-- <button pButton label="Login with Facebook"  (click)="submitLogin()"></button>    -->
+                                <span class="p-buttonset">
+                                    <button pButton  pRipple type="button" label="Facebook" icon="pi pi-facebook" class="btn btn-primary btn-lg btn-block" (click)="submitLogin()"></button>
+                                   
+                                </span>
+                               
+                        </div>
+                        
+                        
                     </div>
                 </div>
                 <!-- <div class="leftScreen">
