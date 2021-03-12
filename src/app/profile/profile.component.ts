@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
     //   headers: header
     // }
 
-    // this.http.get('http://apifood.comsciproject.com/follow/searchFollow', option).subscribe(response => {
+    // this.http.get('https://apifood.comsciproject.com/follow/searchFollow', option).subscribe(response => {
     //   //this.countFollowing = response['data'].username
     //   console.log(response)
     // })
@@ -82,7 +82,7 @@ export class ProfileComponent implements OnInit {
     }
     this.user_id = this.interpretations.user_ID
 
-    let req = this.http.get("http://apifood.comsciproject.com/users/dataUser/" + this.searchUser).subscribe(response => {
+    let req = this.http.get("https://apifood.comsciproject.com/users/dataUser/" + this.searchUser).subscribe(response => {
 
       //console.log(response["data"].user_ID)
       this.dataUser_id = response["data"].user_ID
@@ -117,23 +117,23 @@ export class ProfileComponent implements OnInit {
         this.username = response["data"].username
         this.nickname = response["data"].nickName
 
-        let req = this.http.get('http://apifood.comsciproject.com/follow/countFollowingUser/' + this.dataUser_id).subscribe(response => {
+        let req = this.http.get('https://apifood.comsciproject.com/follow/countFollowingUser/' + this.dataUser_id).subscribe(response => {
           this.countFollowing = response['countMyFollowing']
           this.following = response['following']
           console.log(this.following)
         })
 
-        let req1 = this.http.get('http://apifood.comsciproject.com/follow/countFollowerUser/' + this.dataUser_id).subscribe(response => {
+        let req1 = this.http.get('https://apifood.comsciproject.com/follow/countFollowerUser/' + this.dataUser_id).subscribe(response => {
           this.countFollower = response['countMyFollower']
           this.follower = response['follower']
           console.log(this.follower)
         })
 
-        let req2 = this.http.get('http://apifood.comsciproject.com/post/countMyPostUser/' + this.dataUser_id).subscribe(response => {
+        let req2 = this.http.get('https://apifood.comsciproject.com/post/countMyPostUser/' + this.dataUser_id).subscribe(response => {
           this.countPost = response['countMyPost']
         })
 
-        let req3 = this.http.get("http://apifood.comsciproject.com/post/mypostUser/" + this.dataUser_id).subscribe(response => {
+        let req3 = this.http.get("https://apifood.comsciproject.com/post/mypostUser/" + this.dataUser_id).subscribe(response => {
           this.data = new Array()
           let dataImg: any = response["data"]
           for (let i = 0; i < dataImg.length; i++) {
@@ -142,7 +142,7 @@ export class ProfileComponent implements OnInit {
           }
           //console.log(this.data)
         });
-        this.http.get("http://apifood.comsciproject.com/follow/checkFollow/" + this.dataUser_id, option).subscribe(response => {
+        this.http.get("https://apifood.comsciproject.com/follow/checkFollow/" + this.dataUser_id, option).subscribe(response => {
           this.checkFollow = response['checkFollow']
         });
 
@@ -176,7 +176,7 @@ export class ProfileComponent implements OnInit {
           this.displaydelete();
         }
       },
-      { label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io' },
+      { label: 'Angular.io', icon: 'pi pi-info', url: 'https://angular.io' },
       { separator: true },
       { label: 'Setup', icon: 'pi pi-cog', routerLink: ['/setup'] }
     ];
@@ -205,7 +205,7 @@ export class ProfileComponent implements OnInit {
     this.captionPost = this.textboxOfEdit
     let option = this.testpok()
     let json = { post_ID: this.itemPost.post_ID, caption: this.textboxOfEdit };
-    let req = this.http.post('http://apifood.comsciproject.com/post/editPost', json, option).subscribe(responese => {
+    let req = this.http.post('https://apifood.comsciproject.com/post/editPost', json, option).subscribe(responese => {
       console.log(responese)
     })
     console.log(this.textboxOfEdit)
@@ -215,7 +215,7 @@ export class ProfileComponent implements OnInit {
   confirmDelPost() {
     let option = this.testpok()
     let json = { post_ID: this.itemPost.post_ID };
-    let request = this.http.post('http://apifood.comsciproject.com/post/deletePost', json, option)
+    let request = this.http.post('https://apifood.comsciproject.com/post/deletePost', json, option)
       .subscribe(response => {
 
         if (response["success"] == 1) {
@@ -253,7 +253,7 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let req = this.http.get("http://apifood.comsciproject.com/post/mypost", option).subscribe(response => {
+    let req = this.http.get("https://apifood.comsciproject.com/post/mypost", option).subscribe(response => {
       this.data = new Array()
       let dataImg: any = response["data"]
       for (let i = 0; i < dataImg.length; i++) {
@@ -347,7 +347,7 @@ export class ProfileComponent implements OnInit {
       this.followTags = 0
 
       for(let i =0; i<this.countFollower;i++){
-        this.http.get("http://apifood.comsciproject.com/follow/checkFollow/" + this.follower[i].user_ID, option).subscribe(response =>{
+        this.http.get("https://apifood.comsciproject.com/follow/checkFollow/" + this.follower[i].user_ID, option).subscribe(response =>{
             this.checkFollowTags[i] = response['checkFollow']
         })
       }
@@ -358,7 +358,7 @@ export class ProfileComponent implements OnInit {
       this.followTags = 1
 
       for(let i =0; i<this.countFollowing;i++){
-        this.http.get("http://apifood.comsciproject.com/follow/checkFollow/" + this.following[i].user_ID, option).subscribe(response =>{
+        this.http.get("https://apifood.comsciproject.com/follow/checkFollow/" + this.following[i].user_ID, option).subscribe(response =>{
             this.checkFollowTags[i] = response['checkFollow']
         })
       }
@@ -418,7 +418,7 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let req = this.http.get('http://apifood.comsciproject.com/follow/countFollowing', option).subscribe(response => {
+    let req = this.http.get('https://apifood.comsciproject.com/follow/countFollowing', option).subscribe(response => {
       this.countFollowing = response['countMyFollowing']
       this.following = response['following']
       console.log(this.following)
@@ -434,7 +434,7 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let req = this.http.get('http://apifood.comsciproject.com/follow/countFollower', option).subscribe(response => {
+    let req = this.http.get('https://apifood.comsciproject.com/follow/countFollower', option).subscribe(response => {
       this.countFollower = response['countMyFollower']
       this.follower = response['follower']
       console.log(this.follower)
@@ -450,7 +450,7 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let req = this.http.get('http://apifood.comsciproject.com/post/countMyPost', option).subscribe(response => {
+    let req = this.http.get('https://apifood.comsciproject.com/post/countMyPost', option).subscribe(response => {
       this.countPost = response['countMyPost']
     })
   }
@@ -471,7 +471,7 @@ export class ProfileComponent implements OnInit {
       headers: header
     }
 
-    let request = this.http.post('http://apifood.comsciproject.com/users/uploadProfile', formdata)
+    let request = this.http.post('https://apifood.comsciproject.com/users/uploadProfile', formdata)
       .subscribe(response => {
         if (response["success"] == 1) {
 
@@ -483,7 +483,7 @@ export class ProfileComponent implements OnInit {
           let option = {
             headers: header
           }
-          let request = this.http.get('http://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
+          let request = this.http.get('https://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
 
             this.interpretations = {
               success: response["success"],
@@ -515,7 +515,7 @@ export class ProfileComponent implements OnInit {
         console.log('Error ' + JSON.stringify(error));
       });
 
-    // http://apifood.comsciproject.com/users/uploadProfile
+    // https://apifood.comsciproject.com/users/uploadProfile
 
   }
 
@@ -551,11 +551,11 @@ export class ProfileComponent implements OnInit {
     }
 
 
-    let request = this.http.post('http://apifood.comsciproject.com/users/uploadProfile', formdata)
+    let request = this.http.post('https://apifood.comsciproject.com/users/uploadProfile', formdata)
       .subscribe(response => {
         if (response["success"] == 1) {
 
-          let request = this.http.get('http://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
+          let request = this.http.get('https://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
 
             this.interpretations = {
               success: response["success"],
@@ -590,16 +590,16 @@ export class ProfileComponent implements OnInit {
   confirmEdit() {
     // this.methodUpload()
     //console.log(this.editname)
-    let request0 = this.http.get('http://apifood.comsciproject.com/users/path_profileImage/' + this.user_id).subscribe(respone => {
+    let request0 = this.http.get('https://apifood.comsciproject.com/users/path_profileImage/' + this.user_id).subscribe(respone => {
       this.profileImagePath = respone["data"].profile_img
       //console.log(this.profileImagePath)
     })
     if (this.editname !== undefined) {
       let json = { newNickname: this.editname, user_id: this.user_id };
-      let request = this.http.post('http://apifood.comsciproject.com/users/editNickname', json)
+      let request = this.http.post('https://apifood.comsciproject.com/users/editNickname', json)
         .subscribe(response => {
           if (response["success"] == 1) {
-            // let request = this.http.get('http://apifood.comsciproject.com/users/' + this.user_id).subscribe(response => {
+            // let request = this.http.get('https://apifood.comsciproject.com/users/' + this.user_id).subscribe(response => {
 
 
             this.interpretations = {
@@ -656,11 +656,11 @@ export class ProfileComponent implements OnInit {
 
     if (this.profileImagePath !== undefined) {
       let json = { profileImagePath: this.profileImagePath, user_id: this.user_id };
-      let request = this.http.post('http://apifood.comsciproject.com/users/path_updateprofileImage', json)
+      let request = this.http.post('https://apifood.comsciproject.com/users/path_updateprofileImage', json)
         .subscribe(response => {
           if (response["success"] == 1) {
 
-            // let request = this.http.get('http://apifood.comsciproject.com/users/' + this.user_id).subscribe(response => {
+            // let request = this.http.get('https://apifood.comsciproject.com/users/' + this.user_id).subscribe(response => {
 
             this.interpretations = {
               success: response["success"],
@@ -721,7 +721,7 @@ export class ProfileComponent implements OnInit {
     // }
 
 
-    // let req = this.http.post('http://apifood.comsciproject.com/users/test', json, option).subscribe(response => {
+    // let req = this.http.post('https://apifood.comsciproject.com/users/test', json, option).subscribe(response => {
     //   console.log(response)
     // })
 
@@ -743,7 +743,7 @@ export class ProfileComponent implements OnInit {
     let query = event.query;
     let country
     let data;
-    let req = this.http.get('http://apifood.comsciproject.com/users/searchUser/' + query).subscribe(response => {
+    let req = this.http.get('https://apifood.comsciproject.com/users/searchUser/' + query).subscribe(response => {
       for (let datas in response["data"]) {
         country = response["data"][datas].nickName
         //console.log(response["data"][datas].nickName)
@@ -762,18 +762,18 @@ export class ProfileComponent implements OnInit {
 
   }
   value(nickname) {
-    // let response = await this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).subscribe(response => {
+    // let response = await this.http.get('https://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).subscribe(response => {
 
     //   this.router.navigateByUrl('/profile/'+response["data"] )
 
     // })
 
-    //let response = await this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise();
+    //let response = await this.http.get('https://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise();
     // this.router.navigateByUrl('/profile/'+response["data"] )
     //console.log(response['data']);
     //location.reload()
 
-    // let response = this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise().then(data =>{
+    // let response = this.http.get('https://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise().then(data =>{
     //       console.log(data)
     //       if(data["success"] == 1){
     //       //   this.displayModal = false;
@@ -800,7 +800,7 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let request = this.http.post('http://apifood.comsciproject.com/follow/following', json, option)
+    let request = this.http.post('https://apifood.comsciproject.com/follow/following', json, option)
       .subscribe(response => {
 
         console.log(response)
@@ -823,7 +823,7 @@ export class ProfileComponent implements OnInit {
     let option = {
       headers: header
     }
-    let request = this.http.post('http://apifood.comsciproject.com/follow/unfollowing', json, option)
+    let request = this.http.post('https://apifood.comsciproject.com/follow/unfollowing', json, option)
       .subscribe(response => {
 
         console.log(response)

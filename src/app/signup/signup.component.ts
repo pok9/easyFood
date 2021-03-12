@@ -38,17 +38,17 @@ export class SignupComponent implements OnInit {
     // console.log(this.fullname);
     // console.log(this.nickName);
     if (this.captcha !== undefined) {
-      let url_deProfiel = "http://apifood.comsciproject.com/uploadProfile/img_avatar.png"
+      let url_deProfiel = "https://apifood.comsciproject.com/uploadProfile/img_avatar.png"
 
       let json = { username: this.username, password: this.password, fullName: this.fullname, nickName: this.nickName, status: 1, profile_img: url_deProfiel };
-      let request = this.http.post('http://apifood.comsciproject.com/users/signup', json)
+      let request = this.http.post('https://apifood.comsciproject.com/users/signup', json)
         .subscribe(response => {
           //console.log('not error ' + JSON.stringify(response));
           // this.router.navigateByUrl('/feeds');
           //console.log(response["success"].username)
           if (response["success"] == 1) {
             let json = { username: this.username, password: this.password };
-            let req = this.http.post('http://apifood.comsciproject.com/users/login', json).subscribe(response => {
+            let req = this.http.post('https://apifood.comsciproject.com/users/login', json).subscribe(response => {
 
               if (response["success"] == 1) {
                 var token = response["token"]
@@ -64,7 +64,7 @@ export class SignupComponent implements OnInit {
                 }
 
 
-                let req = this.http.get('http://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
+                let req = this.http.get('https://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
                   console.log(response["data"].username)
                   if (response["success"] == 1) {
                     this.interpretations = {

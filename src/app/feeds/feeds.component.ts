@@ -72,7 +72,7 @@ export class FeedsComponent implements OnInit {
       headers: header
     }
 
-    let req = this.http.get('http://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
+    let req = this.http.get('https://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
       if (response["success"] == 1) {
         this.interpretations = {
           success: response["success"],
@@ -101,7 +101,7 @@ export class FeedsComponent implements OnInit {
 
     })
 
-    let req2 = await this.http.get('http://apifood.comsciproject.com/post/newfeed', option).toPromise().then(response => {
+    let req2 = await this.http.get('https://apifood.comsciproject.com/post/newfeed', option).toPromise().then(response => {
       var d = new Date()
 
       var datePipe = new DatePipe('en-US');
@@ -156,7 +156,7 @@ export class FeedsComponent implements OnInit {
         //
         //////////////////เรียกหาจำนวน like เมื่อรอบแรก
 
-        let reqestLike = this.http.get("http://apifood.comsciproject.com/post/getLikePost/" + response["feed"][i].post_ID, option).toPromise().then(response1 => {
+        let reqestLike = this.http.get("https://apifood.comsciproject.com/post/getLikePost/" + response["feed"][i].post_ID, option).toPromise().then(response1 => {
           this.likeCount[i] = response1["countLike"]
           if (response1["user_ID"] == 1) {  //ไม่ใช่ user_ID แต่มันคือcount ใส่ผิด เบลออ
             this.divLike[i] = 1
@@ -197,7 +197,7 @@ export class FeedsComponent implements OnInit {
           this.displaydelete();
         }
       },
-      { label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io' },
+      { label: 'Angular.io', icon: 'pi pi-info', url: 'https://angular.io' },
       { separator: true },
       { label: 'Setup', icon: 'pi pi-cog', routerLink: ['/setup'] }
     ];
@@ -216,7 +216,7 @@ export class FeedsComponent implements OnInit {
     }
 
     let json = { pid: pid }
-    let request = this.http.post('http://apifood.comsciproject.com/post/likepost', json, option).subscribe(response => {
+    let request = this.http.post('https://apifood.comsciproject.com/post/likepost', json, option).subscribe(response => {
       if (response["success"] == 1) {
         this.likeCount[index] = response["countLike"]
         if (response["countMyLiked"] == 1) {
@@ -245,7 +245,7 @@ export class FeedsComponent implements OnInit {
     }
 
     let json = { post_ID: postId.post_ID };
-    let request = this.http.post('http://apifood.comsciproject.com/post/deletePost', json, option)
+    let request = this.http.post('https://apifood.comsciproject.com/post/deletePost', json, option)
       .subscribe(response => {
 
         if (response["success"] == 1) {
@@ -274,7 +274,7 @@ export class FeedsComponent implements OnInit {
     }
     let json = { post_ID: postId.post_ID, caption: this.property };
 
-    let request = this.http.post('http://apifood.comsciproject.com/post/editPost', json, option)
+    let request = this.http.post('https://apifood.comsciproject.com/post/editPost', json, option)
       .subscribe(response => {
         console.log(response)
         if (response["success"] == 1) {
@@ -357,7 +357,7 @@ export class FeedsComponent implements OnInit {
 
       if (this.uploadSS == true) {
         this.uploadSS = false
-        let req = this.http.post('http://apifood.comsciproject.com/post/createPost', formData).toPromise().then(data => {
+        let req = this.http.post('https://apifood.comsciproject.com/post/createPost', formData).toPromise().then(data => {
           //console.log(data)
           //if (this.value >= 100) {
 
@@ -435,14 +435,14 @@ export class FeedsComponent implements OnInit {
       headers: header
     }
 
-    let req = this.http.get("http://apifood.comsciproject.com/follow/randFollow", option).subscribe(response => {
+    let req = this.http.get("https://apifood.comsciproject.com/follow/randFollow", option).subscribe(response => {
 
       if(response["results"]==""){
         this.setNullAccount = true
       }else{ 
       //let i = 0
       for (let i = 0; i < 5; i++) {
-        this.http.get("http://apifood.comsciproject.com/follow/checkFollow/" + response["results"][i].user_ID, option).subscribe(response1 => {
+        this.http.get("https://apifood.comsciproject.com/follow/checkFollow/" + response["results"][i].user_ID, option).subscribe(response1 => {
           this.checkFollow = response1['checkFollow']
           console.log(response1['checkFollow'])
           if (response1['checkFollow'] != 1) {
@@ -468,7 +468,7 @@ export class FeedsComponent implements OnInit {
     }
     console.log(index)
     let json = { following_ID: id };
-    let request = this.http.post('http://apifood.comsciproject.com/follow/following', json, option)
+    let request = this.http.post('https://apifood.comsciproject.com/follow/following', json, option)
       .subscribe(response => {
 
         if (response["success"] == 1) {
@@ -493,7 +493,7 @@ export class FeedsComponent implements OnInit {
     }
     console.log(index)
     let json = { following_ID: id };
-    let request = this.http.post('http://apifood.comsciproject.com/follow/unfollowing', json, option)
+    let request = this.http.post('https://apifood.comsciproject.com/follow/unfollowing', json, option)
       .subscribe(response => {
 
         if (response["success"] == 1) {
@@ -520,7 +520,7 @@ export class FeedsComponent implements OnInit {
     let option = this.getHeader()
     //console.log(this.postnewFeed.length)
     
-    this.http.get('http://apifood.comsciproject.com/post/getCommentPost/'+pid,option).subscribe(response =>{
+    this.http.get('https://apifood.comsciproject.com/post/getCommentPost/'+pid,option).subscribe(response =>{
       console.log(response["comment"])
       if(response['comment'] != ""){
         this.showCommentsUser[i] = true
@@ -578,7 +578,7 @@ export class FeedsComponent implements OnInit {
       caption:this.myCommentValue
     }
 
-      this.http.post('http://apifood.comsciproject.com/post/commentPost',json,option).subscribe(response =>{
+      this.http.post('https://apifood.comsciproject.com/post/commentPost',json,option).subscribe(response =>{
         //console.log(response)
       })
 

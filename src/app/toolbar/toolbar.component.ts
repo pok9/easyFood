@@ -73,7 +73,7 @@ export class ToolbarComponent implements OnInit {
     }
 
 
-    let req = this.http.post('http://apifood.comsciproject.com/users/test1', json, option).subscribe(response => {
+    let req = this.http.post('https://apifood.comsciproject.com/users/test1', json, option).subscribe(response => {
       console.log(response)
     })
 
@@ -93,7 +93,7 @@ export class ToolbarComponent implements OnInit {
     let query = event.query;
     let country
     let data;
-    let req = this.http.get('http://apifood.comsciproject.com/users/searchUser/' + query).subscribe(response => {
+    let req = this.http.get('https://apifood.comsciproject.com/users/searchUser/' + query).subscribe(response => {
     console.log("response = "+response["data"])  
     for (let datas in response["data"]) {
         country = response["data"][datas].nickName
@@ -119,20 +119,20 @@ export class ToolbarComponent implements OnInit {
   }
 
   value(nickname){
-    // let response = await this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).subscribe(response => {
+    // let response = await this.http.get('https://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).subscribe(response => {
 
     //   this.router.navigateByUrl('/profile/'+response["data"] )
      
     // })
 
-    //let response = await this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise();
+    //let response = await this.http.get('https://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise();
    // this.router.navigateByUrl('/profile/'+response["data"] )
     //console.log(response['data']);
     //location.reload()
     var test = '/profile/'+nickname;
             window.location.href = test
 
-    // let response = this.http.get('http://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise().then(data =>{
+    // let response = this.http.get('https://apifood.comsciproject.com/users/convertNameToUsername/' + nickname).toPromise().then(data =>{
     //       console.log(data)
     //       if(data["success"] == 1){
     //       //   this.displayModal = false;

@@ -144,8 +144,20 @@ export class LoginComponent implements OnInit {
   facebookData: any
   fbJson : any
    json: any 
-   submitLogin() {
-    
+   async submitLogin() {
+    // let response = await FB.login().toPromise();
+    // console.log('submitLogin', response);
+    //   if (response.authResponse) {
+    //     //this.toastr.successToastr('login successful', 'Success!');
+    //     console.log("Hello FB")
+    //     response = FB.getLoginStatus().toPromise();
+    //     if (response.status === 'connected') {
+    //       this.token = response.authResponse.accessToken
+    //       console.log(this.token)
+    //       //response = FB.api('/me/?fields=picture.width(400).height(400),name').toPromise();
+    //     }
+    //   }
+
     FB.login((response) => {
       console.log('submitLogin', response);
       if (response.authResponse) {
@@ -168,9 +180,10 @@ export class LoginComponent implements OnInit {
               //{ userID: this.id, name: this.name,profile_fbimg:this.profile_fbimg };
              this.json = { userID: this.id, name: this.name,profile_fbimg:this.profile_fbimg }
 
-            //  let request = this.http.post('http://localhost:3000/users/loginFacebook', json).subscribe(response1=>{
+            //  let request = this.http.post('http://localhost:3000/users/loginFacebook', this.json).subscribe(response1=>{
             //    console.log(response1)
             //  })
+             
             this.facebookData = {
              
               userID: this.id,
@@ -213,7 +226,7 @@ export class LoginComponent implements OnInit {
     this.fbJson = JSON.parse(localStorage.getItem('FB'))
     this.json = { userID: this.fbJson['userID'], name: this.fbJson['name'],profile_fbimg:this.fbJson['profile_fbimg'] }
     //json = JSON.stringify(json)
-     let request = this.http.post('http://apifood.comsciproject.com/users/loginFacebook', this.json).subscribe(response1=>{
+     let request = this.http.post('https://apifood.comsciproject.com/users/loginFacebook', this.json).subscribe(response1=>{
        //console.log(response1)
        this.TOKEN = {
         token: response1["token"]
@@ -233,7 +246,7 @@ export class LoginComponent implements OnInit {
       }
       console.log(option)
 
-      let req = this.http.get('http://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
+      let req = this.http.get('https://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
             console.log(response)
            if (response["success"] == 1) {
               this.interpretations = {
@@ -262,7 +275,7 @@ export class LoginComponent implements OnInit {
 
       //window.location.href = '/feeds'
 
-     })
+     }) //<<<<<<<<<<<
      //console.log(json)
     // console.log("userID: "+this.id)
     // console.log("name: "+this.name)
