@@ -1,0 +1,21 @@
+
+<div class="container-fluid">
+    <div class="row"><br></div>
+        <div class="col">
+            <div class="row"> <p>input สามารถสลับตัวอักษรและเรียงกันได้ทั้งหมดกี่วิธี</p></div>
+            <div class="row">
+               
+                <span class="p-float-label">
+                    <input id="float-input" type="text" pInputText [(ngModel)]="inputdata"> 
+                    <label for="float-input">input</label>
+                </span>
+                <button pButton type="button" label="Click" (click)="send()"></button>
+
+            </div>
+            <div class="row">
+                <p>สามารถสลับได้ {{final}} วิธี</p>
+            </div>
+            
+        </div>
+    
+</div>

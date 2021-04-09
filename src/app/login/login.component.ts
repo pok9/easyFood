@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
   login() {
 
     let json = { username: this.username, password: this.password };
-    let request = this.http.post('http://apifood.comsciproject.com/users/login', json)
+    let request = this.http.post('https://apifood.comsciproject.com/users/login', json)
       .subscribe(response => {
         if (response["success"] == 1) {
           this.txtalert = "success"
@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
             headers: header
           }
 
-          let req = this.http.get('http://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
+          let req = this.http.get('https://apifood.comsciproject.com/users/myAccount', option).subscribe(response => {
             console.log(response["data"].username)
             if (response["success"] == 1) {
               this.interpretations = {
@@ -180,7 +180,7 @@ export class LoginComponent implements OnInit {
               //{ userID: this.id, name: this.name,profile_fbimg:this.profile_fbimg };
              this.json = { userID: this.id, name: this.name,profile_fbimg:this.profile_fbimg }
 
-            //  let request = this.http.post('http://localhost:3000/users/loginFacebook', this.json).subscribe(response1=>{
+            //  let request = this.http.post('https://localhost:3000/users/loginFacebook', this.json).subscribe(response1=>{
             //    console.log(response1)
             //  })
              

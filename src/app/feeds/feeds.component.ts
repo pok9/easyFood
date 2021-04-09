@@ -160,9 +160,10 @@ export class FeedsComponent implements OnInit {
           this.likeCount[i] = response1["countLike"]
           if (response1["user_ID"] == 1) {  //ไม่ใช่ user_ID แต่มันคือcount ใส่ผิด เบลออ
             this.divLike[i] = 1
-            //console.log(this.divLike+"<<<<<<<<<<<<<<<")
+            console.log(this.divLike[i]+"<<<<<<<<<<<<<<<")
           } else {
             this.divLike[i] = 0
+            console.log(this.divLike[i]+"<<>>>>>>")
           }
           //console.log(response1["countLike"]+" like")
         })
@@ -176,7 +177,7 @@ export class FeedsComponent implements OnInit {
       //   console.log(val)
       // }
       this.postnewFeed = response["feed"]
-      console.log(this.likeCount)
+      console.log("Hello")
       // console.log(this.postnewFeed)
       // console.log(this.postnewFeed)
 
@@ -203,6 +204,10 @@ export class FeedsComponent implements OnInit {
     ];
 
     console.log(this.postnewFeed);
+  }
+
+  testss(i){
+    console.log("zzzz  "+this.divLike[i])
   }
 
   //กด likeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
